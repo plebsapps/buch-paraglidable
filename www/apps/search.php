@@ -3,7 +3,7 @@
 error_reporting(0);
 
 $allowed = false;
-$allowed_referers = array("antoine.lol", "paraglidable.com");
+$allowed_referers = array("paraglidable.com", "paraglidable.net", "v1.paraglidable.com", "v1.paraglidable.net");
 foreach ($allowed_referers as $referer)
 {
 	if (strpos($_SERVER['HTTP_REFERER'], 'https://'.$referer) === 0)
