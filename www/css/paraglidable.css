@@ -294,6 +294,11 @@ html, body {
   background-image: url("../imgs/icons/api.svg");
 }
 
+#menuButtonV2 {
+  background-image: url("../imgs/icons/v2.svg");
+  cursor: pointer;
+}
+
 #menuButtonDonate {
   background-image: url("../imgs/icons/heart.svg");
   cursor: pointer;
