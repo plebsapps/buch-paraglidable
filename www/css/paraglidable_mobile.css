@@ -238,6 +238,10 @@ html, body {
   background-image: url("../imgs/icons/information.svg");
 }
 
+#v2Link {
+  background-image: url("../imgs/icons/v2.svg");
+}
+
 #donateLink {
   background-image: url("../imgs/icons/heart.svg");
 }
