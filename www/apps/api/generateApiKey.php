@@ -1,6 +1,7 @@
 <?php
 
 include 'bdd.php';
+require_once __DIR__ . '/../mail_helper.php'; // Ajout du helper
 
 //=============================================================
 // Verbose mode
@@ -93,45 +94,26 @@ if ($verbose) {
 // Send email with key
 //=============================================================
 
-$exampleUrl = "<a href=\"https://api.paraglidable.com/?key=$apiKey&format=JSON&version=1\">https://api.paraglidable.com/?key=$apiKey&format=JSON&version=1</a><br>".
-			  "<a href=\"https://api.paraglidable.com/?key=$apiKey&format=XML&version=1\">https://api.paraglidable.com/?key=$apiKey&format=XML&version=1</a>";
-
 $fromEmail = 'antoine@paraglidable.com';
+$to      = $email;
+$subject = "Paraglidable: your API key";
 
-$to      = 	$email;
-$subject = 	"Paraglidable: your API key";
+// Préparation du contenu (on sépare HTML et Texte brut)
+$exampleUrlText = "https://api.paraglidable.com/?key=$apiKey&format=JSON&version=1\nhttps://api.paraglidable.com/?key=$apiKey&format=XML&version=1";
+$exampleUrlHtml = "<a href=\"https://api.paraglidable.com/?key=$apiKey&format=JSON&version=1\">https://api.paraglidable.com/?key=$apiKey&format=JSON&version=1</a><br>".
+                  "<a href=\"https://api.paraglidable.com/?key=$apiKey&format=XML&version=1\">https://api.paraglidable.com/?key=$apiKey&format=XML&version=1</a>";
 
-//create a boundary for the email. This 
-$boundary = uniqid('np');
+// Version Texte Brut
+$plainText = "Your API key is: $apiKey\n\nExamples:\n\n$exampleUrlText\n\nBest,\nAntoine";
 
+// Version HTML
+$htmlBody = "<html><body>Your API key is: <span style=\"font-weight:bold\">$apiKey</span><br><br>Examples:<br><br>$exampleUrlHtml<br><br>Best,<br>Antoine</body></html>";
 
-
-//here is the content body
-$message = "This is a MIME encoded message.";
-$message .= "\r\n\r\n--" . $boundary . "\r\n";
-$message .= "Content-type: text/plain;charset=utf-8\r\n\r\n";
-
-//Plain text body
-$message .= "Your API key is: $apiKey\n\nExamples:\n\nhttps://api.paraglidable.com/?key=$apiKey&format=JSON&version=1\nhttps://api.paraglidable.com/?key=$apiKey&format=XML&version=1\n\nBest,\nAntoine";
-
-$message .= "\r\n\r\n--" . $boundary . "\r\n";
-$message .= "Content-type: text/html;charset=utf-8\r\n\r\n";
-
-//Html body
-$message .= "<html>Your API key is: <span style=\"font-weight:bold\">$apiKey</span><br><br>Examples:<br><br>$exampleUrl<br><br>Best,<br>Antoine</html>";
-
-$message .= "\r\n\r\n--" . $boundary . "--";
-
-
-
-$headers  = "";
-$headers .= "MIME-Version: 1.0\r\n"; 
-$headers .= "Content-Type: multipart/alternative;boundary=" . $boundary . "\r\n";
-$headers .= "From: $fromEmail" . "\r\n" .
-			"Reply-To: $fromEmail" . "\r\n" .
-			"X-Mailer: PHP/" . phpversion();
-
-print(mail($to, $subject, $message, $headers, "-f". $fromEmail)); // le "-f" a amélioré mon SPAM score
-
+// Appel de la fonction partagée
+if (sendSmartMail($to, $subject, $htmlBody, $fromEmail, $plainText)) {
+    echo "1"; // Succès
+} else {
+    echo "Error";
+}
 
 ?>
