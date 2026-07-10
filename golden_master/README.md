@@ -45,9 +45,12 @@ The pipeline is fully deterministic on an unchanged environment.
 
 **Calibrated tolerances** for `compare_golden_master.py` (defaults):
 
-- predictions.txt / spots.json: `rtol=1e-5`, `atol=1e-7` — generous, since
-  observed deviation on identical environments is exactly 0; headroom is
-  reserved for the dependency updates of stage B (numpy/TF version drift).
+- predictions.txt / spots.json: `rtol=1e-5`, `atol=2e-6`. On identical
+  hardware the observed deviation is exactly 0 (byte-identical). Across
+  hardware (GitHub CI vs. development machine) 1-ulp float drift flips the
+  last printed digit (resolution 1e-6 at 6 decimals) on ~0.06% of lines —
+  the first CI run demonstrated this on 2026-07-10; atol=2e-6 covers a
+  last-digit flip including rounding-boundary cases.
 - tiles: max channel difference 2, at most 0.1 % differing pixels per tile,
   deterministic sample of ~50 tiles across all zoom levels.
 

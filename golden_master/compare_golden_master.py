@@ -149,9 +149,11 @@ def compare_tiles(dir_a, dir_b, sample, max_channel_diff, max_diff_frac):
 
 
 def compare_data_tiles(dir_a, dir_b):
-	"""Byte-exact compare of all .data tiles (quantized to 1/255 steps by
-	construction, so tolerance handling happens before quantization; any
-	byte difference is a real behavior change of the API's data source)."""
+	"""Compare all .data tiles. Values are quantized to 1/255 steps, so on
+	identical hardware the files are byte-identical. Across hardware, 1-ulp
+	float drift can flip a byte by exactly 1 where a value sits on a
+	quantization boundary — tolerated for at most 0.5% of bytes per tile;
+	any difference >= 2 or a larger flip fraction is a real change."""
 
 	def data_set(d):
 		out = []
@@ -168,15 +170,28 @@ def compare_data_tiles(dir_a, dir_b):
 	if not set_a:
 		return fail("no .data tiles found in %s" % dir_a)
 	errors = 0
+	flipped_total = 0
 	for rel in set_a:
 		with open(os.path.join(dir_a, rel), "rb") as fa, \
 			 open(os.path.join(dir_b, rel), "rb") as fb:
-			if fa.read() != fb.read():
-				errors += fail(".data tile %s differs" % rel)
-				if errors > 20:
-					break
+			ba, bb = fa.read(), fb.read()
+		if ba == bb:
+			continue
+		if len(ba) != len(bb):
+			errors += fail(".data tile %s: size differs" % rel)
+			continue
+		diffs = [abs(x - y) for x, y in zip(ba, bb) if x != y]
+		frac = float(len(diffs)) / len(ba)
+		if max(diffs) > 1 or frac > 0.005:
+			errors += fail(".data tile %s: max byte diff %d, %.3f%% bytes differ" %
+						   (rel, max(diffs), 100.0 * frac))
+			if errors > 20:
+				break
+		else:
+			flipped_total += len(diffs)
 	if not errors:
-		print("[OK   ] data tiles: %d compared byte-exact" % len(set_a))
+		print("[OK   ] data tiles: %d compared (%d quantization-boundary "
+			  "byte flips tolerated)" % (len(set_a), flipped_total))
 	return 1 if errors else 0
 
 
@@ -192,8 +207,14 @@ def main():
 	ap = argparse.ArgumentParser()
 	ap.add_argument("run_a")
 	ap.add_argument("run_b")
+	# atol default 2e-6: predictions.txt prints 6 decimals, so the smallest
+	# representable text difference is 1e-6. Cross-hardware runs (CI vs.
+	# development machine) show 1-ulp float drift that flips the last
+	# printed digit on ~0.06% of lines; 2e-6 covers a last-digit flip
+	# including rounding-boundary cases without masking real changes
+	# (identical hardware still reproduces byte-identical output).
 	ap.add_argument("--rtol", type=float, default=1e-5)
-	ap.add_argument("--atol", type=float, default=1e-7)
+	ap.add_argument("--atol", type=float, default=2e-6)
 	ap.add_argument("--max-channel-diff", type=int, default=2)
 	ap.add_argument("--max-diff-pixel-frac", type=float, default=0.001)
 	ap.add_argument("--tile-sample", type=int, default=50)
