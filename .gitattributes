@@ -1,1 +1,5 @@
 **/*.ipynb linguist-vendored
+
+# Enforce LF line endings for all text files (development happens on Windows,
+# execution in Linux containers — CRLF breaks shell scripts and entrypoints)
+* text=auto eol=lf
