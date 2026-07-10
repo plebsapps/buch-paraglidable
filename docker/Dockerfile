@@ -27,7 +27,9 @@ RUN apt-get install -y sudo \
 
 USER $USERNAME
 
-RUN sudo pip install glob3 tqdm colorama requests pandas matplotlib pillow numba pyproj jupyter
+# glob3 removed 2026-07: placeholder package deleted from PyPI; the code only
+# uses the Python 3 stdlib module "glob" (see neural_network/plot_training.py)
+RUN sudo pip install tqdm colorama requests pandas matplotlib pillow numba pyproj jupyter
 RUN sudo pip install pygrib
 RUN sudo pip install https://github.com/matplotlib/basemap/archive/master.zip
 
