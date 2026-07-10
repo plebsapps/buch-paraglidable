@@ -12,7 +12,12 @@ RUN apt-get -y update && apt-get install -y --no-install-recommends libgrib-api-
 RUN apt-get -y update && apt-get install -y --no-install-recommends libeccodes-dev libeccodes0
 
 # tex2svg
-RUN npm install -y --no-install-recommends --global mathjax-node-cli
+# Disabled 2026-07: npm 3.x (Ubuntu 18.04) can no longer talk to the npm
+# registry (TypeError inside npm itself), so this step breaks the build.
+# mathjax-node-cli is only used by scripts/update_nn_README.py to regenerate
+# the documentation equations; the resulting SVGs are already committed in
+# neural_network/docs/README_files/. Not needed for forecast/tiler/www.
+#RUN npm install -y --no-install-recommends --global mathjax-node-cli
 
 # Add sudo support
 RUN apt-get install -y sudo \
