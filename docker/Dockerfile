@@ -1,4 +1,7 @@
-FROM tensorflow/tensorflow:latest-py3
+# Pinned 2026-07 by digest (stage B): "latest-py3" is a tag frozen in 2020
+# (TensorFlow 2.1.0, Ubuntu 18.04, Python 3.6) but tags are mutable --
+# the digest is the actual state the golden master was proven on.
+FROM tensorflow/tensorflow:latest-py3@sha256:14ec674cefd622aa9d45f07485500da254acaf8adfef80bd0f279db03c735689
 
 ARG USERNAME=paraglidable
 RUN useradd -m $USERNAME
@@ -33,8 +36,12 @@ USER $USERNAME
 
 # glob3 removed 2026-07: placeholder package deleted from PyPI; the code only
 # uses the Python 3 stdlib module "glob" (see neural_network/plot_training.py)
-RUN sudo pip install tqdm colorama requests pandas matplotlib pillow numba pyproj jupyter
-RUN sudo pip install pygrib
+# Pinned 2026-07 (stage B): install from the lockfile frozen out of the image
+# state the golden master was proven on. apt-managed packages (pygobject,
+# cryptography, ...) are excluded -- the base image digest pins those.
+# python_requirements.txt remains as the author's historical Jan 2020 freeze.
+COPY python_requirements.lock.txt /tmp/python_requirements.lock.txt
+RUN sudo pip install -r /tmp/python_requirements.lock.txt
 # Pinned 2026-07: current basemap master requires setuptools>=67 which does
 # not exist for the Python 3.6 in this image. v1.2.1rel matches the
 # basemap==1.2.1 recorded in python_requirements.txt (Jan 2020 freeze).
