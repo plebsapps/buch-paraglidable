@@ -31,5 +31,8 @@ USER $USERNAME
 # uses the Python 3 stdlib module "glob" (see neural_network/plot_training.py)
 RUN sudo pip install tqdm colorama requests pandas matplotlib pillow numba pyproj jupyter
 RUN sudo pip install pygrib
-RUN sudo pip install https://github.com/matplotlib/basemap/archive/master.zip
+# Pinned 2026-07: current basemap master requires setuptools>=67 which does
+# not exist for the Python 3.6 in this image. v1.2.1rel matches the
+# basemap==1.2.1 recorded in python_requirements.txt (Jan 2020 freeze).
+RUN sudo pip install https://github.com/matplotlib/basemap/archive/v1.2.1rel.zip
 
