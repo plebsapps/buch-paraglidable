@@ -1,0 +1,53 @@
+# Golden-master gate (stage B): every push and pull request must prove that
+# the forecast pipeline still produces the frozen reference output.
+# Data assets (frozen GFS input, reference run, training-data pickles,
+# elevation tiles) are attached to the "golden-master-v1" release -- they are
+# too large for Git and immutable by definition.
+
+name: golden-master
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  golden-master:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t paraglidable ./docker/
+
+      - name: Download golden-master assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download golden-master-v1 --pattern '*.tar.gz'
+          tar -xzf gm_reference.tar.gz   # golden_master/input + golden_master/reference
+          tar -xzf gm_data.tar.gz        # neural_network/bin/data + tiler/_cache/elevation
+          rm -f gm_reference.tar.gz gm_data.tar.gz
+
+      - name: Build tiler
+        run: >
+          docker run --rm --user root
+          -v "$PWD:/workspaces/Paraglidable"
+          -w /workspaces/Paraglidable/scripts
+          paraglidable sh build_tiler.sh
+
+      - name: Run pipeline on frozen input
+        run: >
+          docker run --rm --user root -e PYTHONHASHSEED=0
+          -v "$PWD:/workspaces/Paraglidable"
+          paraglidable python /workspaces/Paraglidable/golden_master/run_golden_master.py
+          /workspaces/Paraglidable/golden_master/runs/ci
+
+      - name: Compare against reference
+        run: >
+          docker run --rm --user root
+          -v "$PWD:/workspaces/Paraglidable"
+          paraglidable python /workspaces/Paraglidable/golden_master/compare_golden_master.py
+          /workspaces/Paraglidable/golden_master/reference
+          /workspaces/Paraglidable/golden_master/runs/ci
