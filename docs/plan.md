@@ -64,10 +64,10 @@ Pflichtjob ab sofort: `compare_golden_master` grün vor jedem Merge/Push.
 | **A1** | Original-Image baut wieder (archäologisches Pinning) | ✅ 2026-07-10 — 3 Reparaturen: mathjax-node-cli deaktiviert (npm 3.x/Registry), glob3 entfernt (von PyPI gelöscht), Basemap auf v1.2.1rel gepinnt |
 | **A2** | Daten geladen, GFS-Zyklus archiviert | ✅ 2026-07-10 — Google-Drive-Downloader repariert (stiller Fehlschlag bei großen Dateien), make/g++ ergänzt; Zyklus 2026-07-09 06z (3 GRIBs) gesichert |
 | **A3** | Golden Master eingefroren | ✅ 2026-07-10 — 3 Läufe **byte-identisch**; Runner + dreistufiger Vergleich im Repo; Referenz im Release |
-| **B** | Pinnen + CI | ✅ Pinnung (Digest + Lockfile, GM-verifiziert); CI-Workflow committet — Push wartet auf `workflow`-Scope des Tokens |
+| **B** | Pinnen + CI | ✅ 2026-07-10 — Pinnung (Digest + Lockfile, GM-verifiziert); CI grün: Golden-Master-Vergleich als Pflichtjob bei jedem Push/PR. Lehrstück: erster CI-Lauf deckte 1-ULP-Drift auf fremder Hardware auf → Toleranzen begründet kalibriert (atol=2e-6 = Textformat-Auflösung; .data-Byte-Kipper ≤0,5 % toleriert) |
 | **C1** | Format-Naht forecast→tiler | ✅ 2026-07-10 — docs/predictions_format.md + pipeline/predictions_io.py, Round-Trip byte-identisch |
 | **C2** | Pipeline in CLI-Schritte zerlegen (download/forecast/tile/publish) | offen |
-| **C3** | Web-Inventar: PHP-Endpunkte + .htaccess, Charakterisierungstests | offen |
+| **C3** | Web-Inventar: PHP-Endpunkte + .htaccess, Charakterisierungstests | teilweise — Inventar ✅ (docs/web_inventory.md, inkl. Fund MySQL-ApiKeys + .data/.elev-Formate); HTTP-Snapshots offen |
 | **D1** | Tiler → Python (numpy/Pillow/mercantile), Pixelvergleich, dann C++/Qt entfernen | offen |
 | **D2** | PHP → FastAPI, endpunktweise mit Snapshots; Frontend zunächst 1:1 | offen |
 | **D3** | cron_tasks → APScheduler | offen |
