@@ -11,6 +11,10 @@ RUN apt-get -y update && apt-get install -y --no-install-recommends net-tools li
 RUN apt-get -y update && apt-get install -y --no-install-recommends libgrib-api-dev libgrib-api0
 RUN apt-get -y update && apt-get install -y --no-install-recommends libeccodes-dev libeccodes0
 
+# Added 2026-07: the tensorflow:latest-py3 base image ships no build tools,
+# but scripts/build_tiler.sh needs make and g++ (qmake + make for the Qt tiler)
+RUN apt-get -y update && apt-get install -y --no-install-recommends make g++
+
 # tex2svg
 # Disabled 2026-07: npm 3.x (Ubuntu 18.04) can no longer talk to the npm
 # registry (TypeError inside npm itself), so this step breaks the build.

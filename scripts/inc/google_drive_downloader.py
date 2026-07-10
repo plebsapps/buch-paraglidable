@@ -11,8 +11,11 @@ def download(file_id, dest_dir, res_file, zipped=True):
 	os.makedirs(dest_dir, exist_ok=True)
 	subprocess.run("wget \"https://docs.google.com/uc?export=download&id="+ file_id +"\" -O "+ dest_dir+"/"+res_file, shell=True, check=True)
 	if is_big_file(dest_dir+"/"+res_file):
+		# Fixed 2026-07: Google Drive changed its virus-scan confirmation flow;
+		# the old cookie/confirm-token extraction silently saved the HTML warning
+		# page instead of the file. The modern download endpoint accepts confirm=t.
 		os.remove(dest_dir+"/"+res_file)
-		subprocess.run("wget --load-cookies /tmp/cookies.txt \"https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id="+ file_id +"' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\\1\\n/p')&id="+ file_id +"\" -O "+ dest_dir+"/"+res_file +" && rm -rf /tmp/cookies.txt", shell=True, check=True)
+		subprocess.run("wget \"https://drive.usercontent.google.com/download?export=download&confirm=t&id="+ file_id +"\" -O "+ dest_dir+"/"+res_file, shell=True, check=True)
 
 	if zipped:
 		os.system("unzip "+ dest_dir+"/"+res_file +" -d "+ dest_dir +"/")
