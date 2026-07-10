@@ -1,0 +1,5 @@
+{
+ "body": "unknown key",
+ "request": "GET /apps/api/get.php?key=zzz",
+ "status": 200
+}

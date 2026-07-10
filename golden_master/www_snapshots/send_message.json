@@ -1,0 +1,5 @@
+{
+ "body": "",
+ "request": "POST /apps/sendMessage.php",
+ "status": 500
+}

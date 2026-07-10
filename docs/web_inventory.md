@@ -81,6 +81,17 @@ Zugang root/paraglidable (hartkodiert in `bdd.php`), DB `paraglidable`:
 PHP-serialisierter Spotliste. Wandert in Etappe E nach PostgreSQL
 (Tabellen `accounts`, `api_keys`; Zugang per Umgebungsvariablen).
 
+## Charakterisierungstests
+
+`golden_master/snapshot_www.py` friert 13 HTTP-Snapshots gegen das laufende
+Original ein (`record`/`check`; Snapshots in `golden_master/www_snapshots/`).
+Befund dabei: **`www/apps/mail_helper.php` ist upstream nicht committet**
+(vermutlich wegen SMTP-Zugangsdaten) — `sendMessage.php` und
+`generateApiKey.php` antworten daher in jedem frischen Klon mit HTTP 500;
+die Snapshots frieren genau diesen beobachtbaren Zustand ein.
+`getAnalysisData.php` ist bewusst ausgenommen (verändert bei jedem Aufruf
+die versionierte Bann-Liste `banned.txt.php`).
+
 ## Portierungsentscheidungen (offen, vor D2 zu klären)
 
 1. **gtag.php / Google Analytics:** übernehmen oder für die eigene Instanz

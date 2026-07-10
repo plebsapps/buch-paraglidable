@@ -1,0 +1,5 @@
+{
+ "body": "",
+ "request": "GET /apps/api/get.php?tx=65&ty=45&x=128&y=128&zoom=7&date=1999-01-01",
+ "status": 200
+}

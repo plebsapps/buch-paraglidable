@@ -67,7 +67,7 @@ Pflichtjob ab sofort: `compare_golden_master` grün vor jedem Merge/Push.
 | **B** | Pinnen + CI | ✅ 2026-07-10 — Pinnung (Digest + Lockfile, GM-verifiziert); CI grün: Golden-Master-Vergleich als Pflichtjob bei jedem Push/PR. Lehrstück: erster CI-Lauf deckte 1-ULP-Drift auf fremder Hardware auf → Toleranzen begründet kalibriert (atol=2e-6 = Textformat-Auflösung; .data-Byte-Kipper ≤0,5 % toleriert) |
 | **C1** | Format-Naht forecast→tiler | ✅ 2026-07-10 — docs/predictions_format.md + pipeline/predictions_io.py, Round-Trip byte-identisch |
 | **C2** | Pipeline in CLI-Schritte zerlegen (download/forecast/tile/publish) | offen |
-| **C3** | Web-Inventar: PHP-Endpunkte + .htaccess, Charakterisierungstests | teilweise — Inventar ✅ (docs/web_inventory.md, inkl. Fund MySQL-ApiKeys + .data/.elev-Formate); HTTP-Snapshots offen |
+| **C3** | Web-Inventar: PHP-Endpunkte + .htaccess, Charakterisierungstests | ✅ 2026-07-10 — Inventar (docs/web_inventory.md, Funde: MySQL-ApiKeys, .data/.elev-Formate, fehlende mail_helper.php) + 13 HTTP-Snapshots (golden_master/snapshot_www.py, zweifach verifiziert) |
 | **D1** | Tiler → Python (numpy/Pillow/mercantile), Pixelvergleich, dann C++/Qt entfernen | offen |
 | **D2** | PHP → FastAPI, endpunktweise mit Snapshots; Frontend zunächst 1:1 | offen |
 | **D3** | cron_tasks → APScheduler | offen |
