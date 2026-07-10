@@ -7,3 +7,5 @@ __pycache__
 neural_network/bin/data
 golden_master/input/
 golden_master/run1_provisional/
+golden_master/runs/
+golden_master/reference/
