@@ -1,10 +1,13 @@
 # Golden-master comparison: verify that two pipeline runs are equivalent
 # within defined tolerances. Exit code 0 = equivalent, 1 = deviation.
 #
-# Three-tier comparison (see golden_master/README.md):
+# Four-tier comparison (see golden_master/README.md):
 #   1. predictions.txt  -- numeric compare, token by token (primary reference)
 #   2. tiles/           -- pixel compare on a deterministic sample of PNGs
-#   3. spots.json       -- structure must match exactly, numbers with tolerance
+#   3. tiles/ *.data    -- byte-exact compare of ALL quantized data tiles
+#                          (these are what the public API serves, see
+#                          docs/web_inventory.md)
+#   4. spots.json       -- structure must match exactly, numbers with tolerance
 #
 # The predictions.txt format is an undocumented ad-hoc text format (its
 # specification is produced later, in stage C1). Until then the comparison
@@ -145,6 +148,38 @@ def compare_tiles(dir_a, dir_b, sample, max_channel_diff, max_diff_frac):
 	return 1 if errors else 0
 
 
+def compare_data_tiles(dir_a, dir_b):
+	"""Byte-exact compare of all .data tiles (quantized to 1/255 steps by
+	construction, so tolerance handling happens before quantization; any
+	byte difference is a real behavior change of the API's data source)."""
+
+	def data_set(d):
+		out = []
+		for root, _dirs, files in os.walk(d):
+			for fn in files:
+				if fn.endswith(".data"):
+					out.append(os.path.relpath(os.path.join(root, fn), d))
+		return sorted(out)
+
+	set_a, set_b = data_set(dir_a), data_set(dir_b)
+	if set_a != set_b:
+		return fail(".data tile sets differ (%d vs %d files)" %
+					(len(set_a), len(set_b)))
+	if not set_a:
+		return fail("no .data tiles found in %s" % dir_a)
+	errors = 0
+	for rel in set_a:
+		with open(os.path.join(dir_a, rel), "rb") as fa, \
+			 open(os.path.join(dir_b, rel), "rb") as fb:
+			if fa.read() != fb.read():
+				errors += fail(".data tile %s differs" % rel)
+				if errors > 20:
+					break
+	if not errors:
+		print("[OK   ] data tiles: %d compared byte-exact" % len(set_a))
+	return 1 if errors else 0
+
+
 def find_spots_json(run_dir):
 	tiles = os.path.join(run_dir, "tiles")
 	for root, _dirs, files in os.walk(tiles):
@@ -180,7 +215,11 @@ def main():
 						args.tile_sample, args.max_channel_diff,
 						args.max_diff_pixel_frac)
 
-	# 3. Spots forecast as served to the website
+	# 3. Quantized data tiles served by the public API
+	rc |= compare_data_tiles(os.path.join(args.run_a, "tiles"),
+							 os.path.join(args.run_b, "tiles"))
+
+	# 4. Spots forecast as served to the website
 	sa, sb = find_spots_json(args.run_a), find_spots_json(args.run_b)
 	if sa is None or sb is None:
 		rc |= fail("spots.json missing in one of the runs")
