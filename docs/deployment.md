@@ -1,0 +1,36 @@
+# Deployment: paraglidable.plebsapps.de (Etappe S)
+
+Serverbefund und Inbetriebnahme-Protokoll gemäß `docs/server_briefing.md`.
+Stand: 2026-07-11.
+
+## Serverbefund (Bestandsaufnahme 2026-07-11)
+
+| Prüfung | Befund |
+|---|---|
+| Architektur | x86_64 ✅ |
+| RAM | **1,8 GB gesamt, ~0,8 GB verfügbar; Swap 2 GB (573 MB belegt)** — deutlich unter dem Richtwert ≥ 8 GB 🛑 |
+| Platte | 77 GB gesamt, 63 GB frei ✅ (Richtwert ≥ 15 GB) |
+| Docker | 29.1.3, Compose v2.40.3 ✅ |
+| Reverse Proxy | nginx (systemd-Dienst) mit certbot; je Subdomain eine vhost-Datei in `/etc/nginx/sites-enabled/`, `proxy_pass` auf localhost-Port, Let's-Encrypt-Zertifikate „managed by Certbot" |
+| DNS | `dig +short paraglidable.plebsapps.de` → 217.154.144.59 = Server-IP ✅ |
+| gh | eingeloggt (Account plebsapps); Release `golden-master-v1` mit `gm_reference.tar.gz` und `gm_data.tar.gz` erreichbar ✅ |
+| Belegte Ports | 127.0.0.1:8000–8005 (pdb, ralfwbalz, yoga, offerte, bewerbung, schule) sowie 3 Postgres-Container ohne Host-Port |
+
+## Betreiber-Entscheidungen
+
+1. **RAM-STOPP-Kriterium** (Briefing Schritt 1): Der Betreiber hat entschieden,
+   den Swap um ein 8-GB-Swapfile zu erweitern und den Golden-Master-Lauf zu
+   versuchen. Der Ausgang wird ehrlich dokumentiert — auch ein Misserfolg
+   (OOM, unvertretbare Laufzeit) ist Befund, kein Anlass zum Tricksen.
+2. **Container-Port**: Abweichend vom Briefing (127.0.0.1:8001) läuft der
+   Paraglidable-Container auf **127.0.0.1:8006**, weil 8001 bereits durch den
+   ralfwbalz-Container belegt ist.
+
+## Inbetriebnahme-Protokoll
+
+_(wird während der Etappe ergänzt)_
+
+## Offene Punkte
+
+- RAM-Ausstattung des Servers (1,8 GB) weit unter Richtwert; Swap-Erweiterung
+  ist ein Workaround, kein Ersatz für ein VPS-Upgrade.
