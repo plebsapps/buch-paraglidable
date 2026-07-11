@@ -68,7 +68,7 @@ Pflichtjob ab sofort: `compare_golden_master` grün vor jedem Merge/Push.
 | **C1** | Format-Naht forecast→tiler | ✅ 2026-07-10 — docs/predictions_format.md + pipeline/predictions_io.py, Round-Trip byte-identisch |
 | **C2** | Pipeline in CLI-Schritte zerlegen (download/forecast/tile/publish) | offen |
 | **C3** | Web-Inventar: PHP-Endpunkte + .htaccess, Charakterisierungstests | ✅ 2026-07-10 — Inventar (docs/web_inventory.md, Funde: MySQL-ApiKeys, .data/.elev-Formate, fehlende mail_helper.php) + 13 HTTP-Snapshots (golden_master/snapshot_www.py, zweifach verifiziert) |
-| **S** | Server-Inbetriebnahme paraglidable.plebsapps.de (vor C2): Setup nach CLAUDE.md, GM-Verifikation auf Server-Hardware, Reverse Proxy + TLS + Basic-Auth, manueller Forecast-Lauf | offen — Scopevertrag: docs/server_briefing.md; Entwicklung wechselt danach auf den Server |
+| **S** | Server-Inbetriebnahme paraglidable.plebsapps.de (vor C2): Setup nach CLAUDE.md, GM-Verifikation auf Server-Hardware, Reverse Proxy + TLS + Basic-Auth, manueller Forecast-Lauf | ✅ 2026-07-11 — GM auf Server-Hardware EQUIVALENT (dritte Hardware, Toleranzen unverändert), 13/13 Snapshots, 3/3 Tests; live hinter nginx+TLS+Basic-Auth auf Port 8006 (8001 belegt); Forecast-Lauf 2026-07-11 06z. Befund: nur 1,8 GB RAM → Swap auf 9 GiB erweitert (docs/deployment.md) |
 | **D1** | Tiler → Python (numpy/Pillow/mercantile), Pixelvergleich, dann C++/Qt entfernen | offen |
 | **D2** | PHP → FastAPI, endpunktweise mit Snapshots; Frontend zunächst 1:1 | offen |
 | **D3** | cron_tasks → APScheduler | offen |
