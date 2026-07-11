@@ -235,68 +235,8 @@ class Forecast:
 
 				os.makedirs(tiles_dir_this_day, exist_ok=True)
 
-				#======================================================================================
-				# Download / update next hours grib files
-				#======================================================================================
-
-				if self.forced_meteo_files is None:
-
-					meteo_files = []
-					l_h = [(hh+24*days-last_forecast_hour) for hh in [6, 12, 18] if (hh+24*days-last_forecast_hour)>=0]
-					for kh,h in enumerate(l_h):
-						forecast_datetime_with_hours = datetime.datetime(int(last_forecast_time[0:4]), int(last_forecast_time[4:6]), int(last_forecast_time[6:8]), int(last_forecast_time[8:10]))
-						valid_datetime = forecast_datetime_with_hours + datetime.timedelta(hours=h)
-						meteo_file     = self.destination_forecast_file % valid_datetime.strftime("%Y-%m-%d-%H")
-
-						Verbose.print_text(1, "download "+ meteo_file)
-
-						if not self.DEBUG_MODE or not os.path.exists(meteo_file):
-							self.download_forecast(last_forecast_time, self.GFS_resolution, h, last_forecast_hour, meteo_file)
-
-						meteo_files += [meteo_file]
-
-					#======================================================================================
-					# Re-create a complete list of 3 files even with those not updated (in the past)
-					#
-					# params:
-					#    - destinationForecastFile
-					# input:
-					#    - dayDateTime
-					# output:
-					#    - meteo_files
-					#======================================================================================
-
-					meteo_files = [self.destination_forecast_file % (day_datetime+datetime.timedelta(hours=h)).strftime("%Y-%m-%d-%H") for h in [6,12,18]]
-
-					Verbose.print_text(1, str(meteo_files))
-
-				else: # self.forced_meteo_files is not None
-
-					# ======================================================================================
-					# Use forced meteo files
-					#
-					# params:
-					#    - forced_meteo_files
-					# ======================================================================================
-
-					assert(len(self.forced_meteo_files) == 3)
-
-					meteo_files = ["/tmp/forced_meteo_06", "/tmp/forced_meteo_12", "/tmp/forced_meteo_18"]
-					for m in range(len(meteo_files)):
-						shutil.copyfile(self.forced_meteo_files[m], meteo_files[m])
-
-
-				#======================================================================================
-				# Skip if meteo files are missing
-				#======================================================================================
-
-				if not self.__check_meteo_files(meteo_files):
-					if not self.DEBUG_MODE:
-						Forecast.clean_meteo_files(meteo_files)
-					else:
-						for mf in meteo_files:
-							if os.path.isfile(mf) and os.path.getsize(mf) <= 5000:
-								Forecast.remove_file(mf)
+				meteo_files = self.step_download(last_forecast_time, last_forecast_hour, days, day_datetime)
+				if meteo_files is None:
 					continue
 
 				#======================================================================================
@@ -305,45 +245,7 @@ class Forecast:
 
 				self.set_progress(10, strdate)
 
-				#======================================================================================
-				# Read weather data
-				#======================================================================================
-
-				distinct_latitudes, distinct_longitudes, meteo_matrix = ForecastData.readWeatherData(meteo_files, self.crops)
-
-				#======================================================================================
-				# Compute and generate the predictions file for tiler
-				#======================================================================================
-
-				ForecastAndAnl.compute_prediction_file_cells(# predictions
-												   ForecastAndAnl.compute_cells_forecasts(self.models_directory, self.problem_formulation, meteo_matrix),
-												   # other params
-												   self.prediction_filename_for_tiler,
-				                                   distinct_latitudes,
-				                                   distinct_longitudes,
-												   np.copy(meteo_matrix),
-												   self.crops,
-												   self.meteoParams,
-												   self.grid_desc_predictions)
-
-				#======================================================================================
-				# Compute spots prediction
-				#======================================================================================
-
-				if True:
-					self.__compute_spots_forecasts(self.models_directory,
-												   self.problem_formulation,
-					                               distinct_latitudes,
-												   distinct_longitudes,
-					                               np.copy(meteo_matrix),
-					                               os.path.join(self.tiles_dir, os.path.join(strdate, "spots.json")))
-
-				#======================================================================================
-				# Clean files
-				#======================================================================================
-
-				if not self.DEBUG_MODE:
-					Forecast.clean_meteo_files(meteo_files)
+				self.step_forecast(meteo_files, strdate)
 
 				#========================================================================
 				# PROGRESS: end of prediction computation
@@ -351,37 +253,176 @@ class Forecast:
 
 				self.set_progress(20, strdate)
 
-				#========================================================================
-				# Render tiles
-				#========================================================================
+				self.step_tile(tiles_dir_this_day)
 
-				if self.render_tiles:
-					ForecastAndAnl.generate_tiler_argument_file(self.tiler_arguments_filename,
-												        self.prediction_filename_for_tiler,
-												        tiles_dir_this_day,
-												        self.tiler_cache_dir,
-												        self.geo_json_borders,
-												        self.min_tiles_zoom,
-												        self.max_tiles_zoom,
-												        self.background_tiles_dir,
-												        True,
-												        "",
-												        self.skipped_tiles,
-												        generateTranspaVersion = True)
+				self.step_publish(day_datetime, last_forecast_time, strdate)
 
-					call([self.tiler_program, self.tiler_arguments_filename])
 
-				#========================================================================
-				# Set last update date
-				#========================================================================
+	#==================================================================
+	# Pipeline steps (stage C2): download / forecast / tile / publish
+	#
+	# Pure extraction from main(): same order, same side effects. The
+	# steps communicate through files only (GRIB files, predictions.txt,
+	# tilerArguments.json, tiles directory), so they can be run one by
+	# one from the CLI (pipeline/cli.py).
+	#==================================================================
 
-				self.save_last_update_time(day_datetime, last_forecast_time)
+	def step_download(self, last_forecast_time, last_forecast_hour, days, day_datetime):
+		"""Fetch the GRIB files for one valid day.
 
-				#========================================================================
-				# PROGRESS: end for this date
-				#========================================================================
+		Returns the list of the 3 meteo file paths for day_datetime,
+		or None if they are missing (the day is then skipped)."""
 
-				self.set_progress(100, strdate)
+		#======================================================================================
+		# Download / update next hours grib files
+		#======================================================================================
+
+		if self.forced_meteo_files is None:
+
+			meteo_files = []
+			l_h = [(hh+24*days-last_forecast_hour) for hh in [6, 12, 18] if (hh+24*days-last_forecast_hour)>=0]
+			for kh,h in enumerate(l_h):
+				forecast_datetime_with_hours = datetime.datetime(int(last_forecast_time[0:4]), int(last_forecast_time[4:6]), int(last_forecast_time[6:8]), int(last_forecast_time[8:10]))
+				valid_datetime = forecast_datetime_with_hours + datetime.timedelta(hours=h)
+				meteo_file     = self.destination_forecast_file % valid_datetime.strftime("%Y-%m-%d-%H")
+
+				Verbose.print_text(1, "download "+ meteo_file)
+
+				if not self.DEBUG_MODE or not os.path.exists(meteo_file):
+					self.download_forecast(last_forecast_time, self.GFS_resolution, h, last_forecast_hour, meteo_file)
+
+				meteo_files += [meteo_file]
+
+			#======================================================================================
+			# Re-create a complete list of 3 files even with those not updated (in the past)
+			#
+			# params:
+			#    - destinationForecastFile
+			# input:
+			#    - dayDateTime
+			# output:
+			#    - meteo_files
+			#======================================================================================
+
+			meteo_files = [self.destination_forecast_file % (day_datetime+datetime.timedelta(hours=h)).strftime("%Y-%m-%d-%H") for h in [6,12,18]]
+
+			Verbose.print_text(1, str(meteo_files))
+
+		else: # self.forced_meteo_files is not None
+
+			# ======================================================================================
+			# Use forced meteo files
+			#
+			# params:
+			#    - forced_meteo_files
+			# ======================================================================================
+
+			assert(len(self.forced_meteo_files) == 3)
+
+			meteo_files = ["/tmp/forced_meteo_06", "/tmp/forced_meteo_12", "/tmp/forced_meteo_18"]
+			for m in range(len(meteo_files)):
+				shutil.copyfile(self.forced_meteo_files[m], meteo_files[m])
+
+
+		#======================================================================================
+		# Skip if meteo files are missing
+		#======================================================================================
+
+		if not self.__check_meteo_files(meteo_files):
+			if not self.DEBUG_MODE:
+				Forecast.clean_meteo_files(meteo_files)
+			else:
+				for mf in meteo_files:
+					if os.path.isfile(mf) and os.path.getsize(mf) <= 5000:
+						Forecast.remove_file(mf)
+			return None
+
+		return meteo_files
+
+	def step_forecast(self, meteo_files, strdate):
+		"""Compute cell and spot predictions for one valid day.
+
+		Writes self.prediction_filename_for_tiler and
+		<tiles_dir>/<strdate>/spots.json, then deletes the consumed
+		GRIB files (unless DEBUG_MODE)."""
+
+		#======================================================================================
+		# Read weather data
+		#======================================================================================
+
+		distinct_latitudes, distinct_longitudes, meteo_matrix = ForecastData.readWeatherData(meteo_files, self.crops)
+
+		#======================================================================================
+		# Compute and generate the predictions file for tiler
+		#======================================================================================
+
+		ForecastAndAnl.compute_prediction_file_cells(# predictions
+										   ForecastAndAnl.compute_cells_forecasts(self.models_directory, self.problem_formulation, meteo_matrix),
+										   # other params
+										   self.prediction_filename_for_tiler,
+		                                   distinct_latitudes,
+		                                   distinct_longitudes,
+										   np.copy(meteo_matrix),
+										   self.crops,
+										   self.meteoParams,
+										   self.grid_desc_predictions)
+
+		#======================================================================================
+		# Compute spots prediction
+		#======================================================================================
+
+		if True:
+			self.__compute_spots_forecasts(self.models_directory,
+										   self.problem_formulation,
+			                               distinct_latitudes,
+										   distinct_longitudes,
+			                               np.copy(meteo_matrix),
+			                               os.path.join(self.tiles_dir, os.path.join(strdate, "spots.json")))
+
+		#======================================================================================
+		# Clean files
+		#======================================================================================
+
+		if not self.DEBUG_MODE:
+			Forecast.clean_meteo_files(meteo_files)
+
+	def step_tile(self, tiles_dir_this_day):
+		"""Render the PNG/data tiles for one valid day via the Tiler."""
+
+		#========================================================================
+		# Render tiles
+		#========================================================================
+
+		if self.render_tiles:
+			ForecastAndAnl.generate_tiler_argument_file(self.tiler_arguments_filename,
+										        self.prediction_filename_for_tiler,
+										        tiles_dir_this_day,
+										        self.tiler_cache_dir,
+										        self.geo_json_borders,
+										        self.min_tiles_zoom,
+										        self.max_tiles_zoom,
+										        self.background_tiles_dir,
+										        True,
+										        "",
+										        self.skipped_tiles,
+										        generateTranspaVersion = True)
+
+			call([self.tiler_program, self.tiler_arguments_filename])
+
+	def step_publish(self, day_datetime, last_forecast_time, strdate):
+		"""Mark the day as up-to-date (freshness gate) and finish progress."""
+
+		#========================================================================
+		# Set last update date
+		#========================================================================
+
+		self.save_last_update_time(day_datetime, last_forecast_time)
+
+		#========================================================================
+		# PROGRESS: end for this date
+		#========================================================================
+
+		self.set_progress(100, strdate)
 
 
 
