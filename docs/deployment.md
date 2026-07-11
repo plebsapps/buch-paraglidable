@@ -115,10 +115,18 @@ OK
 
 ## Startbefehle (Referenz)
 
+Der Container läuft seit 2026-07-11 mit `--restart unless-stopped` und
+`scripts/container_start.sh` als Startbefehl (Apache im Vordergrund als
+PID 1). Nach Container- oder Server-Neustart kommt die Webschicht damit
+ohne manuellen Eingriff wieder hoch; `start_server.sh` wird nur noch für
+manuelle Sonderfälle gebraucht.
+
 ```bash
-# Container (falls gestoppt)
-docker start paraglidable
-docker exec -w /workspaces/Paraglidable/scripts paraglidable sh start_server.sh
+# Container neu anlegen (nur nach docker rm nötig)
+docker run -d --name paraglidable --restart unless-stopped \
+  -p 127.0.0.1:8006:80 \
+  -v /home/ralf/buch-paraglidable:/workspaces/Paraglidable \
+  paraglidable sh /workspaces/Paraglidable/scripts/container_start.sh
 
 # Manueller Forecast-Lauf (bis D3 kein Cron)
 docker exec -w /workspaces/Paraglidable/neural_network paraglidable python3 forecast.py
@@ -134,5 +142,7 @@ docker exec -w /workspaces/Paraglidable/neural_network paraglidable python3 fore
 - `sendMessage.php` und `generateApiKey.php` antworten 500 (privates
   `mail_helper.php` fehlt upstream); MySQL-abhängiger API-Key-Teil bis
   Etappe E außer Betrieb (akzeptiert, siehe docs/web_inventory.md).
-- Apache im Container startet nicht automatisch nach Container-/Server-
-  Neustart (`start_server.sh` nötig); bis D2/D3 manuell.
+- ~~Apache im Container startet nicht automatisch nach Container-/Server-
+  Neustart~~ — erledigt 2026-07-11: Container mit Restart-Policy
+  `unless-stopped` neu angelegt, `scripts/container_start.sh` startet
+  Apache idempotent im Vordergrund (Auslöser: 502 nach Server-Reboot).
