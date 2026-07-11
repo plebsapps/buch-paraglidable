@@ -44,15 +44,17 @@ aktuellem Stand steht in **docs/plan.md** — vor jeder Arbeit lesen.
 git clone https://github.com/plebsapps/buch-paraglidable
 cd buch-paraglidable
 
-# Große Datenpakete (nicht in Git): GM-Referenz + Eingabe, Trainingsdaten, Elevation
+# Große Datenpakete (nicht in Git): GM-Referenz + Eingabe, Trainingsdaten,
+# Elevation, Corner-Cache (eingefrorenes Artefakt des entfernten C++-Tilers)
 gh release download golden-master-v1 --pattern '*.tar.gz'
-tar -xzf gm_reference.tar.gz   # golden_master/input + golden_master/reference
-tar -xzf gm_data.tar.gz        # neural_network/bin/data + tiler/_cache/elevation
+tar -xzf gm_reference.tar.gz    # golden_master/input + golden_master/reference
+tar -xzf gm_data.tar.gz         # neural_network/bin/data + tiler/_cache/elevation
+tar -xzf gm_corner_cache.tar.gz # tiler/_cache/256 (ohne ihn rechnet der
+                                # Python-Tiler die Ecken langsam selbst)
 
 docker build -t paraglidable ./docker/
 docker run -d --name paraglidable -p 8001:80 \
   -v "$PWD:/workspaces/Paraglidable" paraglidable tail -f /dev/null
-docker exec -w /workspaces/Paraglidable/scripts paraglidable sh build_tiler.sh
 ```
 
 ## Prüfbefehle (vor jedem Push grün)

@@ -20,7 +20,7 @@ You can find it live here: https://paraglidable.com
 
 This repository contains:
 * Scripts for setting and training the neural network, downloading +10 days forecasts data from third parties and running a prediction in `/neural_network/`
-* Program for generating the map tiles from a prediction in `/tiler/`
+* Program for generating the map tiles from a prediction in `pipeline/tiler.py` (Python port of the original C++/Qt tiler; static tiler data in `/tiler/`)
 * Complete web site in `/www/`
 
 ## Requirements
@@ -45,7 +45,6 @@ cd /workspaces/Paraglidable/scripts/
 python download_data.py             # Download training weather and flights data (200MB)
 python download_elevation_tiles.py  # Download elevation data (260MB)
 python download_background_tiles.py # Download background tiles (facultative) (180MB)
-sh build_tiler.sh                   # Build the C++ tiler
 ```
 
 You're all set!

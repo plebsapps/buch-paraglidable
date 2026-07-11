@@ -68,3 +68,33 @@ Training remains outside the golden-master scope: it is inherently
 non-deterministic (multi-init, early stopping) and out of scope of the
 modernization anyway; the shipped `.npy` weights are treated as a frozen,
 irreplaceable artifact.
+
+## Corner cache — frozen artifact of the removed C++ tiler (stage D1)
+
+Since stage D1 the tiles are rendered by the Python port
+(`pipeline/tiler.py`); the C++/Qt tiler has been removed from the tree.
+The per-tile corner cache it produced (`tiler/_cache/256/…`, int32
+big-endian, 4 cell-corner indices per pixel) is preserved as the release
+asset **gm_corner_cache.tar.gz** and should be extracted on every fresh
+clone (see CLAUDE.md / the CI workflow).
+
+The cache is technically recomputable: the Python port contains a faithful
+fallback (`compute_corners_scalar`) that was verified to reproduce the C++
+cache byte-identically on zoom 5–8 tiles and the vignette. It is kept as a
+frozen artifact anyway because (a) recomputing all 1352 files is slow
+(~1.3 s per tile) and (b) the C++ `std::sort` is unstable, so at exact
+float32 distance ties the fallback (stable argsort) could in principle
+choose different corners — no such tie occurs in the frozen data, but the
+original bytes are the safer reference.
+
+**D1 acceptance check** (Python tiler vs. C++ reference on identical
+`predictions.txt`, ALL tiles, stricter than the golden-master tile
+tolerance):
+
+    python golden_master/compare_tiler_outputs.py \
+        <run>/tiles golden_master/reference/tiles/2026-07-09/256
+
+Result 2026-07-11: 2521/2703 PNGs byte-identical pixels, 182 within ±1 in
+one channel (226 of 177 million pixels; cause: 1-ulp sin() difference
+numpy vs. libm at truncation boundaries of the fufu pattern), all 269
+.data tiles byte-identical.

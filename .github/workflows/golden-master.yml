@@ -1,8 +1,9 @@
 # Golden-master gate (stage B): every push and pull request must prove that
 # the forecast pipeline still produces the frozen reference output.
 # Data assets (frozen GFS input, reference run, training-data pickles,
-# elevation tiles) are attached to the "golden-master-v1" release -- they are
-# too large for Git and immutable by definition.
+# elevation tiles, and since stage D1 the corner cache produced by the
+# removed C++ tiler) are attached to the "golden-master-v1" release -- they
+# are too large for Git and immutable by definition.
 
 name: golden-master
 
@@ -28,14 +29,15 @@ jobs:
           gh release download golden-master-v1 --pattern '*.tar.gz'
           tar -xzf gm_reference.tar.gz   # golden_master/input + golden_master/reference
           tar -xzf gm_data.tar.gz        # neural_network/bin/data + tiler/_cache/elevation
-          rm -f gm_reference.tar.gz gm_data.tar.gz
-
-      - name: Build tiler
-        run: >
-          docker run --rm --user root
-          -v "$PWD:/workspaces/Paraglidable"
-          -w /workspaces/Paraglidable/scripts
-          paraglidable sh build_tiler.sh
+          # Corner cache of the removed C++ tiler (stage D1). Tolerant until
+          # the asset is uploaded: without it the Python tiler recomputes the
+          # corners itself (verified byte-identical, but much slower).
+          if [ -f gm_corner_cache.tar.gz ]; then
+            tar -xzf gm_corner_cache.tar.gz  # tiler/_cache/256
+          else
+            echo "::warning::gm_corner_cache.tar.gz not in release, tiler will recompute corners"
+          fi
+          rm -f gm_reference.tar.gz gm_data.tar.gz gm_corner_cache.tar.gz
 
       - name: Run pipeline on frozen input
         run: >

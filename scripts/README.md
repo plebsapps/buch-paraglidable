@@ -6,7 +6,6 @@
 python download_data.py             # Download training weather and flights data (200MB)
 python download_elevation_tiles.py  # Download elevation data (260MB)
 python download_background_tiles.py # Download background tiles (facultative) (180MB)
-sh build_tiler.sh                   # Build the C++ tiler
 
 python download_GFS.py # Optional, download the source .grib weather data files from GFS
 ```
