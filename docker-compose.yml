@@ -1,0 +1,18 @@
+# Docker Compose of the target architecture (docs/plan.md). Grows stage by
+# stage: web (D2, replaces Apache/PHP), worker (D3), postgres (E).
+# The frozen legacy container (docker/Dockerfile) keeps running alongside
+# until each stage's replacement is verified and switched over.
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    container_name: paraglidable-web
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8007:8000"
+    volumes:
+      - ./web:/app/web:ro
+      - ./www:/app/www:ro
+      # www/data/elevation is a relative symlink into tiler/_cache
+      - ./tiler/_cache/elevation:/app/tiler/_cache/elevation:ro
