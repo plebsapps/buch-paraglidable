@@ -52,6 +52,22 @@ Stand: 2026-07-11.
 - HTTP-Snapshots: `python3 golden_master/snapshot_www.py check` im Container →
   **13/13 OK, RESULT: EQUIVALENT**.
 
+### Golden Master auf dieser Hardware (2026-07-11)
+
+Lauf mit `PYTHONHASHSEED=0` nach erweitertem Swap (Gesamt 9 GiB), Vergleich
+gegen `golden_master/reference` mit den kalibrierten Standard-Toleranzen:
+
+```
+[OK   ] predictions.txt within tolerance (max relative deviation: 1.300e-04)
+[OK   ] tiles: 51 of 2703 sampled and compared
+[OK   ] data tiles: 269 compared (81 quantization-boundary byte flips tolerated)
+[OK   ] spots.json equivalent
+RESULT: EQUIVALENT
+```
+
+Dritte verifizierte Hardware (nach Entwicklungsrechner und GitHub-CI);
+Toleranzen unverändert.
+
 ### Unit-Tests (2026-07-11)
 
 ```
