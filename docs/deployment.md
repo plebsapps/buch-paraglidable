@@ -28,7 +28,37 @@ Stand: 2026-07-11.
 
 ## Inbetriebnahme-Protokoll
 
-_(wird während der Etappe ergänzt)_
+### Setup (2026-07-11)
+
+- Release `golden-master-v1` heruntergeladen (`gm_reference.tar.gz` 307 MB,
+  `gm_data.tar.gz` 222 MB), entpackt: `golden_master/input` (158 MB),
+  `golden_master/reference` (238 MB), `neural_network/bin/data` (490 MB),
+  `tiler/_cache/elevation` (50 MB).
+- `docker build -t paraglidable ./docker/` erfolgreich (Image 5,78 GB).
+- Container gestartet mit `-p 127.0.0.1:8006:80` (Abweichung: Port 8006,
+  localhost-Bindung — Proxy terminiert TLS).
+- `build_tiler.sh` erfolgreich, Binary `tiler/Tiler/Tiler` (159 KB).
+
+### Webschicht (2026-07-11)
+
+- Apache via `scripts/start_server.sh` gestartet; `curl http://127.0.0.1:8006/`
+  liefert die Startseite (HTTP 200).
+- `www/data` befüllt (Voraussetzung der Snapshots, siehe Kopf von
+  `golden_master/snapshot_www.py`): GM-Tag-Tiles als **Kopie** aus
+  `golden_master/reference/tiles/2026-07-09` (bewusst kein Symlink, damit
+  die Webschicht nie in die eingefrorene Referenz schreiben kann);
+  `www/data/elevation` als Symlink auf `tiler/_cache/elevation`
+  (dokumentierter Weg aus `scripts/download_elevation_tiles.py`).
+- HTTP-Snapshots: `python3 golden_master/snapshot_www.py check` im Container →
+  **13/13 OK, RESULT: EQUIVALENT**.
+
+### Unit-Tests (2026-07-11)
+
+```
+Ran 3 tests in 0.665s
+OK
+```
+(`python -m unittest discover -s pipeline/tests` im Container: 3/3 grün.)
 
 ## Offene Punkte
 
