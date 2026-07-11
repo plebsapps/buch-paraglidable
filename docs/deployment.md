@@ -76,6 +76,22 @@ OK
 ```
 (`python -m unittest discover -s pipeline/tests` im Container: 3/3 grün.)
 
+### Manueller Forecast-Lauf (2026-07-11)
+
+- Ausgeführt wie `scripts/cron_tasks/update_forecasts.sh`, aber von Hand
+  (`docker exec -w /workspaces/Paraglidable/neural_network paraglidable
+  python3 forecast.py`) — **kein Cron eingerichtet** (kommt mit D3).
+- Verwendeter GFS-Zyklus: **2026-07-11 06z** (aktuell, NOMADS erreichbar;
+  der Rückfall auf den archivierten GM-Zyklus war nicht nötig).
+- Ergebnis: `www/data/tiles/2026-07-10` … `2026-07-20` vollständig
+  (256er-Kacheln, spots.json, progress.txt = 100). Die API liefert für den
+  aktuellen Tag echte Werte, z. B.
+  `get.php?tx=65&ty=45&x=128&y=128&zoom=7&date=2026-07-11` →
+  `0.502,0.0392,0.7373,0.3961,0,0.3255`.
+- Log-Hinweis: eine Warnung „Meteo files not found" für den nur teilweise
+  verfügbaren Vortages-Zyklus 2026-07-10 06z; der Lauf ist danach regulär
+  mit dem 06z-Zyklus vom 2026-07-11 durchgelaufen.
+
 ## Offene Punkte
 
 - RAM-Ausstattung des Servers (1,8 GB) weit unter Richtwert; Swap-Erweiterung
