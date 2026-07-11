@@ -68,6 +68,7 @@ Pflichtjob ab sofort: `compare_golden_master` grün vor jedem Merge/Push.
 | **C1** | Format-Naht forecast→tiler | ✅ 2026-07-10 — docs/predictions_format.md + pipeline/predictions_io.py, Round-Trip byte-identisch |
 | **C2** | Pipeline in CLI-Schritte zerlegen (download/forecast/tile/publish) | offen |
 | **C3** | Web-Inventar: PHP-Endpunkte + .htaccess, Charakterisierungstests | ✅ 2026-07-10 — Inventar (docs/web_inventory.md, Funde: MySQL-ApiKeys, .data/.elev-Formate, fehlende mail_helper.php) + 13 HTTP-Snapshots (golden_master/snapshot_www.py, zweifach verifiziert) |
+| **S** | Server-Inbetriebnahme paraglidable.plebsapps.de (vor C2): Setup nach CLAUDE.md, GM-Verifikation auf Server-Hardware, Reverse Proxy + TLS + Basic-Auth, manueller Forecast-Lauf | offen — Scopevertrag: docs/server_briefing.md; Entwicklung wechselt danach auf den Server |
 | **D1** | Tiler → Python (numpy/Pillow/mercantile), Pixelvergleich, dann C++/Qt entfernen | offen |
 | **D2** | PHP → FastAPI, endpunktweise mit Snapshots; Frontend zunächst 1:1 | offen |
 | **D3** | cron_tasks → APScheduler | offen |
@@ -90,5 +91,9 @@ Pflichtjob ab sofort: `compare_golden_master` grün vor jedem Merge/Push.
 ## Betrieb (Ausblick, Kapitel 20)
 
 Zielumgebung: eigener Ubuntu-Server, Instanz unter paraglidable.plebsapps.de.
+Zwischenphase ab Etappe S: Legacy-Webschicht (Apache/PHP im eingefrorenen
+Container) läuft hinter dem vorhandenen Reverse Proxy mit TLS und
+**Basic-Auth**, bis die FastAPI-Webschicht (D2) sie ablöst; Forecast-Läufe
+bis D3 manuell, kein Cron. Serverbefund und Proxy-Integration: docs/deployment.md.
 Deployment gestuft (Staging-Probelauf auf Referenzdaten → manuelle Freigabe →
 Produktion); Details werden bei Etappe D/E konkretisiert.
