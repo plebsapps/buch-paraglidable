@@ -17,7 +17,9 @@ es wird bei jedem Etappenabschluss nachgeführt.
 - Leitplanke über allem: **das Prognoseverhalten ändert sich nicht**
   (Golden Master entscheidet, nicht die Diskussion).
 - Ausdrücklich außer Scope: neues Modell, Neutraining, Prognoseverbesserung,
-  neue Features.
+  neue Features. Bewusste Ausnahme seit 2026-07-11: eine eigenständige
+  visuelle Identität des Frontends (Etappe F, nach D2) — das
+  Prognoseverhalten bleibt davon unberührt.
 
 ## Getroffene Entscheidungen
 
@@ -30,6 +32,7 @@ es wird bei jedem Etappenabschluss nachgeführt.
 | Datenbank | postgis/postgis-Image, `geom`-Spalten erst bei Bedarf | Umstieg später wäre Migration; PostGIS-Konzepte erst, wenn sie Nutzen bringen |
 | Migrationen | Alembic ab Schema Nr. 1 | Versionierte, reversible Migrationen von Anfang an |
 | GM-Datenhaltung | Release `golden-master-v1` (Eingabe-GRIBs, Referenzlauf, Trainingsdaten, Elevation) | Zu groß für Git, unveränderlich per Definition, CI lädt per `gh release download` |
+| Frontend-Identität | Sichtbarer Derivat-Hinweis sofort (Footer, 2026-07-11); vollständiges Redesign erst als Etappe F **nach** D2 | HTTP-Snapshots bleiben bis zur D2-Portierung das Sicherheitsnetz; Redesign vor/während D2 würde es zerstören. Hinweis dient GPLv3-Attribution und Abgrenzung zu paraglidable.com |
 
 ## Ziel-Architektur (Docker Compose, Endzustand)
 
@@ -73,6 +76,7 @@ Pflichtjob ab sofort: `compare_golden_master` grün vor jedem Merge/Push.
 | **D2** | PHP → FastAPI, endpunktweise mit Snapshots; Frontend zunächst 1:1 | offen |
 | **D3** | cron_tasks → APScheduler | offen |
 | **E** | Datei→DB per Expand and Contract (Alembic, Doppel-Schreiben, Leser umstellen, Rückbau) | offen |
+| **F** | Eigenständige Identität (nach D2): eigenes Design/Name-Auftritt, og-Meta/Titel bereinigen, Kontakt-/Spenden-Links des Originals ersetzen, mobile-Seite einbeziehen; Snapshots danach bewusst neu einfrieren | offen — Entscheidung 2026-07-11; Derivat-Hinweis im Footer bereits umgesetzt |
 
 ## Risiken / Merkposten
 
