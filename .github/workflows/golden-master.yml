@@ -15,9 +15,7 @@ on:
 jobs:
   golden-master:
     runs-on: ubuntu-latest
-    # 120 statt 60, solange gm_corner_cache.tar.gz nicht im Release ist:
-    # der Corner-Fallback des Python-Tilers kostet ~1s pro Kachel.
-    timeout-minutes: 120
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
