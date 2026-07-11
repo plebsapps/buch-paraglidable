@@ -30,7 +30,7 @@ if __name__ == "__main__":
 	prediction_filename_for_tiler = "prediction_filename_for_tiler"
 	tiler_arguments_filename      = "tmp/tilerArguments.json"
 	tiler_cache_dir               = "/workspaces/Paraglidable/tiler/_cache"
-	tiler_program                 = "/workspaces/Paraglidable/tiler/Tiler/Tiler"
+	tiler_program                 = "/workspaces/Paraglidable/pipeline/tiler.py"
 	geo_json_borders              = "/workspaces/Paraglidable/tiler/data/Europe_africa_med_red.geo.json"
 	background_tiles_dir          = "/workspaces/Paraglidable/tiler/background_tiles"
 	skipped_tiles                 = "/workspaces/Paraglidable/tiler/data/skippedTiles.txt"
@@ -99,7 +99,7 @@ if __name__ == "__main__":
 												skipped_tiles,
 												generateTranspaVersion = True)
 
-				call([tiler_program, tiler_arguments_filename])
+				call(["python3", tiler_program, tiler_arguments_filename])
 			
 			except KeyboardInterrupt:
 				raise

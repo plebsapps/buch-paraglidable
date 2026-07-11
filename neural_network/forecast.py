@@ -33,7 +33,7 @@ class Forecast:
 			self.prediction_filename_for_tiler = "/tmp/predictions.txt"
 			self.tiler_arguments_filename      = "/tmp/tilerArguments.json"
 			self.tiles_dir                     = "/var/www/html/data/tiles"
-			self.tiler_program                 = root+"tiler/Tiler/Tiler"
+			self.tiler_program                 = root+"pipeline/tiler.py"
 			self.tiler_cache_dir               = root+"tiler/_cache"
 			self.background_tiles_dir          = root+"tiler/background_tiles"
 			self.geo_json_borders              = root+"tiler/data/Europe_africa_med_red.geo.json"
@@ -50,7 +50,7 @@ class Forecast:
 			self.prediction_filename_for_tiler = "/tmp/predictions.txt"
 			self.tiler_arguments_filename      = "/tmp/tilerArguments.json"
 			self.tiles_dir                     = root+"www/data/tiles"
-			self.tiler_program                 = root+"tiler/Tiler/Tiler"
+			self.tiler_program                 = root+"pipeline/tiler.py"
 			self.tiler_cache_dir               = root+"tiler/_cache"
 			self.background_tiles_dir          = root+"tiler/background_tiles"
 			self.geo_json_borders              = root+"tiler/data/Europe_africa_med_red.geo.json"
@@ -407,7 +407,7 @@ class Forecast:
 										        self.skipped_tiles,
 										        generateTranspaVersion = True)
 
-			call([self.tiler_program, self.tiler_arguments_filename])
+			call(["python3", self.tiler_program, self.tiler_arguments_filename])
 
 	def step_publish(self, day_datetime, last_forecast_time, strdate):
 		"""Mark the day as up-to-date (freshness gate) and finish progress."""
