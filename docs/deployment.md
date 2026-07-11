@@ -130,6 +130,8 @@ docker run -d --name paraglidable --restart unless-stopped \
 
 # Manueller Forecast-Lauf (bis D3 kein Cron)
 docker exec -w /workspaces/Paraglidable/neural_network paraglidable python3 forecast.py
+# gleichwertig seit C2, auch schrittweise möglich (siehe pipeline/cli.py):
+docker exec -w /workspaces/Paraglidable paraglidable python -m pipeline run
 ```
 
 ## Offene Punkte
