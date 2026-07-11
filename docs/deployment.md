@@ -132,7 +132,27 @@ docker run -d --name paraglidable --restart unless-stopped \
 docker exec -w /workspaces/Paraglidable/neural_network paraglidable python3 forecast.py
 # gleichwertig seit C2, auch schrittweise möglich (siehe pipeline/cli.py):
 docker exec -w /workspaces/Paraglidable paraglidable python -m pipeline run
+
+# FastAPI-Webschicht (D2), Port 127.0.0.1:8007
+docker compose up -d --build web
+# Verifikation (13 Charakterisierungstests; localhost, nicht 127.0.0.1!):
+SNAPSHOT_BASE=http://localhost:8007 python3 golden_master/snapshot_www.py check
 ```
+
+## Produktivschaltung der FastAPI-Webschicht (D2 → live)
+
+Die Portierung ist snapshot-verifiziert; die Umschaltung ist ein
+nginx-Handgriff (sudo, Betreiber):
+
+```bash
+# im vhost paraglidable.plebsapps.de proxy_pass von 8006 auf 8007 stellen
+sudo sed -i 's/127\.0\.0\.1:8006/127.0.0.1:8007/' /etc/nginx/sites-available/paraglidable.plebsapps.de
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+Rückweg (Rollback): dieselbe Zeile zurück auf 8006 — der eingefrorene
+Apache/PHP-Container läuft unverändert weiter, bis die Umschaltung
+einige Forecast-Zyklen stabil überstanden hat.
 
 ## Offene Punkte
 

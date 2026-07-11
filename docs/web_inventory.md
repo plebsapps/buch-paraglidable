@@ -92,12 +92,16 @@ die Snapshots frieren genau diesen beobachtbaren Zustand ein.
 `getAnalysisData.php` ist bewusst ausgenommen (verändert bei jedem Aufruf
 die versionierte Bann-Liste `banned.txt.php`).
 
-## Portierungsentscheidungen (offen, vor D2 zu klären)
+## Portierungsentscheidungen (entschieden 2026-07-11, umgesetzt in D2)
 
-1. **gtag.php / Google Analytics:** übernehmen oder für die eigene Instanz
-   entfernen? (Nach außen sichtbare Änderung → bewusste Entscheidung.)
-2. **Honeypot getAnalysisData.php:** Verhalten nachbilden oder für die
-   eigene Instanz vereinfachen? Bann-Liste ist veränderlicher Zustand.
-3. **Mail-Versand** (API-Schlüssel, Kontaktformular): SMTP-Konfiguration
-   der eigenen Instanz (paraglidable.plebsapps.de), Absenderadresse.
-4. **search.php:** statt Proxy die Suchindex-Dateien direkt ausliefern.
+1. **gtag.php / Google Analytics:** 1:1 portiert (snapshot-treu); Entfernen/
+   Ersetzen des Trackings ist eine Identitätsfrage → Etappe F.
+2. **Honeypot getAnalysisData.php:** bewusst **nicht** portiert → 404. War
+   schon von den Charakterisierungstests ausgenommen und hängt an nicht
+   versionierten Daten und veränderlichem Bann-Zustand.
+3. **Mail-Versand** (Kontaktformular, API-Schlüssel): der eingefrorene
+   500-Zustand bleibt erhalten; echter SMTP-Versand → Etappe F,
+   API-Schlüssel brauchen die Datenbank → Etappe E.
+4. **search.php:** beobachtbares Verhalten 1:1 erhalten (Referer-Prüfung,
+   Bereinigung, Proxy-Versuch → leere Antwort); direkte Auslieferung erst,
+   wenn ein Suchindex existiert.
