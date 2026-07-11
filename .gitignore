@@ -1,5 +1,8 @@
 *.o
 *.elev
+tiler/Tiler/Makefile
+tiler/Tiler/Tiler
+tiler/Tiler/.qmake.stash
 www/data/
 tiler/_cache/
 .DS_Store
