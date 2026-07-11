@@ -230,6 +230,19 @@ html, body {
   justify-content: center;
 }
 
+#derivativeNotice {
+  align-self: center;
+  color: #8993a1;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#derivativeNotice a {
+  color: #8993a1;
+}
+
 #version > a {
   position: absolute;
   right: 0px;

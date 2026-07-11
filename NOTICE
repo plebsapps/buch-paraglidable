@@ -26,6 +26,9 @@ the Git history for exact dates and details of each change):
   * Introduction of PostgreSQL for forecast results and metadata
     (large binary data remains file-based)
   * Dependency pinning, containerization rework, tests and CI
+  * A visible notice in the web front-end marking this instance as an
+    independent re-implementation (added 2026-07-11); a full visual
+    redesign establishing a distinct identity is planned (stage F)
 
 This derivative work is distributed under the same license as the original:
 GNU General Public License v3. See the LICENSE file.
