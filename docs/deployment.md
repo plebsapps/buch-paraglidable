@@ -92,7 +92,47 @@ OK
   verfügbaren Vortages-Zyklus 2026-07-10 06z; der Lauf ist danach regulär
   mit dem 06z-Zyklus vom 2026-07-11 durchgelaufen.
 
+### Proxy-Integration (2026-07-11)
+
+- vhost: `/etc/nginx/sites-available/paraglidable.plebsapps.de`
+  (Symlink in `sites-enabled/`), nach dem Muster der bestehenden
+  plebsapps.de-Subdomains: `proxy_pass http://127.0.0.1:8006`, gleiche
+  proxy_set_header-Zeilen, Port-80-Block leitet per 301 auf HTTPS um.
+- TLS: Let's Encrypt via `certbot --nginx`, Zertifikat
+  `/etc/letsencrypt/live/paraglidable.plebsapps.de/` (gültig bis 2026-10-09,
+  automatische Erneuerung durch den certbot-Timer).
+- Basic-Auth: `auth_basic` mit `/etc/nginx/.htpasswd_paraglidable`
+  (ein Benutzer `paraglidable`; Zugangsdaten dem Betreiber übergeben,
+  nicht im Repo). Schützt die Legacy-Webschicht (PHP 7.2/Ubuntu 18.04 im
+  eingefrorenen Container) bis zur Portierung (D2).
+- Stolperstein, dokumentiert: Beim ersten Versuch war der vhost wegen eines
+  im Terminal umgebrochenen Befehls noch nicht installiert; `certbot --nginx`
+  hängte die paraglidable-Blöcke deshalb an `sites-available/default` an
+  (Antwort: 444). Korrigiert: Blöcke aus `default` entfernt (Backup
+  `default.bak-paraglidable-*`), richtige vhost-Datei installiert.
+- Verifikation: `https://paraglidable.plebsapps.de/` → **401** ohne, **200**
+  mit Credentials; `http://…` → **301** auf HTTPS.
+
+## Startbefehle (Referenz)
+
+```bash
+# Container (falls gestoppt)
+docker start paraglidable
+docker exec -w /workspaces/Paraglidable/scripts paraglidable sh start_server.sh
+
+# Manueller Forecast-Lauf (bis D3 kein Cron)
+docker exec -w /workspaces/Paraglidable/neural_network paraglidable python3 forecast.py
+```
+
 ## Offene Punkte
 
-- RAM-Ausstattung des Servers (1,8 GB) weit unter Richtwert; Swap-Erweiterung
-  ist ein Workaround, kein Ersatz für ein VPS-Upgrade.
+- RAM-Ausstattung des Servers (1,8 GB) weit unter Richtwert; die
+  Swap-Erweiterung auf 9 GiB (zusätzliches `/swapfile2`, 8 GB, in
+  `/etc/fstab`) ist ein Workaround, kein Ersatz für ein VPS-Upgrade.
+  GM-Lauf und Forecast liefen damit durch, aber langsam und zulasten
+  der übrigen Container (Swap-Druck).
+- `sendMessage.php` und `generateApiKey.php` antworten 500 (privates
+  `mail_helper.php` fehlt upstream); MySQL-abhängiger API-Key-Teil bis
+  Etappe E außer Betrieb (akzeptiert, siehe docs/web_inventory.md).
+- Apache im Container startet nicht automatisch nach Container-/Server-
+  Neustart (`start_server.sh` nötig); bis D2/D3 manuell.
