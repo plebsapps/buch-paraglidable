@@ -27,7 +27,10 @@ import sys
 import urllib.request
 import urllib.error
 
-BASE = "http://localhost"
+# Default: the Apache/PHP original inside the legacy container. Override
+# with SNAPSHOT_BASE to run the same characterization suite against the
+# FastAPI port (stage D2), e.g. SNAPSHOT_BASE=http://127.0.0.1:8007
+BASE = os.environ.get("SNAPSHOT_BASE", "http://localhost")
 GM_DATE = "2026-07-09"
 SNAP_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "www_snapshots")
 
