@@ -1,0 +1,38 @@
+<div id="apiNavigationBar" class="navigationBar" style="visibility:hidden; width:100%">
+    <div id="apiNavigationBarContainer">
+        <div id="apiNavigationBarContent">
+            <div class="bottomPopupContent">
+                <div class="bottomPopupContent2">
+                    <div class="bottomPopupHeaderCross" onclick="switchMode('main')"></div>
+                    <div style="width:100%;height:100%;display:flex;flex-direction:row">
+                        <div id="apiStepOne" style="flex:1">
+                            <h1>1) Spots platzieren</h1>
+                            <ul>
+                                <li>Auf die Karte klicken, um einen Spot hinzuzufügen</li>
+                                <li>Auf einen Spot klicken, um ihn umzubenennen oder zu entfernen</li>
+                            </ul>
+                        </div>
+                        <div id="apiStepTwo" style="flex:1">
+                            <h1>2) Schlüssel anfordern</h1>
+                            <div style="padding-left:20px">
+                                <span>E-Mail: <input class="textInput" type="text" id="apiEmail" style="width:180px"> </span>
+                                <span id="apiSendButton" class="textInput" onclick="generateKey();">Schlüssel senden <img style="vertical-align:middle;margin-bottom:3px" src="imgs/icons/email-send.svg" height="22"></span> <div style="display:none" id="apiEmailSpinner" class="lds-ellipsis"><div></div><div></div></div><br>
+                                <span style="display:none" id="apiEmailOK"><span class="blinkingText" style="font-size:13px">&#10003; Bitte auch den Spam-Ordner prüfen.</span></span>
+                                <span style="display:none" id="apiEmailErr" style="font-size:13px">Fehler</span>
+                                <div style="font-size:10px">Existiert zu dieser E-Mail bereits ein Schlüssel, wird er ersetzt.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottomPopupHeader">
+                <div class="bottomPopupHeaderText">
+                <img style="vertical-align:middle" src="imgs/icons/key.svg" height="11"> <pan style="position:relative;vertical-align:middle;bottom:1px">API-Schlüssel</pan>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- --------------------- -->
+

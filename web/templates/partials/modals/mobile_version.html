@@ -1,0 +1,32 @@
+    <div id="popupMobileVersion" class="newModal">
+        <div class="newModalContainer">
+            <div class="newModalTitle">
+                <div class="newModalTileText">Zur mobilen Version wechseln?</div>
+                <div class="newModalTileCross" onclick="$(this).closest('.newModal').css('display','none');"></div>
+            </div>
+            <div class="newModalContent" id="popupMobileVersionContent">
+
+                <div style="display:flex; flex-direction: column; padding-top: 50px">
+                    <div style="flex:1;text-align: center;">
+                        <img height="80" src="imgs/icons/smartphone-black.svg" alt=""/>
+                    </div>
+                    <div style="flex:1; padding-top: 55px; padding-bottom: 60px; text-align: center;">
+                        Zur mobilen Version wechseln?
+                    </div>
+                    <div style="flex: 1; display:flex; flex-direction: row;">
+                        <div style="width:40px"></div>
+                        <div class="modalButtonYes" onclick="location.href='mobile.html';">JA</div>
+                        <div style="width:40px"></div>
+                        <div class="modalButtonNo" onclick="$('#popupMobileVersion').css('display', 'none');">NEIN</div>
+                        <div style="width:40px"></div>
+                    </div>
+                </div>
+
+                <div style="width:100%;text-align:right;padding-top:35px">
+                <a onclick="stopAskingMobileVersion();" style="margin-left:auto; font-size:smaller;">nie fragen</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+

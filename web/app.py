@@ -26,6 +26,7 @@ import urllib.request
 from fastapi import FastAPI, Request
 from fastapi.responses import Response
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 from web.php_compat import (php_filter_int, php_filter_float, ctype_xdigit,
 							php_round4, php_float_str, php_substr_byte,
@@ -34,7 +35,21 @@ from web.php_compat import (php_filter_int, php_filter_float, ctype_xdigit,
 
 WWW_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "www")
 
+# Stage F2: the desktop page is rendered from Jinja2 templates (mechanical
+# decomposition of the former static index.html). trim_blocks +
+# keep_trailing_newline make the includes reproduce the original file
+# byte for byte -- the proof that the decomposition changed nothing.
+TEMPLATES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates")
+templates = Jinja2Templates(directory=TEMPLATES_DIR,
+							trim_blocks=True, keep_trailing_newline=True)
+
 app = FastAPI(title="Paraglidable web layer (D2 port)")
+
+
+@app.get("/")
+@app.get("/index.html")
+def index(request: Request):
+	return templates.TemplateResponse(request=request, name="index.html")
 
 # PHP's default response Content-Type under this Apache config.
 PHP_CT = "text/html; charset=UTF-8"

@@ -18,13 +18,20 @@ Tannengrün/Bernstein, eigenes Gleitschirm-Signet (Favicons + Logo),
 Wortmarke + Projektzeile im Kopf. Startansicht Alpenraum war bereits
 Standard. Vorhersage-Farben rot→grün unangetastet.
 
-## 3. Frontend-Neubau FastAPI + Jinja2 (Etappe F, Stufe 2)
+## 3. Frontend-Neubau FastAPI + Jinja2 (Etappe F, Stufe 2)  ⬅ in Arbeit
 
 Statische index.html → Jinja2-Templates mit eigenem Layout (Navigation
 statt Popup-Sammlung), jQuery raus (Vanilla JS), Leaflet bleibt.
 API-Naht (`get.php`) bleibt verhaltensgleich — Golden Master und
-API-Snapshots bleiben das Sicherheitsnetz; Frontend-Snapshots werden
-dann bewusst in Rente geschickt. Etappierbar: erst Desktop, dann mobile.
+API-Snapshots bleiben das Sicherheitsnetz.
+
+- ✅ Teil 1a (2026-07-12): 12 Inline-JS-Blöcke → `www/js/app/`-Module
+  (reine Extraktion, Reihenfolge unverändert)
+- ✅ Teil 1b (2026-07-12): index.html → Jinja2 (`web/templates/` mit
+  12 Partials), FastAPI rendert „/"; Beweis: Rendering **byte-identisch**
+  zur alten Datei, Snapshot blieb ohne Neuaufnahme EQUIVALENT
+- offen: mobile.html/mobileAndroid.html templatisieren, gemeinsames
+  base-Layout, Navigations-Redesign (Popups → Panel), jQuery-Ablösung
 
 ---
 Unabhängig davon offen: Etappe E (Datei → PostgreSQL, echte API-Schlüssel);

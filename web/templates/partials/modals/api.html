@@ -1,0 +1,52 @@
+    <div id="newPopupAboutApi" class="newModal">
+        <div class="newModalContainer">
+            <div class="newModalTitle">
+                <div class="newModalTileText">Was ist die API?</div>
+                <div class="newModalTileCross" onclick="$(this).closest('.newModal').css('display','none');"></div>
+            </div>
+            <div class="newModalContent">
+                <p>
+                    Über die Paraglidable-API lassen sich die Vorhersagen frei in eigene Websites, Dienste oder Anwendungen einbinden.<br>
+                    Einen <a style="cursor:pointer" onclick="switchMode('api');">Schlüssel</a> gibt es gegen Angabe einer E-Mail-Adresse.<br>
+                    Pro Schlüssel sind maximal 10 Spots möglich.<br>
+                    <i>Hinweis: Auf dieser Instanz ist die Schlüssel-Vergabe vorübergehend nicht verfügbar (sie kommt mit der Datenbank-Migration zurück).</i>
+                </p>
+
+                <h1>JSON-Format</h1>
+                    <div style="margin-left:20px">
+                        <h2>Aufruf-URL</h2>
+
+                        <div style="margin-left:10px">
+                            <div class="popupApiUrl inset">
+                                <a href="https://paraglidable.plebsapps.de/apps/api/get.php?key=YOUR_KEY&format=JSON" target="_blank"><span style="font-size:13px;color:#000000">https://paraglidable.plebsapps.de/apps/api/get.php?key=<span class="textHighlight">YOUR_KEY</span>&format=<span class="textHighlight">JSON</span></span></a>
+                            </div>
+                        </div>
+                        
+                        <h2>Beispiel-Ergebnis</h2>
+
+                        <div style="margin-left:10px">
+                            <div id="apiJsonExample" class="popupPreformatedDiv"></div>
+                        </div>
+                    </div>
+
+                <br>
+                <h1>XML-Format</h1>
+                    <div style="margin-left:20px">
+                        <h2>Aufruf-URL</h2>
+
+                        <div style="margin-left:10px">
+                            <div class="popupApiUrl inset">
+                                <a href="https://paraglidable.plebsapps.de/apps/api/get.php?key=YOUR_KEY&format=XML" target="_blank"><span style="font-size:13px;color:#000000">https://paraglidable.plebsapps.de/apps/api/get.php?key=<span class="textHighlight">YOUR_KEY</span>&format=<span class="textHighlight">XML</span></span></a>
+                            </div>
+                        </div>
+                        
+                        <h2>Beispiel-Ergebnis</h2>
+
+                        <div style="margin-left:10px">
+                            <div id="apiXmlExample" class="popupPreformatedDiv"></div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+

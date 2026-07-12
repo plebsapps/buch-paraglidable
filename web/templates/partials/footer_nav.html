@@ -1,0 +1,43 @@
+    <div id="loaderContainer">
+        <div id="loader"></div>
+        <div id="loaderImg"><img src="imgs/logo/logoSmall70.png" alt="" height="45" /></div>
+    </div>
+
+<!-- --------------------- -->
+
+    <div id="footer">
+        <div class="vignettesContainer"></div>
+        <div id="derivativeNotice">Independent re-implementation (GPLv3) of <a href="https://github.com/AntoineMeler/Paraglidable" target="_blank">Paraglidable</a> by Antoine Meler &mdash; not affiliated with paraglidable.com &middot; Operated by <a href="https://ralfwbalz.ch" target="_blank">Ralf Balz</a> &middot; <a href="https://github.com/plebsapps/buch-paraglidable" target="_blank">source code</a> &middot; Karte: &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>-Mitwirkende, SRTM | &copy; <a href="https://opentopomap.org" target="_blank">OpenTopoMap</a> (CC-BY-SA)</div>
+        <div id="version"></div>
+    </div>
+
+<!-- bottom navigation bar -->
+
+<div id="mainNavigationBar" class="navigationBar" style="visibility:visible">
+    <div id="vignettesContainer0">
+        <div id="vignettesContainer" class="vignettesContainer"></div>
+    </div>
+    <div id="lastUpdates">
+        <div id="lastUpdateFieldTxt">Letzte Aktualisierung</div>
+        <div id="lastUpdateTime"></div>
+    </div>
+</div>
+
+<!-- --------------------- -->
+
+<div id="prevNextDayContainer">
+    <div id="prevNextDay">
+        <div class="prevNextLine">
+            <div class="mapControlButton topleft" id="mapControlButtonPrev" title="Vorheriger Tag" onclick="hideAllModals();moveDay(-1);"></div>
+            <div class="mapControlButton topright" id="mapControlButtonNext" title="Nächster Tag"     onclick="hideAllModals();moveDay(+1);"></div>
+        </div>
+        <div class="prevNextLine">
+            <div class="mapControlButton" id="mapControlButtonBackward" title="Vergangenheit"   onclick="hideAllModals();moveForward(false);"></div>
+            <div class="mapControlButton" id="mapControlButtonForward"  title="Zukunft" onclick="hideAllModals();moveForward(true);"></div>
+        </div>
+    </div>
+    <div id="bottomLeftShadowHider"></div>
+</div>
+
+<!-- --------------------- -->
+

@@ -1,0 +1,87 @@
+    <div id="newPopupHowDoesItWork" class="newModal">
+        <div class="newModalContainer">
+            <div class="newModalTitle">
+                <div class="newModalTileText">Wie funktioniert es?</div>
+                <div class="newModalTileCross" onclick="$(this).closest('.newModal').css('display','none');"></div>
+            </div>
+            <div class="newModalContent">
+
+        <p>
+            Paraglidable analysiert die Vorhersagen gängiger Wettermodelle mit <a href="https://de.wikipedia.org/wiki/Deep_Learning" target="_blank">Deep Learning</a>.
+        </p>
+        <h1>Offline-Training</h1>
+        <p>
+            Paraglidable berechnet „Flyability"- und „Crossability"-Scores mit einem künstlichen neuronalen Netz, das täglich rund 200 Wetterparameter auswertet.<br>
+            Trainiert wurde das Netz auf Ground-Truth-Daten aus zehn Jahren.<br>
+            Diese bestehen aus Wetterarchiven und öffentlich verfügbaren Online-Flugdatenbanken (~2&nbsp;000&nbsp;000 Flüge).<br>
+            Beim Training lernt das Netz den Zusammenhang zwischen Wetterlage und gemeldeten Flügen (Anzahl, Distanz, max. Steigen, max. Höhe …).<br>
+            Die Korrelations-Ergebnisse lassen sich <span class="textHighlight" style="cursor:pointer" onclick="switchMode('analysis');">hier</span> ansehen.<br>
+            <div style="width:100%; text-align:center">
+                <div style="display: inline-block; position:relative; width:300px; height: 150px">
+                    <div style="position: absolute; left:50px; top: 10px; text-align: center; width: 50px">
+                        <img style="position: absolute; left:0px; top: 0px; opacity: 0.2" src="imgs/icons/database.svg" alt="" width="50">
+                        <img style="padding-top: 8px"                                     src="imgs/icons/weather.svg"  alt="" width="32">
+                    </div>
+
+                    <div style="position: absolute; left:50px; top: 90px; text-align: center; width: 50px">
+                        <img style="position: absolute; left:0px; top: 0px; opacity: 0.2" src="imgs/icons/database.svg"    alt="" width="50">
+                        <img style="padding-top: 11px"                                    src="imgs/icons/paraglider2.svg" alt="" width="32">
+                    </div>
+                    <img style="position: absolute; left:140px; top: 59px" src="imgs/icons/gears.svg" alt="" width="32">
+                    <img style="position: absolute; left:230px; top: 59px" src="imgs/icons/neuralNetwork.svg" alt="" width="32">
+                    <img style="position: absolute; left:103px; top: 45px; transform: rotate(105deg);" src="imgs/icons/arrow-in.svg" alt="" width="32">
+                    <img style="position: absolute; left:103px; top: 75px; transform: rotate(75deg);" src="imgs/icons/arrow-in.svg" alt="" width="32">
+                    <img style="position: absolute; left:178px; top: 53px; transform: rotate(90deg);" src="imgs/icons/arrow-out.svg" alt="" width="44">
+                </div>
+            </div>
+        </p>
+        <h1>Online-Vorhersage</h1>
+        <p>
+            Für die Vorhersage lädt Paraglidable die aktuellen Wetterprognosen mehrerer Quellen und speist sie in das neuronale Netz ein.
+            Das Netz gibt eine Einschätzung der Flugbedingungen aus.
+            <div style="width:100%; text-align:center">
+                <div style="display: inline-block; position:relative; width:300px; height: 70px">
+                    <img style="position: absolute; left:50px; top: 20px" src="imgs/icons/weather.svg" alt=""  width="40">
+                    <img style="position: absolute; left:140px; top: 20px" src="imgs/icons/neuralNetwork.svg" alt="" width="40">
+                    <div style="position: absolute; left:234px; top: 22px">
+                        <img style="position: absolute; left:0px; top: 0px" src="imgs/icons/gauge-nocolor.svg" alt="" width="40">
+                    </div>
+                    <img style="position: absolute; left:92px; top: 21px; transform: rotate(90deg);" src="imgs/icons/arrow-in.svg" alt="" width="40">
+                    <img style="position: absolute; left:184px; top: 19px; transform: rotate(90deg);" src="imgs/icons/arrow-out.svg" alt="" width="44">
+                </div>
+            </div>
+        </p>
+        <h1>Datenquellen</h1>
+        <p>
+            <div style="position:relative; width:300px; height: 150px">
+                <div style="position: absolute; left:50px; top: 10px; text-align: center; width: 50px">
+                    <img style="position: absolute; left:0px; top: 0px; opacity: 0.2" src="imgs/icons/database.svg" alt="" width="50">
+                    <img style="padding-top: 8px" src="imgs/icons/weather.svg" alt="" width="32">
+                </div>
+                <div style="position: absolute; left:120px; top: 20px; width: 250px">
+                    <!--
+                    <a target="_blank" href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs">GFS</a>, 
+                    -->
+                    <a target="_blank" href="https://www.ncdc.noaa.gov">NOAA</a>,
+                    <a target="_blank" href="https://www.ecmwf.int">ECMWF</a>, 
+                    <a target="_blank" href="http://www.meteofrance.com">Météo France</a>
+                </div>
+                <div style="position: absolute; left:50px; top: 70px; text-align: center; width: 50px">
+                    <img style="position: absolute; left:0px; top: 0px; opacity: 0.2" src="imgs/icons/database.svg" alt="" width="50">
+                    <img style="padding-top: 11px" src="imgs/icons/paraglider2.svg" alt=""  width="32">
+                </div>
+                <div style="position: absolute; left:120px; top: 80px; width: 250px">
+                    <a target="_blank" href="http://www.paraglidingforum.com/leonardo">Paragliding Forum</a>, 
+                    <a target="_blank" href="https://www.xcontest.org">XContest</a>, 
+                    <a target="_blank" href="https://www.dhv-xc.de">DHV-XC</a>, 
+                    <a target="_blank" href="https://parapente.ffvl.fr/cfd">CFD</a>,
+                    <a target="_blank" href="http://www.xcleague.com">XC League</a>
+                </div>
+            </div>
+        </p>
+
+            </div>
+        </div>
+    </div>
+
+

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+
+    <meta name="description" content="Paraglidable: KI-basierte Flugwetter-Vorhersage für Gleitschirmflieger">
+    <meta name="keywords" content="paraglidable, gleitschirm, paragliding, wetter, vorhersage">
+    <title>Paraglidable</title>
+
+    <meta property="og:title" content="Paraglidable" />
+    <meta property="og:image" content="https://paraglidable.plebsapps.de/imgs/oc_image2.jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://paraglidable.plebsapps.de" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="KI-basierte Flugwetter-Vorhersage für Gleitschirmflieger" />
+
+    <meta http-equiv="refresh" content="43200">
+
+    <link rel="stylesheet" href="js/third_parties/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="css/paraglidable.css" />
+    <link rel="stylesheet" href="js/third_parties/prism/prism.css" />
+    <!-- favicon -->
+    <link rel="shortcut icon" href="imgs/favicon/favicon.ico">
+    <link rel="icon" sizes="16x16 32x32 64x64" href="imgs/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="196x196" href="imgs/favicon/favicon-192.png">
+    <link rel="icon" type="image/png" sizes="160x160" href="imgs/favicon/favicon-160.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="imgs/favicon/favicon-96.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="imgs/favicon/favicon-64.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="imgs/favicon/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="imgs/favicon/favicon-16.png">
+    <link rel="apple-touch-icon" href="imgs/favicon/favicon-57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="imgs/favicon/favicon-114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="imgs/favicon/favicon-72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="imgs/favicon/favicon-144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="imgs/favicon/favicon-60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="imgs/favicon/favicon-120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="imgs/favicon/favicon-76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="imgs/favicon/favicon-152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="imgs/favicon/favicon-180.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="imgs/favicon/favicon-144.png">
+    <meta name="msapplication-config" content="imgs/favicon/browserconfig.xml">
+    <!-- <script src="https://browser.sentry-cdn.com/4.3.0/bundle.min.js" crossorigin="anonymous"></script> -->
+</head>
+<body>
+
+    <script src="js/third_parties/leaflet/leaflet.js"></script>
+    <script src="js/third_parties/jquery-3.3.1.min.js"></script>
+    <script src="js/third_parties/moment-with-locales.min.js"></script>
+    <script src="js/third_parties/tinycolor-min.js"></script>
+
+{% include "partials/header.html" %}
+    <div id="map"></div>
+
+{% include "partials/legend.html" %}
+{% include "partials/footer_nav.html" %}
+{% include "partials/api_bar.html" %}
+{% include "partials/analysis_bar.html" %}
+<script src="js/app/datepicker.js"></script>
+
+
+
+
+<!-- --------------------- -->
+
+
+<script src="js/paraglidable_lib.js"></script>
+
+<script src="js/app/main.js"></script>
+<script src="js/third_parties/autocomplete.js"></script>
+<script src="js/app/search_gps.js"></script>
+
+
+
+{% include "partials/modals/about.html" %}
+{% include "partials/modals/legend_definition.html" %}
+{% include "partials/modals/api.html" %}
+{% include "partials/modals/links.html" %}
+{% include "partials/modals/how_does_it_work.html" %}
+    <script src="js/app/mobile_prompt.js"></script>
+    
+
+{% include "partials/modals/mobile_version.html" %}
+{% include "partials/modals/credits.html" %}
+<script src="js/app/modes.js"></script>
+
+<script src="js/third_parties/prism/prism.js"></script>
+<script src="js/app/api_examples.js"></script>
+
+
+
+
+
+<script src="js/app/startup_mode.js"></script>
+
+
+<!-- ============================ Analysis ================================== -->
+<!--
+<script src="js/app/analysis.js"></script>
+-->
+
+
+<!-- Color blind mode -->
+<script src="js/app/colorblind.js"></script>
+
+
+<script src="js/app/layers_prefs.js"></script>
+
+<script src="js/app/cookie_desktop.js"></script>
+
+
+
+
+<script src="js/app/version.js"></script>
+
+</body>
+</html>

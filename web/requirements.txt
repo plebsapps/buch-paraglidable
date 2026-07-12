@@ -1,3 +1,4 @@
 # Web layer (stage D2), pinned like the rest of the project (stage B).
 fastapi==0.115.6
 uvicorn==0.34.0
+jinja2==3.1.6

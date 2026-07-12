@@ -1,0 +1,90 @@
+    <div id="topLeftShadowHider"></div>
+    <div id="header">
+        <div id="menuButtonsBar">
+
+<!-- menuButtonsBar -->
+
+<div class="dropdown">
+    <div class="menuButton" id="menuButtonInfo" title="Info"></div>
+    <div id="dropdown-content-about" class="dropdown-content">
+        <ul>
+            <li id="aboutLink" onclick="switchVisibility('newPopupAbout')">Was ist das?</li>
+            <li id="githubLink" onclick="window.open('https://github.com/plebsapps/buch-paraglidable','_blank')">GitHub-Seite</li>
+            <li id="contactLink" onclick="window.open('https://ralfwbalz.ch','_blank')">Kontakt</li>
+            <li id="creditsLink" onclick="switchVisibility('newPopupCredits')">Credits</li>
+            <li id="linksLink" onclick="switchVisibility('newPopupLinks')">Links</li>
+        </ul>
+    </div>
+</div>
+
+<div class="dropdown">
+    <div class="menuButton" id="menuButtonSettings" title="Einstellungen"></div>
+    <div class="dropdown-content">
+        <ul>
+            <li id="colorBlindLink" onclick="switchColorBlind()">Farbenblind-Modus: <span id="colorBlindModeStrValLink" style="font-weight:bold;"></span></li>
+        </ul>
+    </div>
+</div>
+
+<div class="dropdown">
+    <div class="menuButton" id="menuButtonMobile" title="Mobil"></div>
+    <div class="dropdown-content">
+        <ul>
+            <li id="mobileVersionLink" onclick="window.location.href='mobile.html'">Mobile Version</li>
+        </ul>
+    </div>
+</div>
+
+<div class="dropdown">
+    <div class="menuButton" id="menuButtonScience" title="Die Wissenschaft dahinter"></div>
+    <div id="dropdown-content-about" class="dropdown-content">
+        <ul>
+            <li id="howDoesItWorkLink" onclick="switchVisibility('newPopupHowDoesItWork')">Wie funktioniert es?</li>
+            <li id="neuralNetworkLink" onclick="window.open('https://github.com/plebsapps/buch-paraglidable/blob/master/neural_network/README.md','_blank')">Das neuronale Netz</li>
+            <li id="analysisLink" onclick="switchMode('analysis');">Vergangene Daten</li>
+        </ul>
+    </div>
+</div>
+
+<div class="dropdown">
+    <div class="menuButton" id="menuButtonAPI" title="REST API"></div>
+    <div class="dropdown-content">
+        <ul>
+            <li id="apiWhatIsItLink" onclick="switchVisibility('newPopupAboutApi')">Was ist die API?</li>
+            <li id="apiKeyLink" onclick="switchMode('api');">API-Schlüssel anfordern</li>
+        </ul>
+    </div>
+</div>
+
+<div>
+    <div class="menuButtonExpandable">
+      <input autocomplete="off" id="searchInput" type="text" placeholder="Ort"/>
+      <div class="menuButton" id="menuButtonSearch" title="Ort suchen" onclick="expandSearch();$('#searchInput').focus();"></div>
+    </div>
+</div>
+
+<!-- menuButtonsBar -->
+
+        </div>
+
+        <div id="currentDate"></div>
+
+        <div id="brand">Para<b>glidable</b><span class="brandClaim">Praxisfall &bdquo;Softwaremodernisierung mit KI&ldquo;</span></div>
+
+    </div>
+
+
+        <div id="headerMapControls">
+            <div class="mapControlButton" id="mapControlButtonPlus" title="Hineinzoomen" onclick="mapZoom(+1)"></div>
+            <div class="mapControlButton" id="mapControlButtonMinus" title="Herauszoomen" onclick="mapZoom(-1)"></div>
+            <div class="mapControlButton dropdown2" id="mapControlButtonLayers" title="Ebenen">
+                <div class="dropdown-content2">
+            <li id="checkboxShowHideMapColors" onclick="switchLayersVisibility(0)">Kartenfarben</li>
+            <li id="checkboxShowHideSpots" onclick="switchLayersVisibility(1)">Startplätze</li>
+                </div>
+            </div>
+            <div class="mapControlButton bottom" id="mapControlButtonGps" title="GPS" onclick="mapGps()">
+                <img id="mapControlButtonGpsIcon" src="imgs/icons/gps.svg" />
+            </div>
+        </div>
+

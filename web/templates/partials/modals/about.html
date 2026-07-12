@@ -1,0 +1,34 @@
+    <div id="newPopupAbout" class="newModal">
+        <div class="newModalContainer">
+            <div class="newModalTitle">
+                <div class="newModalTileText">Was ist das?</div>
+                <div class="newModalTileCross" onclick="$(this).closest('.newModal').css('display','none');"></div>
+            </div>
+            <div class="newModalContent">
+                <div style="width:100%">
+                </div>
+
+                <p>
+                    <b>Paraglidable ist ein KI-basiertes Vorhersageprogramm für Gleitschirm-Flugbedingungen.</b><br>
+                    <br>
+                    Ein neuronales Netz interpretiert Wettervorhersagen aus mehreren Quellen und übersetzt sie in verständliche Flugbedingungs-Parameter:
+                    Es bewertet Niederschlag, Bewölkung, Wind in verschiedenen Höhen und weitere Größen — insgesamt rund 200 Wetterparameter pro Tag —
+                    und fasst sie zu einer klaren Aussage zusammen, ob geflogen werden kann.
+                    Zusätzlich schätzt Paraglidable, wie gut sich der Tag für Streckenflüge (XC) eignet.<br>
+                    <br>
+                    Diese Instanz ist eine eigenständige Neuimplementierung (GPLv3) des Originals — entstanden als Praxisfall des Buchs
+                    „Softwaremodernisierung mit KI. Mit Golden Master, Charakterisierungstests
+                    und kleinen Schritten vom Altsystem zur Zielarchitektur" von Ralf Balz.
+                    Ein herzliches Dankeschön an <b>Antoine Meler</b> für dieses großartige Projekt und dafür,
+                    dass er es als Open Source zugänglich gemacht hat.<br>
+                    <br>
+                    Wie die Vorhersage im Detail funktioniert, steht <a style="cursor:pointer" onclick="switchVisibility('newPopupHowDoesItWork')">hier</a>.<br>
+					<br>
+                    Der Quellcode dieser Instanz liegt auf <a href="https://github.com/plebsapps/buch-paraglidable" target="_blank">GitHub</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+
