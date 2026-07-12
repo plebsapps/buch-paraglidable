@@ -3,7 +3,7 @@
 Ergänzend zum Etappenplan in docs/plan.md (dort stehen Ziel, Entscheidungen
 und Abnahmekriterien; hier nur die vereinbarte Arbeitsreihenfolge).
 
-## 1. Etappe D3: Worker-Container mit APScheduler  ⬅ in Arbeit
+## 1. Etappe D3: Worker-Container mit APScheduler  ✅ 2026-07-12
 
 `scripts/cron_tasks` → APScheduler im eigenen Compose-Service `worker`
 (gleiches eingefrorenes Basis-Image wie die Pipeline). Damit entfällt der

@@ -128,16 +128,33 @@ docker run -d --name paraglidable --restart unless-stopped \
   -v /home/ralf/buch-paraglidable:/workspaces/Paraglidable \
   paraglidable sh /workspaces/Paraglidable/scripts/container_start.sh
 
-# Manueller Forecast-Lauf (bis D3 kein Cron)
-docker exec -w /workspaces/Paraglidable/neural_network paraglidable python3 forecast.py
-# gleichwertig seit C2, auch schrittweise möglich (siehe pipeline/cli.py):
+# Forecast-Läufe: seit D3 automatisch durch den Worker (siehe unten).
+# Manueller Einzellauf bei Bedarf weiterhin möglich:
 docker exec -w /workspaces/Paraglidable paraglidable python -m pipeline run
 
 # FastAPI-Webschicht (D2), Port 127.0.0.1:8007
 docker compose up -d --build web
 # Verifikation (13 Charakterisierungstests; localhost, nicht 127.0.0.1!):
 SNAPSHOT_BASE=http://localhost:8007 python3 golden_master/snapshot_www.py check
+
+# Worker (D3): APScheduler ersetzt cron — kein manueller Tageslauf mehr
+docker compose up -d --build worker
+docker logs -f paraglidable-worker           # Job-Log (stdout)
+docker exec paraglidable-worker python3 pipeline/scheduler.py clean  # Einzeljob
 ```
+
+### Worker-Betrieb (seit D3, 2026-07-12)
+
+Der Service `paraglidable-worker` (eingefrorenes Pipeline-Image +
+APScheduler) pollt alle 30 min; ein Voll-Lauf passiert nur, wenn auf
+NOMADS ein neuer GFS-Zyklus liegt (max. 4×/Tag, je ~1¾ h auf dieser
+Hardware; parallele Trigger werden per max_instances=1 übersprungen).
+Bei Erstinbetriebnahme wurde der Zyklus-Zustand (`/tmp/lastForecastTime`)
+aus dem Legacy-Container übernommen, um einen Doppellauf zu vermeiden —
+nach einem Container-Neubau läuft schlimmstenfalls ein Zyklus doppelt.
+Merkposten: 4 Voll-Läufe/Tag sind deutlich mehr Last als das bisherige
+manuelle Regime (1/Tag); wenn der Server leidet, Kadenz im Scheduler
+drosseln (eigener, begründeter Commit).
 
 ## Produktivschaltung der FastAPI-Webschicht (D2 → live)
 
