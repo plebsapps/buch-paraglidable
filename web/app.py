@@ -6,11 +6,14 @@
 # (golden_master/snapshot_www.py, run with SNAPSHOT_BASE pointing here).
 # PHP quirks are preserved on purpose -- see web/php_compat.py and the
 # per-endpoint comments. Porting decisions (2026-07-11):
-#   - gtag.php and search.php: ported 1:1 (cleanup belongs to stage F)
+#   - search.php: ported 1:1
+#   - gtag.php (Google Analytics of the original author): ported 1:1 in D2,
+#     removed in stage F (2026-07-12) together with the frontend tracking
+#     snippet -> the path now falls through to the static mount = 404.
 #   - sendMessage.php / generateApiKey.php: the original answers HTTP 500
 #     in every fresh clone (www/apps/mail_helper.php is not committed
-#     upstream); that observable state is preserved until mail (stage F)
-#     and the API-key database (stage E) exist.
+#     upstream); that observable state is preserved until the API-key
+#     database (stage E) exists. The contact form was removed in stage F.
 #   - getAnalysisData.php (honeypot): deliberately NOT ported -> 404.
 #
 # Run:  uvicorn web.app:app  (see docker/web/ and docker-compose.yml)
@@ -176,25 +179,6 @@ def search(request: Request):
 		try:
 			with urllib.request.urlopen(
 					"http://localhost:8001/q/%s.js" % cleaned, timeout=5) as resp:
-				body = resp.read()
-		except Exception:
-			body = b""
-	return php_response(body)
-
-
-# ============================================================================
-# /apps/gtag.php
-# ============================================================================
-
-@app.get("/apps/gtag.php")
-def gtag(request: Request):
-	host = request.headers.get("host", "")
-	body = b""
-	if host[:9] != "localhost":
-		try:
-			with urllib.request.urlopen(
-					"https://www.googletagmanager.com/gtag/js?id=UA-127025208-1",
-					timeout=10) as resp:
 				body = resp.read()
 		except Exception:
 			body = b""
