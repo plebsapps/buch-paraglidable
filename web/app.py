@@ -51,6 +51,16 @@ app = FastAPI(title="Paraglidable web layer (D2 port)")
 def index(request: Request):
 	return templates.TemplateResponse(request=request, name="index.html")
 
+
+@app.get("/mobile.html")
+def mobile(request: Request):
+	return templates.TemplateResponse(request=request, name="mobile.html")
+
+
+@app.get("/mobileAndroid.html")
+def mobile_android(request: Request):
+	return templates.TemplateResponse(request=request, name="mobileAndroid.html")
+
 # PHP's default response Content-Type under this Apache config.
 PHP_CT = "text/html; charset=UTF-8"
 
