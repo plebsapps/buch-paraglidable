@@ -8,11 +8,11 @@
 
 @keyframes blinker {
   50% {
-    color: #f08000;
+    color: #d98a10;
   }
 }
 .textHighlight {
-  color: #f08000;
+  color: #d98a10;
 }
 
 .dropdown {
@@ -23,7 +23,7 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #626c7c;
+  background-color: #2e4a3d;
   min-width: 200px;
   box-shadow: 8px 8px 16px 0px rgba(0, 0, 0, 0.3);
   z-index: 1;
@@ -46,7 +46,7 @@
   text-decoration: none;
   display: block;
   cursor: pointer;
-  border-bottom: 1px solid #57606d;
+  border-bottom: 1px solid #3d5647;
   background-size: 18px 18px;
   background-repeat: no-repeat;
   background-position: 7px center;
@@ -57,11 +57,11 @@
 }
 
 .dropdown-content li:hover {
-  background-color: #8993a1;
+  background-color: #7fa08c;
 }
 
 .dropdown-content li.comingsoon {
-  color: #b3bac3;
+  color: #b9cdc0;
   cursor: auto;
 }
 
@@ -138,7 +138,7 @@
 }
 
 .dropdown:hover .menuButton {
-  background-color: #626c7c;
+  background-color: #2e4a3d;
   border-radius: 2px 2px 0px 0px;
 }
 
@@ -160,7 +160,7 @@
   position: absolute;
   width: 150px;
   left: 28px;
-  background-color: #626c7c;
+  background-color: #2e4a3d;
   box-shadow: 8px 8px 16px 0px rgba(0, 0, 0, 0.3);
   border-radius: 0px 5px 5px 5px;
   overflow: hidden;
@@ -186,14 +186,14 @@
   text-decoration: none;
   display: block;
   cursor: pointer;
-  border-bottom: 1px solid #57606d;
+  border-bottom: 1px solid #3d5647;
   background-size: 14px 14px;
   background-repeat: no-repeat;
   background-position: 10px center;
 }
 
 .dropdown-content2 li:hover {
-  background-color: #8993a1;
+  background-color: #7fa08c;
 }
 
 html, body {
@@ -209,7 +209,7 @@ html, body {
   height: 32px;
   width: calc(100% - 28px);
   left: 28px;
-  background-color: #404751;
+  background-color: #2b3a32;
   display: flex;
   flex-direction: row;
   box-shadow: 1px 1px 5px black;
@@ -222,7 +222,7 @@ html, body {
   left: 0px;
   height: 18px;
   width: 100%;
-  background-color: #404751;
+  background-color: #2b3a32;
   box-shadow: 1px -1px 5px black;
   z-index: 999;
   display: flex;
@@ -232,7 +232,7 @@ html, body {
 
 #derivativeNotice {
   align-self: center;
-  color: #8993a1;
+  color: #7fa08c;
   font-size: 11px;
   white-space: nowrap;
   overflow: hidden;
@@ -240,14 +240,14 @@ html, body {
 }
 
 #derivativeNotice a {
-  color: #8993a1;
+  color: #7fa08c;
 }
 
 #version > a {
   position: absolute;
   right: 0px;
   top: 3px;
-  color: #8993a1;
+  color: #7fa08c;
   font-size: 11px;
   text-decoration: none;
 }
@@ -262,7 +262,7 @@ html, body {
   top: 0px;
   height: 32px;
   width: 34px;
-  background-color: #404751;
+  background-color: #2b3a32;
   border-radius: 13px 0px 0px 0px;
   z-index: 10002;
 }
@@ -284,7 +284,7 @@ html, body {
 }
 
 .menuButton:hover {
-  background-color: #626c7c;
+  background-color: #2e4a3d;
 }
 
 #menuButtonInfo {
@@ -342,12 +342,12 @@ html, body {
 }
 
 #searchInput {
-  border: 0px solid #404751;
+  border: 0px solid #2b3a32;
   margin-top: 2px;
   height: 26px;
   color: #ffffff;
   outline: none;
-  background-color: #404751;
+  background-color: #2b3a32;
   padding-right: 25px;
   padding-left: 3px;
   width: 0px;
@@ -358,24 +358,24 @@ html, body {
 }
 
 #searchInput:hover {
-  background: #626c7c;
+  background: #2e4a3d;
 }
 
 #searchInput.active {
   width: 120px;
-  background: #626c7c;
+  background: #2e4a3d;
 }
 
 input::placeholder {
-  color: #8993a1;
+  color: #7fa08c;
 }
 
 #searchInput::placeholder {
-  color: #b3bac3;
+  color: #b9cdc0;
 }
 
 textarea::placeholder {
-  color: #8993a1;
+  color: #7fa08c;
 }
 
 .ac-renderer {
@@ -393,7 +393,7 @@ textarea::placeholder {
   position: relative;
   cursor: pointer;
   padding: 5px;
-  background-color: #626c7c;
+  background-color: #2e4a3d;
   overflow: hidden !important;
   text-overflow: ellipsis;
   font-size: small;
@@ -401,23 +401,23 @@ textarea::placeholder {
 
 .ac-row .suffix {
   font-size: x-small;
-  color: #b3bac3;
+  color: #b9cdc0;
   padding: 0.1em 0 0.1em 5px;
 }
 
 .ac-row .type {
   font-size: x-small;
-  color: #b3bac3;
+  color: #b9cdc0;
   display: block;
   width: 100%;
 }
 
 .ac-highlighted {
-  color: #f08000;
+  color: #d98a10;
 }
 
 .ac-active {
-  background-color: #8993a1;
+  background-color: #7fa08c;
 }
 
 .Takeoff {
@@ -453,8 +453,8 @@ textarea::placeholder {
   left: 0px;
   width: 28px;
   padding-top: 1px;
-  background-color: #404751;
-  border: 1px solid #404751;
+  background-color: #2b3a32;
+  border: 1px solid #2b3a32;
   display: flex;
   flex-direction: column;
   z-index: 10001;
@@ -491,7 +491,7 @@ textarea::placeholder {
   position: absolute;
   left: 58px;
   bottom: 0px;
-  background: #404751;
+  background: #2b3a32;
   height: 18px;
   width: 7px;
   z-index: 10002;
@@ -519,12 +519,12 @@ textarea::placeholder {
 }
 
 .mapControlButton:hover {
-  background-color: #626c7c;
+  background-color: #2e4a3d;
   cursor: pointer;
 }
 
 .mapControlButton.disabled:hover {
-  background-color: #404751;
+  background-color: #2b3a32;
   cursor: initial;
 }
 
@@ -617,7 +617,7 @@ textarea::placeholder {
   height: 32px;
   width: 8px;
   z-index: 20000;
-  background-color: #404751;
+  background-color: #2b3a32;
 }
 
 .legendSection {
@@ -628,7 +628,7 @@ textarea::placeholder {
 }
 
 #legendSectionPredictions {
-  background-color: #404751;
+  background-color: #2b3a32;
   color: white;
   padding-top: 1px;
   padding-bottom: 2px;
@@ -642,7 +642,7 @@ textarea::placeholder {
 }
 
 #legendSectionKeywords {
-  background-color: #b3bac3;
+  background-color: #b9cdc0;
   color: black;
   padding-top: 0px;
   border-bottom: 0px;
@@ -655,9 +655,9 @@ textarea::placeholder {
 #legendSectionKeywords.active {
   padding-top: 3px;
   padding-bottom: 1px;
-  border-bottom: 1px solid #404751;
-  border-left: 1px solid #404751;
-  border-right: 1px solid #404751;
+  border-bottom: 1px solid #2b3a32;
+  border-left: 1px solid #2b3a32;
+  border-right: 1px solid #2b3a32;
 }
 
 .legendLine {
@@ -676,13 +676,13 @@ textarea::placeholder {
 .legendTopFieldTitle {
   flex: 0 0 32px;
   text-align: right;
-  color: #8993a1;
+  color: #7fa08c;
 }
 
 .legendTopFieldVal {
   flex: 0 0 52px;
   text-align: left;
-  color: #dee1e5;
+  color: #dde5df;
 }
 
 .legendLineKeyWords {
@@ -742,7 +742,7 @@ textarea::placeholder {
 }
 
 #legendImg3 {
-  background-color: #97a0ad;
+  background-color: #8aa393;
 }
 
 #legendImg4 {
@@ -801,13 +801,13 @@ textarea::placeholder {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -53%);
-  background-color: #626c7c;
+  background-color: #2e4a3d;
   z-index: 50000;
   width: 60%;
   max-width: 100%;
   height: 74%;
   border-style: solid;
-  border-color: #626c7c;
+  border-color: #2e4a3d;
   border-width: 2px 2px 2px 2px;
   border-radius: 5px 5px 0px 0px;
   box-shadow: 8px 8px 16px 0px rgba(0, 0, 0, 0.3);
@@ -870,7 +870,7 @@ textarea::placeholder {
 }
 
 .newModalContent a {
-  color: #f08000;
+  color: #d98a10;
   text-decoration: none;
 }
 
@@ -930,10 +930,10 @@ textarea::placeholder {
   width: 120px;
   height: 21px;
   z-index: 20000;
-  background-color: #626c7c;
+  background-color: #2e4a3d;
   padding: 0px;
   margin: 0px;
-  border: 4px solid #404751;
+  border: 4px solid #2b3a32;
   color: #000000;
 }
 
@@ -942,7 +942,7 @@ textarea::placeholder {
   top: 0;
   height: 26px;
   width: 200px;
-  background-color: #404751;
+  background-color: #2b3a32;
   border-radius: 10px;
   text-align: center;
   left: 200px;
@@ -956,7 +956,7 @@ textarea::placeholder {
   top: 0px;
   width: 100%;
   height: 100%;
-  background: #626c7c;
+  background: #2e4a3d;
 }
 
 .basetiles, .basetiles-vignette {
@@ -970,9 +970,9 @@ textarea::placeholder {
 }
 
 #loader {
-  border: 5px solid #626c7c;
-  border-top: 5px solid #b3bac3;
-  border-bottom: 5px solid #b3bac3;
+  border: 5px solid #2e4a3d;
+  border-top: 5px solid #b9cdc0;
+  border-bottom: 5px solid #b9cdc0;
   border-radius: 50%;
   border-style: double;
   width: 60px;
@@ -1042,8 +1042,8 @@ textarea::placeholder {
 
 #newWeekContainer {
   box-shadow: 1px -1px 5px black;
-  border: 1px solid #404751;
-  background-color: #404751;
+  border: 1px solid #2b3a32;
+  background-color: #2b3a32;
   border-radius: 7px 7px 0px 0px;
   z-index: 1999;
   display: flex;
@@ -1057,10 +1057,10 @@ textarea::placeholder {
   height: 100%;
   overflow: visible;
   cursor: pointer;
-  border-top: 1px solid #404751;
-  border-left: 1px solid #404751;
-  border-right: 1px solid #404751;
-  background-color: #404751;
+  border-top: 1px solid #2b3a32;
+  border-left: 1px solid #2b3a32;
+  border-right: 1px solid #2b3a32;
+  background-color: #2b3a32;
   border-bottom: 0px;
   border-radius: 0px;
   z-index: 2000;
@@ -1073,10 +1073,10 @@ textarea::placeholder {
   z-index: 2001;
   box-shadow: 0px -1px 5px black;
   border-radius: 7px 7px 0px 0px;
-  border-top: 1px solid #626c7c;
-  border-left: 1px solid #626c7c;
-  border-right: 1px solid #626c7c;
-  background-color: #626c7c;
+  border-top: 1px solid #2e4a3d;
+  border-left: 1px solid #2e4a3d;
+  border-right: 1px solid #2e4a3d;
+  background-color: #2e4a3d;
 }
 
 .newDay:hover .newDayMap {
@@ -1084,21 +1084,21 @@ textarea::placeholder {
 }
 
 .newDay:hover .newDayTxt {
-  border: 1px solid #626c7c;
-  background-color: #626c7c;
+  border: 1px solid #2e4a3d;
+  background-color: #2e4a3d;
 }
 
 .newDay:hover .newDayTxt.active {
-  border: 1px solid #b3bac3;
-  background-color: #b3bac3;
-  color: #404751;
+  border: 1px solid #b9cdc0;
+  background-color: #b9cdc0;
+  color: #2b3a32;
 }
 
 .newDay.active {
-  border-top: 1px solid #b3bac3;
-  border-left: 1px solid #b3bac3;
-  border-right: 1px solid #b3bac3;
-  background-color: #b3bac3;
+  border-top: 1px solid #b9cdc0;
+  border-left: 1px solid #b9cdc0;
+  border-right: 1px solid #b9cdc0;
+  background-color: #b9cdc0;
 }
 
 .newDay.first {
@@ -1113,7 +1113,7 @@ textarea::placeholder {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: #404751;
+  background-color: #2b3a32;
 }
 
 .newDayMap.first {
@@ -1130,8 +1130,8 @@ textarea::placeholder {
   bottom: -18px;
   left: -1px;
   width: 100%;
-  border: 1px solid #404751;
-  background-color: #404751;
+  border: 1px solid #2b3a32;
+  background-color: #2b3a32;
   color: #ffffff;
   font-size: 11px;
   text-align: center;
@@ -1139,27 +1139,27 @@ textarea::placeholder {
 }
 
 .newDayTxt.active {
-  border: 1px solid #b3bac3;
-  background-color: #b3bac3;
-  color: #404751;
+  border: 1px solid #b9cdc0;
+  background-color: #b9cdc0;
+  color: #2b3a32;
 }
 
 .newDayLeafletMap {
   height: 100%;
   width: 100%;
-  background-color: #404751;
+  background-color: #2b3a32;
 }
 
 .newDayLeafletMap.notAvailable {
-  background-color: #626c7c;
-  color: #b3bac3;
+  background-color: #2e4a3d;
+  color: #b9cdc0;
   font-size: 11px;
   text-align: center;
 }
 
 #lastUpdates {
   position: absolute;
-  color: #404751;
+  color: #2b3a32;
   text-align: right;
   right: 0px;
   padding-right: 2px;
@@ -1190,7 +1190,7 @@ textarea::placeholder {
 
 .bottomPopupHeader {
   flex: 0 18px;
-  background: #404751;
+  background: #2b3a32;
   color: #ffffff;
   display: flex;
   flex-direction: row;
@@ -1210,7 +1210,7 @@ textarea::placeholder {
   width: 28px;
   height: 28px;
   z-index: 30000;
-  background: #626c7c;
+  background: #2e4a3d;
   cursor: pointer;
   border-radius: 0px 7px 0px 7px;
   background-size: 14px 14px;
@@ -1225,8 +1225,8 @@ textarea::placeholder {
   border-radius: 7px 7px 0px 0px;
   border-width: 2px 2px 0px 2px;
   border-style: solid;
-  border-color: #626c7c;
-  background-color: #dee1e5;
+  border-color: #2e4a3d;
+  background-color: #dde5df;
 }
 
 .bottomPopupContent2 {
@@ -1269,12 +1269,12 @@ textarea::placeholder {
 
 #apiSendButton:hover {
   cursor: pointer;
-  background-color: #8993a1;
+  background-color: #7fa08c;
 }
 
 .textInput {
   font-size: 12px;
-  background-color: #b3bac3;
+  background-color: #b9cdc0;
   border: 1px solid black;
   outline: none;
   height: 18px;
@@ -1282,11 +1282,11 @@ textarea::placeholder {
 }
 
 .apiMarker .leaflet-popup-tip {
-  background-color: #dee1e5;
+  background-color: #dde5df;
 }
 
 .apiMarker .leaflet-popup-content-wrapper {
-  background-color: #dee1e5;
+  background-color: #dde5df;
 }
 
 .apiMarker a.leaflet-popup-close-button {
@@ -1375,12 +1375,12 @@ textarea::placeholder {
 }
 
 .contactParagraph {
-  background: #f5f6f7;
+  background: #f4f7f5;
   box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.3);
   border-radius: 5px;
   padding: 10px;
   width: 100%;
-  border: 1px solid #b3bac3;
+  border: 1px solid #b9cdc0;
 }
 
 /* Tooltip container */
@@ -1393,7 +1393,7 @@ textarea::placeholder {
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;
-  background-color: #404751;
+  background-color: #2b3a32;
   color: #fff;
   text-align: center;
   padding: 5px 0;
@@ -1420,7 +1420,7 @@ textarea::placeholder {
   display: block;
   width: 0.6rem;
   height: 0.6rem;
-  background: #404751;
+  background: #2b3a32;
   top: 13px;
   right: 0px;
   transform: translateX(50%) rotate(-45deg);
@@ -1458,7 +1458,7 @@ textarea::placeholder {
 }
 
 .datepicker-day {
-  background-color: #b3bac3;
+  background-color: #b9cdc0;
   border-radius: 2px;
   text-align: center;
   font-size: 10px;
@@ -1466,22 +1466,22 @@ textarea::placeholder {
 }
 
 .datepicker-day:hover {
-  background-color: #8993a1;
+  background-color: #7fa08c;
 }
 
 .datepicker-day.selected {
   color: #ffffff;
-  background-color: #626c7c;
+  background-color: #2e4a3d;
   font-weight: bold;
 }
 
 .datepicker-day.disabled {
-  color: #8993a1;
+  color: #7fa08c;
   cursor: auto;
 }
 
 .datepicker-day.disabled:hover {
-  background-color: #b3bac3;
+  background-color: #b9cdc0;
 }
 
 .leaflet-popup-content {
@@ -1501,7 +1501,7 @@ textarea::placeholder {
 
 .takeoffPopupTitle {
   flex: 1;
-  background: #404751;
+  background: #2b3a32;
   color: white;
   padding: 3px 5px 3px 5px;
   font-weight: bold;
@@ -1510,19 +1510,19 @@ textarea::placeholder {
 
 .takeoffPopupContent {
   flex: 1;
-  background: #b3bac3;
+  background: #b9cdc0;
   padding: 5px;
 }
 
 .takeoffPopupList {
   flex: 1;
-  background: #b3bac3;
+  background: #b9cdc0;
   font-size: 75%;
   padding: 0px 5px 5px 5px;
 }
 
 .leaflet-popup-tip {
-  background: #b3bac3;
+  background: #b9cdc0;
 }
 
 .popupValbox {

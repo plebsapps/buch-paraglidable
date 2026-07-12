@@ -12,7 +12,7 @@ html, body {
   height: 37px;
   width: calc(100% - 35px - 2px - 2px);
   left: 38px;
-  background-color: #404751;
+  background-color: #2b3a32;
   display: flex;
   flex-direction: row;
   box-shadow: 0px 1px 5px black;
@@ -26,7 +26,7 @@ html, body {
   top: 0px;
   height: 37px;
   width: 3px;
-  background-color: #404751;
+  background-color: #2b3a32;
   z-index: 20000;
 }
 
@@ -35,7 +35,7 @@ html, body {
   margin-left: 1px;
   margin-top: 2px;
   height: 31px;
-  background-color: #626c7c;
+  background-color: #2e4a3d;
   width: calc(100% - 26px );
   border-radius: 2px;
   color: #ffffff;
@@ -59,10 +59,10 @@ html, body {
   left: 1px;
   width: 35px;
   padding-top: 1px;
-  background-color: #404751;
+  background-color: #2b3a32;
   border-radius: 9px 0px 9px 9px;
   box-shadow: 0px 1px 5px black;
-  border: 1px solid #404751;
+  border: 1px solid #2b3a32;
   display: flex;
   flex-direction: column;
   z-index: 10001;
@@ -94,12 +94,12 @@ html, body {
 }
 
 .mapControlButton:hover {
-  background-color: #626c7c;
+  background-color: #2e4a3d;
   cursor: pointer;
 }
 
 .mapControlButton.disabled:hover {
-  background-color: #404751;
+  background-color: #2b3a32;
   cursor: initial;
 }
 
@@ -137,7 +137,7 @@ html, body {
   margin-top: 1px;
   border-radius: 2px 9px 9px 2px;
   margin-right: 1px;
-  background-color: #404751;
+  background-color: #2b3a32;
   background-size: 25px 25px;
   background-repeat: no-repeat;
   background-position: center;
@@ -160,7 +160,7 @@ html, body {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #626c7c;
+  background-color: #2e4a3d;
   right: 1px;
   min-width: 200px;
   box-shadow: 8px 8px 16px 0px rgba(0, 0, 0, 0.3);
@@ -174,7 +174,7 @@ html, body {
 }
 
 .dropdown.active #menuButtonMenu {
-  background-color: #626c7c;
+  background-color: #2e4a3d;
   border-radius: 2px 9px 0px 0px;
 }
 
@@ -193,7 +193,7 @@ html, body {
   text-decoration: none;
   display: block;
   cursor: pointer;
-  border-bottom: 1px solid #57606d;
+  border-bottom: 1px solid #3d5647;
   background-size: 25px 25px;
   background-repeat: no-repeat;
   background-position: 7px center;
@@ -211,7 +211,7 @@ html, body {
 }
 
 .dropdown-content li:hover {
-  background-color: #8993a1;
+  background-color: #7fa08c;
 }
 
 #desktopLink {
@@ -265,7 +265,7 @@ html, body {
   width: 150px;
   top: 0px;
   left: 35px;
-  background-color: #626c7c;
+  background-color: #2e4a3d;
   box-shadow: 8px 8px 16px 0px rgba(0, 0, 0, 0.3);
   border-radius: 0px 5px 5px 5px;
   overflow: hidden;
@@ -283,7 +283,7 @@ html, body {
 }
 
 .dropdown-content2 li:hover {
-  background-color: #8993a1;
+  background-color: #7fa08c;
 }
 
 .table, .tr, .td {
@@ -294,7 +294,7 @@ html, body {
 #map {
   width: 100%;
   flex: 5;
-  background: #626c7c;
+  background: #2e4a3d;
 }
 
 #week {
@@ -314,32 +314,32 @@ html, body {
 
 .day {
   margin: 1px;
-  background: #404751;
+  background: #2b3a32;
   display: flex;
   flex-direction: row;
 }
 
 .day-unselected:hover {
-  background: #626c7c;
+  background: #2e4a3d;
 }
 
 .day-unselected {
-  background-color: #404751;
+  background-color: #2b3a32;
   color: #ffffff;
 }
 
 .day-selected {
-  background-color: #b3bac3;
-  color: #404751;
+  background-color: #b9cdc0;
+  color: #2b3a32;
 }
 
 .dateFull {
   font-size: smaller;
-  color: #b3bac3;
+  color: #b9cdc0;
 }
 
 .cellValTxt {
-  color: #b3bac3;
+  color: #b9cdc0;
 }
 
 .day-selected .dateFull {
@@ -385,7 +385,7 @@ html, body {
   position: relative;
   cursor: pointer;
   padding: 5px;
-  background-color: #626c7c;
+  background-color: #2e4a3d;
   overflow: hidden !important;
   text-overflow: ellipsis;
   font-size: small;
@@ -393,23 +393,23 @@ html, body {
 
 .ac-row .suffix {
   font-size: x-small;
-  color: #b3bac3;
+  color: #b9cdc0;
   padding: 0.1em 0 0.1em 5px;
 }
 
 .ac-row .type {
   font-size: x-small;
-  color: #b3bac3;
+  color: #b9cdc0;
   display: block;
   width: 100%;
 }
 
 .ac-highlighted {
-  color: #f08000;
+  color: #d98a10;
 }
 
 .ac-row:hover {
-  background-color: #8993a1;
+  background-color: #7fa08c;
 }
 
 .Takeoff {
@@ -473,7 +473,7 @@ html, body {
 
 .takeoffPopupTitle {
   flex: 1;
-  background: #404751;
+  background: #2b3a32;
   color: white;
   padding: 3px 5px 3px 5px;
   font-weight: bold;
@@ -482,19 +482,19 @@ html, body {
 
 .takeoffPopupContent {
   flex: 1;
-  background: #b3bac3;
+  background: #b9cdc0;
   padding: 5px;
 }
 
 .takeoffPopupList {
   flex: 1;
-  background: #b3bac3;
+  background: #b9cdc0;
   font-size: 75%;
   padding: 0px 5px 5px 5px;
 }
 
 .leaflet-popup-tip {
-  background: #b3bac3;
+  background: #b9cdc0;
 }
 
 .popupValbox {
@@ -511,7 +511,7 @@ html, body {
 }
 
 #takeoffFlyability.waiting {
-  background: #626c7c;
+  background: #2e4a3d;
 }
 
 .mobileModal {
@@ -520,12 +520,12 @@ html, body {
   top: 30%;
   left: 50%;
   transform: translate(-50%, -53%);
-  background-color: #404751;
+  background-color: #2b3a32;
   z-index: 50000;
   width: 77%;
   height: 175px;
   border-style: solid;
-  border-color: #404751;
+  border-color: #2b3a32;
   border-width: 2px 2px 2px 2px;
   border-radius: 5px;
   box-shadow: 8px 8px 16px 0px rgba(0, 0, 0, 0.3);
@@ -588,7 +588,7 @@ html, body {
   flex: 1 1 auto;
   overflow: auto;
   padding: 10px;
-  background-color: #b3bac3;
+  background-color: #b9cdc0;
   font-size: 14px;
   text-align: center;
   -moz-box-shadow: inset 0px 0px 7px rgba(0, 0, 0, 0.2);
@@ -603,19 +603,19 @@ html, body {
   color: black;
   width: 90%;
   text-align: center;
-  border: 1px solid #626c7c;
+  border: 1px solid #2e4a3d;
 }
 
 #inputWidgetName.disabled {
-  background-color: #b3bac3;
+  background-color: #b9cdc0;
 }
 
 #nameLabel.disabled {
-  color: #626c7c;
+  color: #2e4a3d;
 }
 
 .buttonDiv {
-  background-color: #626c7c;
+  background-color: #2e4a3d;
   padding: 5px;
   color: white;
   width: 90%;
@@ -679,11 +679,11 @@ html, body {
   line-height: 14px;
   font-size: 10px;
   text-align: center;
-  background-color: #404751;
-  color: #b3bac3;
+  background-color: #2b3a32;
+  color: #b9cdc0;
   white-space: nowrap;
   overflow: hidden;
 }
 #mapAttribution a {
-  color: #b3bac3;
+  color: #b9cdc0;
 }
