@@ -10,15 +10,13 @@ und Abnahmekriterien; hier nur die vereinbarte Arbeitsreihenfolge).
 manuelle tägliche Forecast-Lauf. Jobs bleiben einzeln als CLI startbar,
 Logging in Container-Stdout.
 
-## 2. Sichtbare Eigenständigkeit (Etappe F, Stufe 1)
+## 2. Sichtbare Eigenständigkeit (Etappe F, Stufe 1)  ✅ 2026-07-12
 
-Kleine Hebel mit großer Wirkung, ohne Frontend-Neubau:
-- anderer Kartenstil (Basemap) — größter Einzelhebel
-- eigenes Farbschema + Typografie in paraglidable.css (Vorhersage-Farben
-  rot→grün bleiben fachlich unangetastet)
-- eigenes Logo/Favicon (aktuell noch das Original-Logo)
-- eigene Startansicht (z. B. Alpenraum)
-- Kopfzeile mit Projektkontext (Buch-Praxisfall), nicht nur Footer
+Umgesetzt als Variante A „Alpenkarte" (Betreiber-Auswahl aus drei
+Entwürfen): OpenTopoMap-Basiskarte mit Attribution, Farbwelt
+Tannengrün/Bernstein, eigenes Gleitschirm-Signet (Favicons + Logo),
+Wortmarke + Projektzeile im Kopf. Startansicht Alpenraum war bereits
+Standard. Vorhersage-Farben rot→grün unangetastet.
 
 ## 3. Frontend-Neubau FastAPI + Jinja2 (Etappe F, Stufe 2)
 

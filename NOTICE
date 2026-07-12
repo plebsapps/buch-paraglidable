@@ -37,6 +37,9 @@ the Git history for exact dates and details of each change):
   * The web user interface was translated from English to German
     (2026-07-12); the English attribution notice in the footer and the
     license credits were left unchanged
+  * Distinct visual identity (2026-07-12): OpenTopoMap base map (with
+    attribution), own color scheme (pine/amber), own logo and favicons
+    replacing the original ones, project tagline in the header
 
 This derivative work is distributed under the same license as the original:
 GNU General Public License v3. See the LICENSE file.
