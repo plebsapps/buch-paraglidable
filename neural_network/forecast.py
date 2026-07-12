@@ -59,6 +59,11 @@ class Forecast:
 			self.max_tiles_zoom                = 8
 			self.render_tiles                  = True
 			self.forced_meteo_files            = None
+			# Etappe F: Küstenlinien abschaltbar (leeres bordersFilename ->
+			# der Tiler zeichnet keine Borders). Default bleibt das
+			# GM-verifizierte Verhalten; nur der Worker setzt die Variable.
+			if os.environ.get("PARAGLIDABLE_DRAW_BORDERS", "1") == "0":
+				self.geo_json_borders = ""
 		else:
 			sys.exit(1)
 

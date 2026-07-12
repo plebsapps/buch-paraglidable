@@ -156,6 +156,12 @@ Merkposten: 4 Voll-Läufe/Tag sind deutlich mehr Last als das bisherige
 manuelle Regime (1/Tag); wenn der Server leidet, Kadenz im Scheduler
 drosseln (eigener, begründeter Commit).
 
+Seit Etappe F setzt der Worker `PARAGLIDABLE_DRAW_BORDERS=0`: die
+Produktions-Kacheln werden ohne eingebrannte Küstenlinien gerendert
+(OpenTopoMap bringt eigene Küsten mit). Golden-Master-Läufe laufen ohne
+die Variable — dort bleibt das Referenzverhalten (mit Linien) erhalten.
+Wirkung ab dem nächsten Voll-Lauf nach Container-Neuanlage.
+
 ## Produktivschaltung der FastAPI-Webschicht (D2 → live)
 
 **Erfolgt am 2026-07-12** (Betreiber): vhost von 8006 auf 8007 umgestellt,

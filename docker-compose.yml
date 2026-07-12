@@ -25,5 +25,9 @@ services:
     restart: unless-stopped
     environment:
       - TZ=Europe/Zurich
+      # Etappe F: keine eingebrannten Küstenlinien in den Produktions-
+      # Kacheln (GM-Läufe laufen ohne diese Variable -> Verhalten dort
+      # unverändert, Referenz bleibt gültig)
+      - PARAGLIDABLE_DRAW_BORDERS=0
     volumes:
       - .:/workspaces/Paraglidable
