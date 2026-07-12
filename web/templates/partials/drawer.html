@@ -1,0 +1,34 @@
+<!-- Seitenleiste (Etappe F2): ersetzt die Icon-Dropdowns; Inhalte öffnen
+     als angedocktes Panel (.newModal.docked) statt als zentriertes Popup.
+     Die IDs der Einträge bleiben erhalten — CSS-Icons und JS (colorblind)
+     hängen daran. -->
+<nav id="drawer" class="closed">
+    <h3>Info</h3>
+    <ul>
+        <li id="aboutLink" onclick="openArticle('newPopupAbout', this)">Was ist das?</li>
+        <li id="legendDefLink" onclick="openArticle('newPopupLegendDefinition', this)">Legende</li>
+        <li id="linksLink" onclick="openArticle('newPopupLinks', this)">Links</li>
+        <li id="creditsLink" onclick="openArticle('newPopupCredits', this)">Credits</li>
+    </ul>
+    <h3>Wissenschaft</h3>
+    <ul>
+        <li id="howDoesItWorkLink" onclick="openArticle('newPopupHowDoesItWork', this)">Wie funktioniert es?</li>
+        <li id="analysisLink" onclick="toggleDrawer(false);switchMode('analysis');">Vergangene Daten</li>
+        <li id="neuralNetworkLink" onclick="window.open('https://github.com/plebsapps/buch-paraglidable/blob/master/neural_network/README.md','_blank')">Das neuronale Netz</li>
+    </ul>
+    <h3>API</h3>
+    <ul>
+        <li id="apiWhatIsItLink" onclick="openArticle('newPopupAboutApi', this)">Was ist die API?</li>
+        <li id="apiKeyLink" onclick="toggleDrawer(false);switchMode('api');">API-Schlüssel anfordern</li>
+    </ul>
+    <h3>Einstellungen</h3>
+    <ul>
+        <li id="colorBlindLink" onclick="switchColorBlind()">Farbenblind-Modus: <span id="colorBlindModeStrValLink" style="font-weight:bold;"></span></li>
+        <li id="mobileVersionLink" onclick="window.location.href='mobile.html'">Mobile Version</li>
+    </ul>
+    <h3>Projekt</h3>
+    <ul>
+        <li id="githubLink" onclick="window.open('https://github.com/plebsapps/buch-paraglidable','_blank')">GitHub-Seite</li>
+        <li id="contactLink" onclick="window.open('https://ralfwbalz.ch','_blank')">Kontakt</li>
+    </ul>
+</nav>
