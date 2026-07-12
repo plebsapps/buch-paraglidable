@@ -14,11 +14,11 @@
     <meta name="keywords" content="paraglidable, paragliding, weather, forecast">
     <title>Paraglidable</title>
 
-    <meta property="og:title" content="paraglidable.com" />
-    <meta property="og:image" content="https://paraglidable.com/imgs/oc_image2.jpeg" />
+    <meta property="og:title" content="Paraglidable" />
+    <meta property="og:image" content="https://paraglidable.plebsapps.de/imgs/oc_image2.jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:url" content="https://paraglidable.com" />
+    <meta property="og:url" content="https://paraglidable.plebsapps.de" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content="AI-based flying conditions forecast for paragliding" />
 
@@ -68,8 +68,8 @@
     <div id="dropdown-content-about" class="dropdown-content">
         <ul>
             <li id="aboutLink" onclick="switchVisibility('newPopupAbout')">What is it?</li>
-            <li id="githubLink" onclick="window.open('https://github.com/AntoineMeler/Paraglidable','_blank')">GitHub page</li>
-            <li id="contactLink" onclick="switchVisibility('newPopupContact')">Contact/Follow</li>
+            <li id="githubLink" onclick="window.open('https://github.com/plebsapps/buch-paraglidable','_blank')">GitHub page</li>
+            <li id="contactLink" onclick="window.open('https://ralfwbalz.ch','_blank')">Contact</li>
             <li id="creditsLink" onclick="switchVisibility('newPopupCredits')">Credits</li>
             <li id="linksLink" onclick="switchVisibility('newPopupLinks')">Links</li>
         </ul>
@@ -90,7 +90,6 @@
     <div class="dropdown-content">
         <ul>
             <li id="mobileVersionLink" onclick="window.location.href='mobile.html'">Mobile version</li>
-            <li id="androidAppLink" onclick="window.open('https://play.google.com/store/apps/details?id=com.paraglidable.paraglidable','_blank')">Android app</li>
         </ul>
     </div>
 </div>
@@ -100,7 +99,7 @@
     <div id="dropdown-content-about" class="dropdown-content">
         <ul>
             <li id="howDoesItWorkLink" onclick="switchVisibility('newPopupHowDoesItWork')">How does it work?</li>
-            <li id="neuralNetworkLink" onclick="window.open('https://github.com/AntoineMeler/Paraglidable/blob/master/neural_network/README.md','_blank')">The neural network</li>
+            <li id="neuralNetworkLink" onclick="window.open('https://github.com/plebsapps/buch-paraglidable/blob/master/neural_network/README.md','_blank')">The neural network</li>
             <li id="analysisLink" onclick="switchMode('analysis');">Past data</li>
         </ul>
     </div>
@@ -114,24 +113,6 @@
             <li id="apiKeyLink" onclick="switchMode('api');">Get an API key</li>
         </ul>
     </div>
-</div>
-
-<div class="dropdown" style="display:none">
-    <div class="menuButton" id="menuButtonShare" title="Share current view"></div>
-    <div class="dropdown-content">
-        <ul>
-            <li id="shareLink" onclick="switchVisibility('newPopupShareLink')">Share link</li>
-            <li id="shareFacebookLink" onclick="">Share on Facebook</li>
-        </ul>
-    </div>
-</div>
-
-<div class="dropdown">
-    <div class="menuButton" id="menuButtonV2" title="v2" onclick="window.location.href=window.location.protocol+'//v2.'+window.location.hostname.split('.').slice(-2).join('.')"></div>
-</div>
-
-<div class="dropdown">
-    <div class="menuButton" id="menuButtonDonate" title="donate" onclick="switchVisibility('newPopupDonate')"></div>
 </div>
 
 <div>
@@ -253,7 +234,7 @@
 
     <div id="footer">
         <div class="vignettesContainer"></div>
-        <div id="derivativeNotice">Independent re-implementation (GPLv3) of <a href="https://github.com/AntoineMeler/Paraglidable" target="_blank">Paraglidable</a> by Antoine Meler &mdash; not affiliated with paraglidable.com</div>
+        <div id="derivativeNotice">Independent re-implementation (GPLv3) of <a href="https://github.com/AntoineMeler/Paraglidable" target="_blank">Paraglidable</a> by Antoine Meler &mdash; not affiliated with paraglidable.com<br>Operated by <a href="https://ralfwbalz.ch" target="_blank">Ralf Balz</a> &mdash; source code: <a href="https://github.com/plebsapps/buch-paraglidable" target="_blank">github.com/plebsapps/buch-paraglidable</a></div>
         <div id="version"></div>
     </div>
 
@@ -1366,10 +1347,6 @@ function updateUrl()
     strDate   = g_strDate;
 
     window.history.replaceState('page2', 'Paraglidable', '/?lat='+ newCenter.lat.toFixed(3) +"&lon="+ newCenter.lng.toFixed(3) +"&zoom="+ newZoom);// +"&day="+ strDate);
-    
-    var shareURL = "https://paraglidable.com/shared.php?lat="+ newCenter.lat.toFixed(3) +"&lon="+ newCenter.lng.toFixed(3) +"&zoom="+ newZoom +"&day="+ strDate;
-    //console.log(shareURL);
-    //$("#shareLinkUrl").html(shareURL);
 }
 
 function updateVignettesView()
@@ -1669,22 +1646,6 @@ function mapGps()
 
 
 
-    <div id="newPopupShareLink" class="newModal">
-        <div class="newModalContainer">
-            <div class="newModalTitle">
-                <div class="newModalTileText">Share link</div>
-                <div class="newModalTileCross" onclick="$(this).closest('.newModal').css('display','none');"></div>
-            </div>
-            <div class="newModalContent">
-                
-                link /?lat='+ newCenter.lat.toFixed(3) +"&lon="+ newCenter.lng.toFixed(3) +"&zoom="+ newZoom);// +"&day="+ strDate
-                <span id="shareLinkUrl"></span>
-
-            </div>
-        </div>
-    </div>
-
-
     <div id="newPopupAbout" class="newModal">
         <div class="newModalContainer">
             <div class="newModalTitle">
@@ -1705,7 +1666,7 @@ function mapGps()
                     <br>
                     To learn more about how it actually works, please follow <a style="cursor:pointer" onclick="switchVisibility('newPopupHowDoesItWork')">this link</a>.<br>
 					<br>
-                    To go even further and contribute, you can now find Paraglidable open-sourced on <a href="https://github.com/AntoineMeler/Paraglidable" target="_blank">GitHub</a>.
+                    To go even further and contribute, you can now find Paraglidable open-sourced on <a href="https://github.com/plebsapps/buch-paraglidable" target="_blank">GitHub</a>.
                 </p>
             </div>
         </div>
@@ -1756,7 +1717,8 @@ function mapGps()
                 <p>
                     The paraglidable API let you integrate freely our forecasts into any website/service/application.<br>
                     You can <a style="cursor:pointer" onclick="switchMode('api');">get a key</a> by providing an email address.<br>
-                    You are limited to 10 spots by key.
+                    You are limited to 10 spots by key.<br>
+                    <i>Note: on this instance, key registration is temporarily unavailable (it returns with the database migration).</i>
                 </p>
 
                 <h1>JSON format</h1>
@@ -1765,7 +1727,7 @@ function mapGps()
 
                         <div style="margin-left:10px">
                             <div class="popupApiUrl inset">
-                                <a href="https://api.paraglidable.com/?key=YOUR_KEY&format=JSON" target="_blank"><span style="font-size:13px;color:#000000">https://api.paraglidable.com/?key=<span class="textHighlight">YOUR_KEY</span>&format=<span class="textHighlight">JSON</span></span></a>
+                                <a href="https://paraglidable.plebsapps.de/apps/api/get.php?key=YOUR_KEY&format=JSON" target="_blank"><span style="font-size:13px;color:#000000">https://paraglidable.plebsapps.de/apps/api/get.php?key=<span class="textHighlight">YOUR_KEY</span>&format=<span class="textHighlight">JSON</span></span></a>
                             </div>
                         </div>
                         
@@ -1783,7 +1745,7 @@ function mapGps()
 
                         <div style="margin-left:10px">
                             <div class="popupApiUrl inset">
-                                <a href="https://api.paraglidable.com/?key=YOUR_KEY&format=XML" target="_blank"><span style="font-size:13px;color:#000000">https://api.paraglidable.com/?key=<span class="textHighlight">YOUR_KEY</span>&format=<span class="textHighlight">XML</span></span></a>
+                                <a href="https://paraglidable.plebsapps.de/apps/api/get.php?key=YOUR_KEY&format=XML" target="_blank"><span style="font-size:13px;color:#000000">https://paraglidable.plebsapps.de/apps/api/get.php?key=<span class="textHighlight">YOUR_KEY</span>&format=<span class="textHighlight">XML</span></span></a>
                             </div>
                         </div>
                         
@@ -1797,39 +1759,6 @@ function mapGps()
         </div>
     </div>
 
-    <div id="newPopupDonate" class="newModal">
-        <div class="newModalContainer">
-            <div class="newModalTitle">
-                <div class="newModalTileText">Donate</div>
-                <div class="newModalTileCross" onclick="$(this).closest('.newModal').css('display','none');"></div>
-            </div>
-            <div class="newModalContent">
-                <p>
-                    Hi,<br>
-                    My name is Antoine, I live in France and I have been creating and hosting Paraglidable since 2018.<br>
-                    I tried my best to squeeze Paraglidable into a small server but the computing needs an sharing the data with other applications for free are starting to take a toll 😅.<br>
-                    On top of that, I have another similar project in the works, but I don't have enough disk space to release it.<br>
-                    So I finally decided to let you contribute to the costs if you're willing to help.<br>
-
-                    <br><br>
-                    <table width="80%" style="margin-left: auto; margin-right: auto;">
-                        <tr>
-                            <td style="text-align: center; vertical-align: middle;">
-                                <a href="https://paypal.me/paraglidable" target="_blank"><img src="imgs/icons/PayPal.svg" width="100px"></a>
-                            </td>
-                            <td style="text-align: center; vertical-align: middle;">
-                                <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="paraglidable" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
-                            </td>
-                        </tr>
-                    </table>
-                    <br><br><br>
-
-                    <span style="display: table; margin: 0 auto; font-weight: bold; font-size:larger">Thank you!</span></b>
-                </p>
-            </div>
-        </div>
-    </div>
-
     <div id="newPopupLinks" class="newModal">
         <div class="newModalContainer">
             <div class="newModalTitle">
@@ -1838,20 +1767,6 @@ function mapGps()
             </div>
             <div class="newModalContent">
 
-                <h1>Paraglidable API and tiles uses</h1>
-
-
-                <div style="padding-left:15px">
-                    <ul>
-                        <li><a target="_blank" href="https://paraddicted.net/">paraddicted</a></li>
-                        <li><a target="_blank" href="https://www.mr-airspaces.cloud">Mr. Airspaces - Telegram bot</a></li>
-                        <li><a target="_blank" href="https://dbrgn.ch/meteo/">1337 Meteo</a></li>
-                        <li><a target="_blank" href="https://www.schwarzwaldgeier.de/merkur-wetter-prognose/">GSV Baden</a></li>
-                        <li><a target="_blank" href="https://launchpoint.cloud">Launch Point</a></li>
-                    </ul>
-                </div>
-
-                
                 <h1>Other websites to know if it's paraglidable</h1>
 
                 <div style="padding-left:15px">
@@ -1894,11 +1809,11 @@ function mapGps()
             <div class="newModalContent">
 
         <p>
-            Paraglidable.com uses <a href="https://en.wikipedia.org/wiki/Deep_learning" target="_blank">deep learning</a> to analyse standard weather models forecasts.
+            Paraglidable uses <a href="https://en.wikipedia.org/wiki/Deep_learning" target="_blank">deep learning</a> to analyse standard weather models forecasts.
         </p>
         <h1>Offline training</h1>
         <p>
-            Paraglidable.com uses an artifical neural network to compute "flyability" and "crossability" scores by analysing ~200 weather parameters for each day.<br>
+            Paraglidable uses an artifical neural network to compute "flyability" and "crossability" scores by analysing ~200 weather parameters for each day.<br>
             The neural network is trained over ground truth data spanning the last 10 years.<br>
             The ground truth data is composed of weather archives and available online flights databases (~2 000 000 flights).<br>
             During training, the neural network learns the correlation between weather conditions and reported flights (their number, distance, max vario, max altitude...).<br>
@@ -1924,7 +1839,7 @@ function mapGps()
         </p>
         <h1>Online prediction</h1>
         <p>
-            For computing forecast, paraglidable.com downloads the last weather forecasts from multiple sources to feed the neural network.
+            For computing forecast, Paraglidable downloads the last weather forecasts from multiple sources to feed the neural network.
             The neural network outputs a prediction of the flying condition.
             <div style="width:100%; text-align:center">
                 <div style="display: inline-block; position:relative; width:300px; height: 70px">
@@ -2017,75 +1932,6 @@ function mapGps()
             </div>
         </div>
     </div>
-
-
-    <div id="newPopupContact" class="newModal">
-        <div class="newModalContainer">
-            <div class="newModalTitle">
-                <div class="newModalTileText">Contact/Follow</div>
-                <div class="newModalTileCross" onclick="$(this).closest('.newModal').css('display','none');"></div>
-            </div>
-            <div class="newModalContent">
-				<br>
-                <div class="contactParagraphContainer">
-				<a href="https://www.facebook.com/paraglidable" target="_blank"><img src="imgs/icons/contact_facebook.svg" width="70px"></a>
-				<a href="https://bsky.app/profile/paraglidable.com" target="_blank"><img src="imgs/icons/contact_bsky.svg" width="70px"></a>
-				<a href="mailto:antoine@paraglidable.com" target="_blank"><img src="imgs/icons/contact_email.svg" width="70px"></a>
-                </div>
-				<br><br>
-                <div class="contactParagraphContainer">
-                    <div class="contactParagraph">
-                        <div style="width: 100%; display:flex;">
-                            <div style="padding:0px 5px;flex:1;font-weight: bold">Your name</div>
-                            <div style="padding:0px 5px;flex:1;font-weight: bold">Your e-mail</div>
-                        </div>
-                        <div style="width: 100%; display:flex;">
-                            <div style="padding:5px;flex:1"><input id="message-name" type="text" style="width:100%" placeholder="Name"></div>
-                            <div style="padding:5px;flex:1"><input id="message-email" type="text" style="width:100%" placeholder="E-mail"></div>
-                        </div>
-                        <div style="width: 100%;">
-                            <div style="padding:0px 5px;flex:1;font-weight: bold">Your message</div>
-                            <div style="padding:5px;"><textarea id="message-text" style="width:100%; height:120px" placeholder="Message"></textarea></div>
-                        </div>
-                        <div style="width: 100%; display:flex;">
-                            <div style="padding-left:5px;flex:1"><input id="send-message" style="width:100%;" type="button" value="send"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        $('#send-message').click(function(){
-
-            var message_name  = $("#message-name").val();
-            var message_email = $("#message-email").val();
-            var message_text  = $("#message-text").val();
-            
-            $.post(
-                '/apps/sendMessage.php',
-                {
-                    name:  message_name,
-                    email: message_email,
-                    text:  message_text
-                },
-
-                function(data) {
-                    if(data == '1')
-                    {
-                        $("#send-message").val("✓");
-                    }
-                    else
-                    {
-                        $("#send-message").val("Sorry there was en error, your e-mail could not be sent.");
-                    }
-                },
-
-                'text'
-            );
-        });
-    </script>
 
 
     <div id="newPopupCredits" class="newModal">
@@ -2842,7 +2688,7 @@ $.ajax({
 	url:      "data/commit.txt",
 	dataType: "text",
 	success: function(commit)   {
-									$("div#version").html('<a target="_blank" href="https://github.com/AntoineMeler/Paraglidable/tree/'+ commit +'">commit '+ commit.substring(0,8) +"</a>");
+									$("div#version").html('<a target="_blank" href="https://github.com/plebsapps/buch-paraglidable/tree/'+ commit +'">commit '+ commit.substring(0,8) +"</a>");
 								}
 });
 
