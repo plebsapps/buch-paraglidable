@@ -833,6 +833,7 @@ var g_nbDays = 10;
 var g_modePast = false;
 var g_strDate = "";
 const g_switchZoom = L.Browser.retina ? 9 : 10;
+const g_maxTileZoom = 8; // höchste erzeugte Kachel-Zoomstufe (forecast.py max_tiles_zoom im Docker-Zweig)
 
 //========================================================
 // actions
@@ -845,7 +846,7 @@ function createMyTilesLayers(date, className, zoom, isRetina)
     var layer = L.tileLayer(tilesUrl(date, zoom >= g_switchZoom), {
         attribution: '',
         minNativeZoom: isRetina ? 4 : 5,
-        maxNativeZoom: g_switchZoom-1,
+        maxNativeZoom: Math.min(g_switchZoom-1, g_maxTileZoom),
         minZoom: 1,
         //maxZoom: 12,
         ext: 'png',
@@ -2170,7 +2171,7 @@ function mapGps()
             }
             else
             {
-                paraglidableTiles.options.maxNativeZoom = g_switchZoom-1;
+                paraglidableTiles.options.maxNativeZoom = Math.min(g_switchZoom-1, g_maxTileZoom);
             }
 
             // prevNextDayContainer

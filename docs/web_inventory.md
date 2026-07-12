@@ -67,6 +67,19 @@ sowie die vom Prognoselauf erzeugten Daten: `data/tiles/<date>/256/...`
 (PNG-Kacheln **und** `.data`-Dateien), `data/tiles/<date>/spots.json`,
 `progress.txt`, `data/elevation/<zoom>/<tx>/<ty>.elev`.
 
+## Befund: Kachel-Zoomstufen (2026-07-12)
+
+`neural_network/forecast.py` hat zwei Umgebungszweige: Antoines
+Produktionsserver erzeugt Kacheln bis **Zoom 9** (`max_tiles_zoom = 9`),
+der Docker-Zweig (diese Instanz, auch Basis der GM-Referenz) nur bis
+**Zoom 8**. Das Frontend erwartete Zoom 9 (`maxNativeZoom = 9` ohne
+Retina) — ab Karten-Zoom 9 liefen die Kachel-Anfragen ins Leere (404 →
+transparentes errorTile, Overlay verschwand). Konsequenz: `maxNativeZoom`
+im Frontend auf die real erzeugte Stufe 8 geklammert (index.html
+`g_maxTileZoom`, paraglidable_mobile.js); Leaflet skaliert ab Zoom 9
+hoch. Zoom-9-Erzeugung wäre ~4× Tiler-Aufwand — auf dieser Hardware
+verworfen, nach D3/Serverausbau neu bewertbar.
+
 ## Binärformate der Webschicht
 
 - **`.data`** (vom C++-Tiler erzeugt, von get.php gelesen): pro Kachel

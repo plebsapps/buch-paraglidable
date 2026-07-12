@@ -62,7 +62,7 @@ function createMyTilesLayers(date, className, isRetina)
     var layer = L.tileLayer(tilesUrl(date), {
         attribution: '',
         minNativeZoom: isRetina ? 4 : 5,
-        maxNativeZoom: isRetina ? 8 : 9,
+        maxNativeZoom: 8, // höchste erzeugte Kachel-Zoomstufe (forecast.py max_tiles_zoom im Docker-Zweig)
         ext: 'png',
         detectRetina: true,
         className: className,
