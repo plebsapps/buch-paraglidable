@@ -1,8 +1,8 @@
 
 var g_latLngBoundingBox = L.latLngBounds([[66.5-0.01,  -10.55+0.01], [31.952+0.01, 33.75-0.01]]);
 
-var g_userLang = navigator.language || navigator.userLanguage; 
-moment.locale(g_userLang);
+// Deutsche Oberfläche (Etappe F): Datumsanzeige fest auf Deutsch
+moment.locale('de');
 
 function valToColorLst(val, vals, colors)
 {
@@ -79,7 +79,7 @@ function popupContent(name, value, id, nbFlights)
         for (l=0; l<arNames.length; l++)
             lst += "<span style=\"font-weight:bold;margin: 0px 5px 0px 5px\">&#x25cf;</span>"+ arNames[l] +"<br>";
         takeoffsList = "<div class=\"takeoffPopupList\">"+
-                            "Merged takeoffs:<br>"+ lst +
+                            "Zusammengefasste Startplätze:<br>"+ lst +
                        "</div>";
     }
 

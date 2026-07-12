@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="utf-8">
 
-    <meta name="description" content="Paraglidable: AI-based flying conditions forecast for paragliding">
-    <meta name="keywords" content="paraglidable, paragliding, weather, forecast">
+    <meta name="description" content="Paraglidable: KI-basierte Flugwetter-Vorhersage für Gleitschirmflieger">
+    <meta name="keywords" content="paraglidable, gleitschirm, paragliding, wetter, vorhersage">
     <title>Paraglidable</title>
 
     <meta property="og:title" content="Paraglidable" />
@@ -13,7 +13,7 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:url" content="https://paraglidable.plebsapps.de" />
     <meta property="og:type" content="website" />
-    <meta property="og:description" content="AI-based flying conditions forecast for paragliding" />
+    <meta property="og:description" content="KI-basierte Flugwetter-Vorhersage für Gleitschirmflieger" />
 
     <meta http-equiv="refresh" content="43200">
 
@@ -57,12 +57,12 @@
 <!-- menuButtonsBar -->
 
 <div class="dropdown">
-    <div class="menuButton" id="menuButtonInfo" title="About"></div>
+    <div class="menuButton" id="menuButtonInfo" title="Info"></div>
     <div id="dropdown-content-about" class="dropdown-content">
         <ul>
-            <li id="aboutLink" onclick="switchVisibility('newPopupAbout')">What is it?</li>
-            <li id="githubLink" onclick="window.open('https://github.com/plebsapps/buch-paraglidable','_blank')">GitHub page</li>
-            <li id="contactLink" onclick="window.open('https://ralfwbalz.ch','_blank')">Contact</li>
+            <li id="aboutLink" onclick="switchVisibility('newPopupAbout')">Was ist das?</li>
+            <li id="githubLink" onclick="window.open('https://github.com/plebsapps/buch-paraglidable','_blank')">GitHub-Seite</li>
+            <li id="contactLink" onclick="window.open('https://ralfwbalz.ch','_blank')">Kontakt</li>
             <li id="creditsLink" onclick="switchVisibility('newPopupCredits')">Credits</li>
             <li id="linksLink" onclick="switchVisibility('newPopupLinks')">Links</li>
         </ul>
@@ -70,30 +70,30 @@
 </div>
 
 <div class="dropdown">
-    <div class="menuButton" id="menuButtonSettings" title="Settings"></div>
+    <div class="menuButton" id="menuButtonSettings" title="Einstellungen"></div>
     <div class="dropdown-content">
         <ul>
-            <li id="colorBlindLink" onclick="switchColorBlind()">Color blind mode: <span id="colorBlindModeStrValLink" style="font-weight:bold;"></span></li>
+            <li id="colorBlindLink" onclick="switchColorBlind()">Farbenblind-Modus: <span id="colorBlindModeStrValLink" style="font-weight:bold;"></span></li>
         </ul>
     </div>
 </div>
 
 <div class="dropdown">
-    <div class="menuButton" id="menuButtonMobile" title="Mobile"></div>
+    <div class="menuButton" id="menuButtonMobile" title="Mobil"></div>
     <div class="dropdown-content">
         <ul>
-            <li id="mobileVersionLink" onclick="window.location.href='mobile.html'">Mobile version</li>
+            <li id="mobileVersionLink" onclick="window.location.href='mobile.html'">Mobile Version</li>
         </ul>
     </div>
 </div>
 
 <div class="dropdown">
-    <div class="menuButton" id="menuButtonScience" title="Science behind"></div>
+    <div class="menuButton" id="menuButtonScience" title="Die Wissenschaft dahinter"></div>
     <div id="dropdown-content-about" class="dropdown-content">
         <ul>
-            <li id="howDoesItWorkLink" onclick="switchVisibility('newPopupHowDoesItWork')">How does it work?</li>
-            <li id="neuralNetworkLink" onclick="window.open('https://github.com/plebsapps/buch-paraglidable/blob/master/neural_network/README.md','_blank')">The neural network</li>
-            <li id="analysisLink" onclick="switchMode('analysis');">Past data</li>
+            <li id="howDoesItWorkLink" onclick="switchVisibility('newPopupHowDoesItWork')">Wie funktioniert es?</li>
+            <li id="neuralNetworkLink" onclick="window.open('https://github.com/plebsapps/buch-paraglidable/blob/master/neural_network/README.md','_blank')">Das neuronale Netz</li>
+            <li id="analysisLink" onclick="switchMode('analysis');">Vergangene Daten</li>
         </ul>
     </div>
 </div>
@@ -102,16 +102,16 @@
     <div class="menuButton" id="menuButtonAPI" title="REST API"></div>
     <div class="dropdown-content">
         <ul>
-            <li id="apiWhatIsItLink" onclick="switchVisibility('newPopupAboutApi')">What is the API?</li>
-            <li id="apiKeyLink" onclick="switchMode('api');">Get an API key</li>
+            <li id="apiWhatIsItLink" onclick="switchVisibility('newPopupAboutApi')">Was ist die API?</li>
+            <li id="apiKeyLink" onclick="switchMode('api');">API-Schlüssel anfordern</li>
         </ul>
     </div>
 </div>
 
 <div>
     <div class="menuButtonExpandable">
-      <input autocomplete="off" id="searchInput" type="text" placeholder="Location"/>
-      <div class="menuButton" id="menuButtonSearch" title="Search location" onclick="expandSearch();$('#searchInput').focus();"></div>
+      <input autocomplete="off" id="searchInput" type="text" placeholder="Ort"/>
+      <div class="menuButton" id="menuButtonSearch" title="Ort suchen" onclick="expandSearch();$('#searchInput').focus();"></div>
     </div>
 </div>
 
@@ -126,12 +126,12 @@
 
 
         <div id="headerMapControls">
-            <div class="mapControlButton" id="mapControlButtonPlus" title="Zoom in" onclick="mapZoom(+1)"></div>
-            <div class="mapControlButton" id="mapControlButtonMinus" title="Zoom out" onclick="mapZoom(-1)"></div>
-            <div class="mapControlButton dropdown2" id="mapControlButtonLayers" title="Layers">
+            <div class="mapControlButton" id="mapControlButtonPlus" title="Hineinzoomen" onclick="mapZoom(+1)"></div>
+            <div class="mapControlButton" id="mapControlButtonMinus" title="Herauszoomen" onclick="mapZoom(-1)"></div>
+            <div class="mapControlButton dropdown2" id="mapControlButtonLayers" title="Ebenen">
                 <div class="dropdown-content2">
-            <li id="checkboxShowHideMapColors" onclick="switchLayersVisibility(0)">Map colors</li>
-            <li id="checkboxShowHideSpots" onclick="switchLayersVisibility(1)">Takeoffs</li>
+            <li id="checkboxShowHideMapColors" onclick="switchLayersVisibility(0)">Kartenfarben</li>
+            <li id="checkboxShowHideSpots" onclick="switchLayersVisibility(1)">Startplätze</li>
                 </div>
             </div>
             <div class="mapControlButton bottom" id="mapControlButtonGps" title="GPS" onclick="mapGps()">
@@ -143,7 +143,7 @@
 
     <div id="hideShadow"></div>
     <div id="legend" class="tooltip" onclick="switchVisibility('newPopupLegendDefinition')">
-        <span class="tooltiptext">Click to see<br>definition<div class="tooltip--tip"></div></span>
+        <span class="tooltiptext">Klicken für<br>Definition<div class="tooltip--tip"></div></span>
         <div class="legendSection" id="legendSectionPredictions">
             <div id="legendTop" class="legendLine">
                 <div class="legendTopFieldTitle" style="flex:0 0 37px">Lat:&nbsp;</div>
@@ -154,7 +154,7 @@
                 <div class="legendTopFieldVal" id="legendTopAlt"></div>
             </div>
             <div class="legendLine">
-                <div class="legendLineName">Can I fly?</div>
+                <div class="legendLineName">Kann ich fliegen?</div>
                 <div class="legendLineValue">
                     <div id="legendImg1" class="legendImg colorMap">
                         <div id="legendVal1" class="legendVal">
@@ -167,7 +167,7 @@
                 </div>
             </div>
             <div class="legendLine">
-                <div class="legendLineName">Can I do XC?</div>
+                <div class="legendLineName">Kann ich XC fliegen?</div>
                 <div class="legendLineValue">
                     <div id="legendImg2" class="legendImg colorMap">
                         <div id="legendVal2" class="legendVal">
@@ -196,7 +196,7 @@
             -->
             
             <div id="legendFlights" style="display:none" class="legendLine">
-                <div class="legendLineName">Flight score</div>
+                <div class="legendLineName">Flug-Score</div>
                 <div class="legendLineValue">
                     <div id="legendImg4" class="legendImg colorMap">
                         <svg width="200" height="20">
@@ -238,7 +238,7 @@
         <div id="vignettesContainer" class="vignettesContainer"></div>
     </div>
     <div id="lastUpdates">
-        <div id="lastUpdateFieldTxt">Last forecast update</div>
+        <div id="lastUpdateFieldTxt">Letzte Aktualisierung</div>
         <div id="lastUpdateTime"></div>
     </div>
 </div>
@@ -248,12 +248,12 @@
 <div id="prevNextDayContainer">
     <div id="prevNextDay">
         <div class="prevNextLine">
-            <div class="mapControlButton topleft" id="mapControlButtonPrev" title="Previous day" onclick="hideAllModals();moveDay(-1);"></div>
-            <div class="mapControlButton topright" id="mapControlButtonNext" title="Next day"     onclick="hideAllModals();moveDay(+1);"></div>
+            <div class="mapControlButton topleft" id="mapControlButtonPrev" title="Vorheriger Tag" onclick="hideAllModals();moveDay(-1);"></div>
+            <div class="mapControlButton topright" id="mapControlButtonNext" title="Nächster Tag"     onclick="hideAllModals();moveDay(+1);"></div>
         </div>
         <div class="prevNextLine">
-            <div class="mapControlButton" id="mapControlButtonBackward" title="Past"   onclick="hideAllModals();moveForward(false);"></div>
-            <div class="mapControlButton" id="mapControlButtonForward"  title="Future" onclick="hideAllModals();moveForward(true);"></div>
+            <div class="mapControlButton" id="mapControlButtonBackward" title="Vergangenheit"   onclick="hideAllModals();moveForward(false);"></div>
+            <div class="mapControlButton" id="mapControlButtonForward"  title="Zukunft" onclick="hideAllModals();moveForward(true);"></div>
         </div>
     </div>
     <div id="bottomLeftShadowHider"></div>
@@ -269,20 +269,20 @@
                     <div class="bottomPopupHeaderCross" onclick="switchMode('main')"></div>
                     <div style="width:100%;height:100%;display:flex;flex-direction:row">
                         <div id="apiStepOne" style="flex:1">
-                            <h1>1) Place spots</h1>
+                            <h1>1) Spots platzieren</h1>
                             <ul>
-                                <li>Click on the map to add a spot</li>
-                                <li>Click on a spot to change its name or remove it</li>
+                                <li>Auf die Karte klicken, um einen Spot hinzuzufügen</li>
+                                <li>Auf einen Spot klicken, um ihn umzubenennen oder zu entfernen</li>
                             </ul>
                         </div>
                         <div id="apiStepTwo" style="flex:1">
-                            <h1>2) Get the key</h1>
+                            <h1>2) Schlüssel anfordern</h1>
                             <div style="padding-left:20px">
-                                <span>E-mail: <input class="textInput" type="text" id="apiEmail" style="width:180px"> </span>
-                                <span id="apiSendButton" class="textInput" onclick="generateKey();">Send the key <img style="vertical-align:middle;margin-bottom:3px" src="imgs/icons/email-send.svg" height="22"></span> <div style="display:none" id="apiEmailSpinner" class="lds-ellipsis"><div></div><div></div></div><br>
-                                <span style="display:none" id="apiEmailOK"><span class="blinkingText" style="font-size:13px">&#10003; Be sure to check your spam folder.</span></span>
-                                <span style="display:none" id="apiEmailErr" style="font-size:13px">Error</span>
-                                <div style="font-size:10px">If a key already exists with this email, it will be replaced.</div>
+                                <span>E-Mail: <input class="textInput" type="text" id="apiEmail" style="width:180px"> </span>
+                                <span id="apiSendButton" class="textInput" onclick="generateKey();">Schlüssel senden <img style="vertical-align:middle;margin-bottom:3px" src="imgs/icons/email-send.svg" height="22"></span> <div style="display:none" id="apiEmailSpinner" class="lds-ellipsis"><div></div><div></div></div><br>
+                                <span style="display:none" id="apiEmailOK"><span class="blinkingText" style="font-size:13px">&#10003; Bitte auch den Spam-Ordner prüfen.</span></span>
+                                <span style="display:none" id="apiEmailErr" style="font-size:13px">Fehler</span>
+                                <div style="font-size:10px">Existiert zu dieser E-Mail bereits ein Schlüssel, wird er ersetzt.</div>
                             </div>
                         </div>
                     </div>
@@ -290,7 +290,7 @@
             </div>
             <div class="bottomPopupHeader">
                 <div class="bottomPopupHeaderText">
-                <img style="vertical-align:middle" src="imgs/icons/key.svg" height="11"> <pan style="position:relative;vertical-align:middle;bottom:1px">API key</pan>
+                <img style="vertical-align:middle" src="imgs/icons/key.svg" height="11"> <pan style="position:relative;vertical-align:middle;bottom:1px">API-Schlüssel</pan>
                 </div>
             </div>
         </div>
@@ -312,7 +312,7 @@
             </div>
             <div class="bottomPopupHeader">
                 <div class="bottomPopupHeaderText">
-                <img style="vertical-align:middle" src="imgs/icons/analysis.svg" height="11"> <pan style="position:relative;vertical-align:middle;bottom:1px">Past data</pan>
+                <img style="vertical-align:middle" src="imgs/icons/analysis.svg" height="11"> <pan style="position:relative;vertical-align:middle;bottom:1px">Vergangene Daten</pan>
                 </div>
             </div>
         </div>
@@ -333,7 +333,7 @@
     }
 
     function getMonthHtml(year, month, settings) {
-        var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+        var monthNames = [ "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ];
         var firstDay = 1;
                 
         var monthHtml  = '<div class="datepicker-month-container">';
@@ -590,7 +590,7 @@ function apiMarkerPopupContent(id, spotId=-1, value="")
     var nameId = "apiSpotName-"+ id.toString();
     var customPopup = '<div style="margin:20px 20px 13px 5px">';
     if (spotId >= 0)
-        customPopup += '<span style="font-size:smaller"><span style="font-weight:bold">Takeoff:</span> takeoff probability<br>will be added to the forecasts<br><br></span>';
+        customPopup += '<span style="font-size:smaller"><span style="font-weight:bold">Startplatz:</span> Die Startplatz-Wahrscheinlichkeit<br>wird den Vorhersagen hinzugefügt<br><br></span>';
     customPopup += 'Name: <input id="'+ nameId +'" class="apiMarkerNameInputText" onclick="clearUntitled('+ id.toString() +')" onkeyup="apiSpotNameChange('+id.toString()+')" onchange="apiSpotNameChange('+ id.toString() +')" type="text" value="'+ value +'"><br/><br/>\
                         <span style="cursor:pointer;position:absolute;right:4px;bottom:4px;" onclick="removeApiMarker('+ id.toString() +')"><img src="imgs/icons/remove.svg" width="16"></span></div>';
     return customPopup;
@@ -689,8 +689,8 @@ function displayKeyWords(val_flyability,
 {
     // keywords
     keywords = [];
-    keywords.push(['Wind',     warningLegendVal(val_wind),    '#A00000']);
-    keywords.push(['Humidity', warningLegendVal(val_water),   '#A00000']);
+    keywords.push(['Wind',         warningLegendVal(val_wind),  '#A00000']);
+    keywords.push(['Feuchtigkeit', warningLegendVal(val_water), '#A00000']);
 
     //keywords.push(['Plaf élevé (WIP fake)', Math.max(0.0, Math.sin(1.5*lon)), '#00A000']);
 
@@ -1200,7 +1200,7 @@ function updateLastUpdateDate()
                 if (lastModified != null)
                 {
                     if (moment(lastModified).format('YYYY-MM-DD') == moment().format('YYYY-MM-DD'))
-                        $('#lastUpdateTime').html('Today at '+moment(lastModified).format('HH:mm'));
+                        $('#lastUpdateTime').html('Heute um '+moment(lastModified).format('HH:mm'));
                     else
                         $('#lastUpdateTime').html(moment(lastModified).format('YYYY-MM-DD HH:mm'));
                 }
@@ -1459,7 +1459,7 @@ function updateVignettes()
                     if (this.getResponseHeader("Last-Modified") == null)
                     {
                         $("#map-"+ strDate).addClass("notAvailable");
-                        $("#map-"+ strDate).html("<div style=\"padding-top:10px\">Not<br>available<br>yet</div>");
+                        $("#map-"+ strDate).html("<div style=\"padding-top:10px\">Noch<br>nicht<br>verfügbar</div>");
                     }
                 }
             }
@@ -1642,7 +1642,7 @@ function mapGps()
     <div id="newPopupAbout" class="newModal">
         <div class="newModalContainer">
             <div class="newModalTitle">
-                <div class="newModalTileText">What is it?</div>
+                <div class="newModalTileText">Was ist das?</div>
                 <div class="newModalTileCross" onclick="$(this).closest('.newModal').css('display','none');"></div>
             </div>
             <div class="newModalContent">
@@ -1675,29 +1675,29 @@ function mapGps()
     <div id="newPopupLegendDefinition" class="newModal">
         <div class="newModalContainer">
             <div class="newModalTitle">
-                <div class="newModalTileText">Legend</div>
+                <div class="newModalTileText">Legende</div>
                 <div class="newModalTileCross" onclick="$(this).closest('.newModal').css('display','none');"></div>
             </div>
             <div class="newModalContent">
 
-                <h1>Can I Fly?</h1>
+                <h1>Kann ich fliegen?</h1>
                 <p>
-                    Probability that a flight will be reported, given the full weather vector of the day, assuming a given paragliders local population.
+                    Wahrscheinlichkeit, dass ein Flug gemeldet wird — gegeben den vollständigen Wettervektor des Tages und eine angenommene lokale Gleitschirmflieger-Population.
                 </p>
 
-                <h1>Can I do XC?</h1>
+                <h1>Kann ich XC fliegen?</h1>
                 <p>
-                    Probability that a flight of 60 points or more (using PWC scoring) will be reported, given the full weather vector of the day, assuming a given paragliders local population.
+                    Wahrscheinlichkeit, dass ein Flug mit 60 Punkten oder mehr (PWC-Wertung) gemeldet wird — gegeben den vollständigen Wettervektor des Tages und eine angenommene lokale Gleitschirmflieger-Population.
                 </p>
 
                 <h1><pan style="color:#C35E5E">Wind</pan></h1>
                 <p>
-                    1 - 3/2 * (probability that a flight will be reported, given the wind-related weather parameters, assuming a given paragliders local population)
+                    1 − 3/2 × (Wahrscheinlichkeit, dass ein Flug gemeldet wird — gegeben nur die windbezogenen Wetterparameter und eine angenommene lokale Gleitschirmflieger-Population)
                 </p>
 
-                <h1><pan style="color:#C35E5E">Humidity</pan></h1>
+                <h1><pan style="color:#C35E5E">Feuchtigkeit</pan></h1>
                 <p>
-                    1 - 3/2 * (probability that a flight will be reported, given the humidity-related weather parameters, assuming a given paragliders local population)
+                    1 − 3/2 × (Wahrscheinlichkeit, dass ein Flug gemeldet wird — gegeben nur die feuchtigkeitsbezogenen Wetterparameter und eine angenommene lokale Gleitschirmflieger-Population)
                 </p>
 
             </div>
@@ -1708,20 +1708,20 @@ function mapGps()
     <div id="newPopupAboutApi" class="newModal">
         <div class="newModalContainer">
             <div class="newModalTitle">
-                <div class="newModalTileText">What is the API?</div>
+                <div class="newModalTileText">Was ist die API?</div>
                 <div class="newModalTileCross" onclick="$(this).closest('.newModal').css('display','none');"></div>
             </div>
             <div class="newModalContent">
                 <p>
-                    The paraglidable API let you integrate freely our forecasts into any website/service/application.<br>
-                    You can <a style="cursor:pointer" onclick="switchMode('api');">get a key</a> by providing an email address.<br>
-                    You are limited to 10 spots by key.<br>
-                    <i>Note: on this instance, key registration is temporarily unavailable (it returns with the database migration).</i>
+                    Über die Paraglidable-API lassen sich die Vorhersagen frei in eigene Websites, Dienste oder Anwendungen einbinden.<br>
+                    Einen <a style="cursor:pointer" onclick="switchMode('api');">Schlüssel</a> gibt es gegen Angabe einer E-Mail-Adresse.<br>
+                    Pro Schlüssel sind maximal 10 Spots möglich.<br>
+                    <i>Hinweis: Auf dieser Instanz ist die Schlüssel-Vergabe vorübergehend nicht verfügbar (sie kommt mit der Datenbank-Migration zurück).</i>
                 </p>
 
-                <h1>JSON format</h1>
+                <h1>JSON-Format</h1>
                     <div style="margin-left:20px">
-                        <h2>URL to use</h2>
+                        <h2>Aufruf-URL</h2>
 
                         <div style="margin-left:10px">
                             <div class="popupApiUrl inset">
@@ -1729,17 +1729,17 @@ function mapGps()
                             </div>
                         </div>
                         
-                        <h2>Result example</h2>
-                        
+                        <h2>Beispiel-Ergebnis</h2>
+
                         <div style="margin-left:10px">
                             <div id="apiJsonExample" class="popupPreformatedDiv"></div>
                         </div>
                     </div>
 
                 <br>
-                <h1>XML format</h1>
+                <h1>XML-Format</h1>
                     <div style="margin-left:20px">
-                        <h2>URL to use</h2>
+                        <h2>Aufruf-URL</h2>
 
                         <div style="margin-left:10px">
                             <div class="popupApiUrl inset">
@@ -1747,8 +1747,8 @@ function mapGps()
                             </div>
                         </div>
                         
-                        <h2>Result example</h2>
-                        
+                        <h2>Beispiel-Ergebnis</h2>
+
                         <div style="margin-left:10px">
                             <div id="apiXmlExample" class="popupPreformatedDiv"></div>
                         </div>
@@ -1765,10 +1765,10 @@ function mapGps()
             </div>
             <div class="newModalContent">
 
-                <h1>Other websites to know if it's paraglidable</h1>
+                <h1>Andere Websites für die Flugwetter-Frage</h1>
 
                 <div style="padding-left:15px">
-                    <h2>Forecasts</h2>
+                    <h2>Vorhersagen</h2>
 
                     <ul>
                         <li><a target="_blank" href="https://meteo-parapente.com">meteo-parapente.com</a></li>
@@ -1776,14 +1776,14 @@ function mapGps()
                         <li><a target="_blank" href="https://www.meteoblue.com">meteoblue.com</a></li>
                     </ul>
 
-                    <h2>Real-time</h2>
+                    <h2>Echtzeit</h2>
 
                     <ul>
                         <li><a target="_blank" href="https://www.spotair.mobi/">SpotAiR</a></li>
                     </ul>
                 </div>
 
-                <h1>Projects I like</h1>
+                <h1>Sehenswerte Projekte</h1>
 
                 <div style="padding-left:15px">
                     <ul>
@@ -1801,21 +1801,21 @@ function mapGps()
     <div id="newPopupHowDoesItWork" class="newModal">
         <div class="newModalContainer">
             <div class="newModalTitle">
-                <div class="newModalTileText">How does it work?</div>
+                <div class="newModalTileText">Wie funktioniert es?</div>
                 <div class="newModalTileCross" onclick="$(this).closest('.newModal').css('display','none');"></div>
             </div>
             <div class="newModalContent">
 
         <p>
-            Paraglidable uses <a href="https://en.wikipedia.org/wiki/Deep_learning" target="_blank">deep learning</a> to analyse standard weather models forecasts.
+            Paraglidable analysiert die Vorhersagen gängiger Wettermodelle mit <a href="https://de.wikipedia.org/wiki/Deep_Learning" target="_blank">Deep Learning</a>.
         </p>
-        <h1>Offline training</h1>
+        <h1>Offline-Training</h1>
         <p>
-            Paraglidable uses an artifical neural network to compute "flyability" and "crossability" scores by analysing ~200 weather parameters for each day.<br>
-            The neural network is trained over ground truth data spanning the last 10 years.<br>
-            The ground truth data is composed of weather archives and available online flights databases (~2 000 000 flights).<br>
-            During training, the neural network learns the correlation between weather conditions and reported flights (their number, distance, max vario, max altitude...).<br>
-            Correlation results can be visualised <span class="textHighlight" style="cursor:pointer" onclick="switchMode('analysis');">here</span>.<br>
+            Paraglidable berechnet „Flyability"- und „Crossability"-Scores mit einem künstlichen neuronalen Netz, das täglich rund 200 Wetterparameter auswertet.<br>
+            Trainiert wurde das Netz auf Ground-Truth-Daten aus zehn Jahren.<br>
+            Diese bestehen aus Wetterarchiven und öffentlich verfügbaren Online-Flugdatenbanken (~2&nbsp;000&nbsp;000 Flüge).<br>
+            Beim Training lernt das Netz den Zusammenhang zwischen Wetterlage und gemeldeten Flügen (Anzahl, Distanz, max. Steigen, max. Höhe …).<br>
+            Die Korrelations-Ergebnisse lassen sich <span class="textHighlight" style="cursor:pointer" onclick="switchMode('analysis');">hier</span> ansehen.<br>
             <div style="width:100%; text-align:center">
                 <div style="display: inline-block; position:relative; width:300px; height: 150px">
                     <div style="position: absolute; left:50px; top: 10px; text-align: center; width: 50px">
@@ -1835,10 +1835,10 @@ function mapGps()
                 </div>
             </div>
         </p>
-        <h1>Online prediction</h1>
+        <h1>Online-Vorhersage</h1>
         <p>
-            For computing forecast, Paraglidable downloads the last weather forecasts from multiple sources to feed the neural network.
-            The neural network outputs a prediction of the flying condition.
+            Für die Vorhersage lädt Paraglidable die aktuellen Wetterprognosen mehrerer Quellen und speist sie in das neuronale Netz ein.
+            Das Netz gibt eine Einschätzung der Flugbedingungen aus.
             <div style="width:100%; text-align:center">
                 <div style="display: inline-block; position:relative; width:300px; height: 70px">
                     <img style="position: absolute; left:50px; top: 20px" src="imgs/icons/weather.svg" alt=""  width="40">
@@ -1851,7 +1851,7 @@ function mapGps()
                 </div>
             </div>
         </p>
-        <h1>Data sources</h1>
+        <h1>Datenquellen</h1>
         <p>
             <div style="position:relative; width:300px; height: 150px">
                 <div style="position: absolute; left:50px; top: 10px; text-align: center; width: 50px">
@@ -1903,7 +1903,7 @@ function mapGps()
     <div id="popupMobileVersion" class="newModal">
         <div class="newModalContainer">
             <div class="newModalTitle">
-                <div class="newModalTileText">Switch to the mobile version?</div>
+                <div class="newModalTileText">Zur mobilen Version wechseln?</div>
                 <div class="newModalTileCross" onclick="$(this).closest('.newModal').css('display','none');"></div>
             </div>
             <div class="newModalContent" id="popupMobileVersionContent">
@@ -1913,19 +1913,19 @@ function mapGps()
                         <img height="80" src="imgs/icons/smartphone-black.svg" alt=""/>
                     </div>
                     <div style="flex:1; padding-top: 55px; padding-bottom: 60px; text-align: center;">
-                        Switch to the mobile version?
+                        Zur mobilen Version wechseln?
                     </div>
                     <div style="flex: 1; display:flex; flex-direction: row;">
                         <div style="width:40px"></div>
-                        <div class="modalButtonYes" onclick="location.href='mobile.html';">YES</div>
+                        <div class="modalButtonYes" onclick="location.href='mobile.html';">JA</div>
                         <div style="width:40px"></div>
-                        <div class="modalButtonNo" onclick="$('#popupMobileVersion').css('display', 'none');">NO</div>
+                        <div class="modalButtonNo" onclick="$('#popupMobileVersion').css('display', 'none');">NEIN</div>
                         <div style="width:40px"></div>
                     </div>
                 </div>
 
                 <div style="width:100%;text-align:right;padding-top:35px">
-                <a onclick="stopAskingMobileVersion();" style="margin-left:auto; font-size:smaller;">never</a>
+                <a onclick="stopAskingMobileVersion();" style="margin-left:auto; font-size:smaller;">nie fragen</a>
                 </div>
             </div>
         </div>
@@ -1940,11 +1940,11 @@ function mapGps()
             </div>
             <div class="newModalContent">
 
-                <h1>Data sources</h1>
+                <h1>Datenquellen</h1>
 
                 <div style="padding-left:15px">
 
-                    <h2>Weather</h2>
+                    <h2>Wetter</h2>
                     <ul>
                         <!--
                         <li><a target="_blank" href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs">GFS</a></li>
@@ -1954,7 +1954,7 @@ function mapGps()
                         <li><a target="_blank" href="https://www.ncdc.noaa.gov">NOAA</a></li>
                     </ul>
 
-                    <h2>Flights</h2>
+                    <h2>Flüge</h2>
                     <ul>
                         <li><a target="_blank" href="http://www.paraglidingforum.com/leonardo">Paragliding Forum</a></li>
                         <li><a target="_blank" href="https://www.xcontest.org">XContest</a></li>
@@ -1963,13 +1963,13 @@ function mapGps()
                         <li><a target="_blank" href="http://www.xcleague.com">XC League</a></li>
                     </ul>
 
-                    <h2>Map tiles</h2>
+                    <h2>Kartenkacheln</h2>
                     <ul>
                         <li><a target="_blank" href="https://www.osm.ch/">OpenStreetMap Switzerland</a></li>
                         <li>Map tiles by <a target="_blank" href="http://stamen.com">Stamen Design</a>, under <a target="_blank" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_blank" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" href="http://www.openstreetmap.org/copyright">ODbL</a>.</li>
                     </ul>
 
-                    <h2>Geography</h2>
+                    <h2>Geographie</h2>
 
                     <ul>
                         <li><a target="_blank" href="https://www.naturalearthdata.com">Natural Earth</a></li>
@@ -1977,7 +1977,7 @@ function mapGps()
                     </ul>
 
 
-                    <h2>Flying spots</h2>
+                    <h2>Fluggelände</h2>
                     <ul>
                         <li><a target="_blank" href="http://www.paraglidingspots.com">paraglidingspots.com</a></li>
                     </ul>
@@ -1985,7 +1985,7 @@ function mapGps()
                 </div>
 
 
-                <h1>Images</h1>
+                <h1>Bilder</h1>
 
                 <ul>
 <!-- copyright, search, mobile, about, info, target, GPS, android, desktop, arrows, key, API, remove, email, email-send -->
@@ -2017,7 +2017,7 @@ function mapGps()
                     <li>Icons made by <a target="_blank" href="https://www.flaticon.com/authors/cole-bemis" title="Cole Bemis">Cole Bemis</a> from <a target="_blank" href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></li>
                 </ul>
 
-                <h1>Libraries</h1>
+                <h1>Bibliotheken</h1>
 
                 <div style="padding-left:15px">
 
@@ -2542,7 +2542,7 @@ function applyColorBlind(className)
 
 function updateColorBlindLinkText()
 {
-    var arrStrMode = ["off", "1/2", "2/2"];
+    var arrStrMode = ["aus", "1/2", "2/2"];
     $("#colorBlindModeStrValLink").html(arrStrMode[colorBlindValue%arrStrMode.length]);
 }
 
