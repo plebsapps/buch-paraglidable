@@ -155,9 +155,12 @@ sudo sed -i 's/127\.0\.0\.1:8006/127.0.0.1:8007/' /etc/nginx/sites-available/par
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
-Rückweg (Rollback): dieselbe Zeile zurück auf 8006 — der eingefrorene
-Apache/PHP-Container läuft unverändert weiter, bis die Umschaltung
-einige Forecast-Zyklen stabil überstanden hat.
+Rückweg (Rollback): dieselbe Zeile zurück auf 8006. Betreiber-Entscheidung
+2026-07-12: Auf die geplante Beobachtungsphase („einige Forecast-Zyklen")
+wird verzichtet — die Instanz ist nicht produktionskritisch, FastAPI ist ab
+sofort der einzige Webpfad. Der Legacy-Container bleibt trotzdem laufen:
+nicht mehr als Webschicht, sondern als eingefrorene Laufzeitumgebung der
+Forecast-Pipeline (Python 3.6/TF); er entfällt erst mit Etappe D3.
 
 Stolperstein, dokumentiert: Der erste Umschaltversuch lief mit einem
 Tippfehler im vhost-Dateinamen ins Leere (`sed` bricht ab, bevor nginx
