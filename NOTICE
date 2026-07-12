@@ -34,6 +34,9 @@ the Git history for exact dates and details of each change):
     original author (donation, social media, contact, app store, v2) were
     removed or replaced by links to the operator of this instance; the
     GPLv3 attribution notice in the footer remains
+  * The web user interface was translated from English to German
+    (2026-07-12); the English attribution notice in the footer and the
+    license credits were left unchanged
 
 This derivative work is distributed under the same license as the original:
 GNU General Public License v3. See the LICENSE file.
