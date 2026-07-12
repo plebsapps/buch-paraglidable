@@ -1,6 +1,6 @@
 {
- "body_bytes": 103548,
- "body_sha256": "ac111a06516e13342f482b258284fa0a26dd6f8cf2b8356b81fb310eb128ddfa",
+ "body_bytes": 103914,
+ "body_sha256": "4342332867e32e44b208142e97c1efa818c9360c5956dc9c925abfcd1fcf3ff1",
  "request": "GET /index.html",
  "status": 200
 }
