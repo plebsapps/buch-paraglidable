@@ -1,0 +1,1 @@
+    setCookie("mobileVersion", "0");
