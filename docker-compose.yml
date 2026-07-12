@@ -16,3 +16,14 @@ services:
       - ./www:/app/www:ro
       # www/data/elevation is a relative symlink into tiler/_cache
       - ./tiler/_cache/elevation:/app/tiler/_cache/elevation:ro
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/worker/Dockerfile
+    container_name: paraglidable-worker
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Zurich
+    volumes:
+      - .:/workspaces/Paraglidable
