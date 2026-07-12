@@ -96,12 +96,18 @@ die versionierte Bann-Liste `banned.txt.php`).
 
 1. **gtag.php / Google Analytics:** 1:1 portiert (snapshot-treu); Entfernen/
    Ersetzen des Trackings ist eine Identitätsfrage → Etappe F.
+   *Nachtrag F Teil 1 (2026-07-12): Tracking entfernt — gtag-Bootstrap aus
+   allen HTML-Seiten, Endpunkt aus web/app.py (jetzt 404), PHP-Quelle
+   gelöscht; Snapshot gtag_localhost friert den 404 ein.*
 2. **Honeypot getAnalysisData.php:** bewusst **nicht** portiert → 404. War
    schon von den Charakterisierungstests ausgenommen und hängt an nicht
    versionierten Daten und veränderlichem Bann-Zustand.
 3. **Mail-Versand** (Kontaktformular, API-Schlüssel): der eingefrorene
-   500-Zustand bleibt erhalten; echter SMTP-Versand → Etappe F,
-   API-Schlüssel brauchen die Datenbank → Etappe E.
+   500-Zustand bleibt erhalten; API-Schlüssel brauchen die Datenbank →
+   Etappe E. *Nachtrag F Teil 1 (2026-07-12): Das Kontaktformular wurde aus
+   dem Frontend entfernt (Kontakt läuft über ralfwbalz.ch); ein eigener
+   SMTP-Versand ist damit vom Tisch. Der sendMessage-Endpunkt bleibt als
+   eingefrorener 500-Stub.*
 4. **search.php:** beobachtbares Verhalten 1:1 erhalten (Referer-Prüfung,
    Bereinigung, Proxy-Versuch → leere Antwort); direkte Auslieferung erst,
    wenn ein Suchindex existiert.

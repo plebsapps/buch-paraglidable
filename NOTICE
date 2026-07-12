@@ -29,6 +29,11 @@ the Git history for exact dates and details of each change):
   * A visible notice in the web front-end marking this instance as an
     independent re-implementation (added 2026-07-11); a full visual
     redesign establishing a distinct identity is planned (stage F)
+  * Front-end identity cleanup (stage F part 1, 2026-07-12): the original
+    author's Google Analytics tracking was removed; links pointing to the
+    original author (donation, social media, contact, app store, v2) were
+    removed or replaced by links to the operator of this instance; the
+    GPLv3 attribution notice in the footer remains
 
 This derivative work is distributed under the same license as the original:
 GNU General Public License v3. See the LICENSE file.
