@@ -141,8 +141,13 @@ SNAPSHOT_BASE=http://localhost:8007 python3 golden_master/snapshot_www.py check
 
 ## Produktivschaltung der FastAPI-Webschicht (D2 → live)
 
-Die Portierung ist snapshot-verifiziert; die Umschaltung ist ein
-nginx-Handgriff (sudo, Betreiber):
+**Erfolgt am 2026-07-12** (Betreiber): vhost von 8006 auf 8007 umgestellt,
+`nginx -t` + Reload. Verifikation über nginx: 401 ohne / 200 mit Credentials,
+HTTP→HTTPS-301; ein voller Seitenaufruf im Browser landete nachweislich im
+uvicorn-Log (Startseite, Assets, 226 Kachel-Anfragen, `get.php` mit echten
+Werten für den Tag). Abweichungen im Log sind die erwarteten eingefrorenen
+Verhalten: 404 für den 11. Tag hinter dem letzten Lauf, 500 für
+`get.php?key=…` (mysqli-Zustand, bis Etappe E). Der Befehl (Referenz):
 
 ```bash
 # im vhost paraglidable.plebsapps.de proxy_pass von 8006 auf 8007 stellen
@@ -153,6 +158,12 @@ sudo nginx -t && sudo systemctl reload nginx
 Rückweg (Rollback): dieselbe Zeile zurück auf 8006 — der eingefrorene
 Apache/PHP-Container läuft unverändert weiter, bis die Umschaltung
 einige Forecast-Zyklen stabil überstanden hat.
+
+Stolperstein, dokumentiert: Der erste Umschaltversuch lief mit einem
+Tippfehler im vhost-Dateinamen ins Leere (`sed` bricht ab, bevor nginx
+angefasst wird) — folgenlos, aber ein Argument dafür, nach jedem
+sudo-Handgriff den Ist-Zustand zu prüfen (`grep proxy_pass …`) statt dem
+Kommando-Exit zu vertrauen.
 
 ## Offene Punkte
 
