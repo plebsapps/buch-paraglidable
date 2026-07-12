@@ -1,7 +1,7 @@
 # Umbauplan und Projektstand
 
 Etappenplan der verhaltenserhaltenden Modernisierung (Praxisfall Teil II des
-Buchs „Softwaremodernisierung mit selbstgehosteter KI"). Dieses Dokument ist
+Buchs „Softwaremodernisierung mit KI"). Dieses Dokument ist
 die maschinen- und ortsunabhängige Quelle für Ziel, Entscheidungen und Stand —
 es wird bei jedem Etappenabschluss nachgeführt.
 

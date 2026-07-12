@@ -5,7 +5,7 @@
 > ([paraglidable.com](https://paraglidable.com)), licensed under GPLv3.
 > This is an **independent derivative — not affiliated with or endorsed by the
 > original project.** It serves as the practice project ("Praxisfall") for the
-> German book *"Softwaremodernisierung mit selbstgehosteter KI"*: a controlled,
+> German book *"Softwaremodernisierung mit KI"*: a controlled,
 > behavior-preserving modernization (Python port of the C++ tiler and the PHP
 > web layer, PostgreSQL for results/metadata, Docker Compose), carried out
 > step by step with a golden-master safety net. See [NOTICE](NOTICE) for

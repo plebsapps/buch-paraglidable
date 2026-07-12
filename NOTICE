@@ -10,8 +10,9 @@ This repository is a derivative work of Paraglidable:
     License: GNU General Public License v3 (see LICENSE)
 
 This derivative ("buch-paraglidable") is an independent teaching and practice
-project accompanying the German book "Softwaremodernisierung mit
-selbstgehosteter KI" by Ralf Balz. It is NOT affiliated with or endorsed by
+project accompanying the German book "Softwaremodernisierung mit KI"
+(subtitle: "Mit Golden Master, Charakterisierungstests und kleinen
+Schritten vom Altsystem zur Zielarchitektur") by Ralf Balz. It is NOT affiliated with or endorsed by
 the original Paraglidable project or its author.
 
 The full Git history of the original project has been preserved in this

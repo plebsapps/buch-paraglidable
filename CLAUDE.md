@@ -7,7 +7,9 @@ für jede Änderung — unabhängig davon, auf welcher Maschine gearbeitet wird.
 
 Dieses Repository ist ein GPLv3-Derivat von Paraglidable (Antoine Meler,
 github.com/AntoineMeler/Paraglidable) und zugleich der reale Praxisfall für
-Teil II des Buchs „Softwaremodernisierung mit selbstgehosteter KI".
+Teil II des Buchs „Softwaremodernisierung mit KI" (Untertitel: „Mit
+Golden Master, Charakterisierungstests und kleinen Schritten vom
+Altsystem zur Zielarchitektur").
 Ziel: verhaltenserhaltende Modernisierung — Portierung von Tiler (C++/Qt)
 und Webschicht (PHP) nach Python, PostgreSQL für Ergebnisse und Metadaten,
 Docker Compose, Betrieb auf **paraglidable.plebsapps.de**.
