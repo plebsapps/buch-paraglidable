@@ -1138,6 +1138,8 @@ function isSelectableDate(strDate)
 function hideAllModals()
 {
     $(".newModal").css("display", "none");
+    if (typeof clearDrawerActive === 'function')
+        clearDrawerActive();
 }
 
 document.addEventListener('keyup', function(e) {
