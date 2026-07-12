@@ -38,12 +38,13 @@ map.on('popupclose', function(e) {
 });
 
 var paraglidableTiles = null;
-var Stamen_Terrain    = L.tileLayer('https://tile.osm.ch/switzerland/{z}/{x}/{y}.png', {
+// Etappe F: eigene Identität — topografische Basiskarte statt des Original-Stils
+var Stamen_Terrain    = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
     attribution: '',
-    subdomains: 'abcd',
+    subdomains: 'abc',
     minZoom: 0,
     maxZoom: 16,
-    maxNativeZoom: 14,
+    maxNativeZoom: 17,
     ext: 'png',
     detectRetina: true,
     className: 'basetiles',

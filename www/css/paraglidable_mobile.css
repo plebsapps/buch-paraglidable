@@ -672,3 +672,18 @@ html, body {
 }
 
 /*# sourceMappingURL=paraglidable_mobile.css.map */
+
+/* Etappe F: Karten-Attribution (OpenTopoMap/OSM, CC-BY-SA) */
+#mapAttribution {
+  flex: 0 0 14px;
+  line-height: 14px;
+  font-size: 10px;
+  text-align: center;
+  background-color: #404751;
+  color: #b3bac3;
+  white-space: nowrap;
+  overflow: hidden;
+}
+#mapAttribution a {
+  color: #b3bac3;
+}
