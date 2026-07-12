@@ -30,8 +30,13 @@ API-Snapshots bleiben das Sicherheitsnetz.
 - ✅ Teil 1b (2026-07-12): index.html → Jinja2 (`web/templates/` mit
   12 Partials), FastAPI rendert „/"; Beweis: Rendering **byte-identisch**
   zur alten Datei, Snapshot blieb ohne Neuaufnahme EQUIVALENT
-- offen: mobile.html/mobileAndroid.html templatisieren, gemeinsames
-  base-Layout, Navigations-Redesign (Popups → Panel), jQuery-Ablösung
+- ✅ Teil 1c (2026-07-12): mobile.html/mobileAndroid.html als Templates
+  (byte-identisch verifiziert)
+- ✅ Teil 2 (2026-07-12): Navigations-Redesign — Seitenleiste (Entwurf A,
+  Betreiber-Auswahl aus drei anklickbaren Entwürfen): Burger + gruppierter
+  Drawer, Inhalte docken als Panel an; drawer.js ohne jQuery
+- offen: gemeinsames base-Layout der drei Templates, jQuery-Ablösung der
+  Bestands-Module (main.js & Co.), ggf. Drawer-Muster auch mobil
 
 ---
 Unabhängig davon offen: Etappe E (Datei → PostgreSQL, echte API-Schlüssel);
