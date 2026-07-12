@@ -1539,3 +1539,26 @@ textarea::placeholder {
 }
 
 /*# sourceMappingURL=paraglidable.css.map */
+
+/* Etappe F: Wortmarke + Projektzeile im Kopf */
+#brand {
+  margin-left: auto;
+  align-self: center;
+  padding-right: 14px;
+  color: #f3efe4;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+#brand b {
+  color: #f0a63c;
+}
+.brandClaim {
+  font-weight: 400;
+  font-size: 11px;
+  color: #b9cdc0;
+  margin-left: 10px;
+}
+@media (max-width: 1150px) { .brandClaim { display: none; } }
+@media (max-width: 760px)  { #brand     { display: none; } }
