@@ -16,8 +16,8 @@
                             <h1>2) Schlüssel anfordern</h1>
                             <div style="padding-left:20px">
                                 <span>E-Mail: <input class="textInput" type="text" id="apiEmail" style="width:180px"> </span>
-                                <span id="apiSendButton" class="textInput" onclick="generateKey();">Schlüssel senden <img style="vertical-align:middle;margin-bottom:3px" src="imgs/icons/email-send.svg" height="22"></span> <div style="display:none" id="apiEmailSpinner" class="lds-ellipsis"><div></div><div></div></div><br>
-                                <span style="display:none" id="apiEmailOK"><span class="blinkingText" style="font-size:13px">&#10003; Bitte auch den Spam-Ordner prüfen.</span></span>
+                                <span id="apiSendButton" class="textInput" onclick="generateKey();">Schlüssel erzeugen <img style="vertical-align:middle;margin-bottom:3px" src="imgs/icons/email-send.svg" height="22"></span> <div style="display:none" id="apiEmailSpinner" class="lds-ellipsis"><div></div><div></div></div><br>
+                                <span style="display:none" id="apiEmailOK"><span style="font-size:13px">&#10003; Dein Schlüssel: <b id="apiKeyValue"></b></span></span>
                                 <span style="display:none" id="apiEmailErr" style="font-size:13px">Fehler</span>
                                 <div style="font-size:10px">Existiert zu dieser E-Mail bereits ein Schlüssel, wird er ersetzt.</div>
                             </div>

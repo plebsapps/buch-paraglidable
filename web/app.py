@@ -18,8 +18,11 @@
 #
 # Run:  uvicorn web.app:app  (see docker/web/ and docker-compose.yml)
 
+import datetime
+import hashlib
 import json
 import os
+import random
 import re
 import urllib.request
 
@@ -31,7 +34,9 @@ from fastapi.templating import Jinja2Templates
 from web.php_compat import (php_filter_int, php_filter_float, ctype_xdigit,
 							php_round4, php_float_str, php_substr_byte,
 							php_substr2_be, php_loose_eq_int,
-							latlon_to_tile_coords, clean_search_q)
+							latlon_to_tile_coords, clean_search_q,
+							php_json_pretty, php_htmlentities,
+							php_validate_email)
 
 WWW_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "www")
 
@@ -72,8 +77,57 @@ def php_response(body, status=200, cors=False):
 
 
 # ============================================================================
+# PostgreSQL (Etappe E): API-Schlüssel — Ersatz der MySQL-Tabellen des
+# Originals (docs/web_inventory.md). Ohne PARAGLIDABLE_DB_URL oder ohne
+# erreichbare DB bleiben die Endpunkte im eingefrorenen Zustand (HTTP 500),
+# exakt wie vor Etappe E — der Umbau ist damit rückwärts harmlos.
+# ============================================================================
+
+def _db_connect():
+	url = os.environ.get("PARAGLIDABLE_DB_URL")
+	if not url:
+		return None
+	try:
+		import psycopg2
+		return psycopg2.connect(url)
+	except Exception:
+		return None
+
+
+def generate_random_key():
+	"""Port von generateRandomKey(): md5(rand()) erste 16 Hexzeichen,
+	XOR mit fester Konstante, '%x'-Format (ohne führende Nullen)."""
+	rnd_hex = hashlib.md5(str(random.randint(0, 2**31 - 1)).encode()).hexdigest()[:16]
+	return "%x" % (int(rnd_hex, 16) ^ 0xddb5097051cd211d)
+
+
+# ============================================================================
 # /apps/api/get.php
 # ============================================================================
+
+def generate_xml(data):
+	"""Port von generateXML(): identische Tabs/Zeilenumbrüche, Werte in
+	PHP-Echo-Formatierung; wie das Original ohne XML-Escaping der Namen."""
+	res = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n"
+	res += "<paraglidable>\n"
+	for date, data_day in data.items():
+		res += "\t<day date=\"%s\">\n" % date
+		for spot in data_day:
+			res += ("\t\t<location name=\"%s\" lat=\"%s\" lon=\"%s\">\n"
+					% (spot["name"], php_float_str(spot["lat"]),
+					   php_float_str(spot["lon"])))
+			res += "\t\t\t<forecast>\n"
+			res += "\t\t\t\t<fly>%s</fly>\n" % php_float_str(spot["forecast"]["fly"])
+			res += "\t\t\t\t<XC>%s</XC>\n" % php_float_str(spot["forecast"]["XC"])
+			if "takeoff" in spot["forecast"]:
+				res += ("\t\t\t\t<takeoff>%s</takeoff>\n"
+						% php_float_str(spot["forecast"]["takeoff"]))
+			res += "\t\t\t</forecast>\n"
+			res += "\t\t</location>\n"
+		res += "\t</day>\n"
+	res += "</paraglidable>\n"
+	return res
+
 
 def get_prediction(date, coords):
 	"""Port of getPrediction() including the float nbVals arithmetic that
@@ -151,11 +205,58 @@ def api_get(request: Request):
 		return php_response("", cors=True)
 
 	if "key" in q:
-		# Frozen state (see snapshot get_key_no_db): the PHP DB layer
-		# (mysqli/MySQL) does not exist in any fresh clone, the include of
-		# bdd.php dies fatally -> HTTP 500, empty body. Real API-key
-		# handling arrives with PostgreSQL in stage E.
-		return php_response("", status=500, cors=True)
+		# Etappe E: Port des API-Zweigs von get.php gegen PostgreSQL
+		# (Original: MySQL ApiKeys.latLonName, PHP-serialisierte Liste).
+		# Ohne erreichbare DB bleibt der eingefrorene Zustand: HTTP 500,
+		# leerer Body (wie die bdd.php-Fatalität des Originals).
+		conn = _db_connect()
+		if conn is None:
+			return php_response("", status=500, cors=True)
+		try:
+			with conn.cursor() as cur:
+				cur.execute("SELECT lat_lon_name FROM api_keys WHERE api_key=%s",
+							(key,))
+				rows = cur.fetchall()
+		finally:
+			conn.close()
+		if len(rows) != 1:
+			return php_response("unknown key", cors=True)
+		spots_cfg = rows[0][0] or []
+
+		data = {}
+		for d in range(10):  # $nbDays = 10, ab heute
+			date = (datetime.date.today()
+					+ datetime.timedelta(days=d)).strftime("%Y-%m-%d")
+			data_day = []
+			for spot_cfg in spots_cfg:
+				coords = latlon_to_tile_coords(spot_cfg["lat"], spot_cfg["lon"])
+				vals = get_prediction(date, coords)
+				if vals is None:
+					continue  # PHP pusht nur bei $vals !== false
+				forecast = {"fly": vals[0], "XC": vals[1]}
+				spot_id = spot_cfg.get("spotId")
+				if spot_id is not None and spot_id >= 0:
+					spot_prediction = get_spot_prediction(date, spot_id)
+					if spot_prediction is not None:
+						forecast["takeoff"] = spot_prediction
+				data_day.append({"lat": spot_cfg["lat"], "lon": spot_cfg["lon"],
+								 "name": spot_cfg["name"], "forecast": forecast})
+			data[date] = data_day
+
+		fmt = q.get("format")
+		wants_entities = bool(q.get("htmlentities"))
+		if not fmt or fmt.lower() == "json":
+			body = php_json_pretty(data)
+			if wants_entities:
+				return php_response(php_htmlentities(body), cors=True)
+			return Response(content=body,
+							media_type="application/json; charset=utf-8",
+							headers={"Access-Control-Allow-Origin": "*"})
+		body = generate_xml(data)
+		if wants_entities:
+			return php_response(php_htmlentities(body), cors=True)
+		return Response(content=body, media_type="text/xml; charset=utf-8",
+						headers={"Access-Control-Allow-Origin": "*"})
 
 	# if ($_GET['lat'] || $_GET['lon']) -- PHP truthiness: 0.0 is falsy
 	if lat or lon:
@@ -221,9 +322,50 @@ def send_message():
 
 
 @app.api_route("/apps/api/generateApiKey.php", methods=["GET", "POST"])
-def generate_api_key():
-	# Same frozen 500: mail helper and MySQL are absent in every clone.
-	return php_response("", status=500)
+def generate_api_key(request: Request):
+	# Etappe E: Port von generateApiKey.php gegen PostgreSQL. Bewusste
+	# Abweichung vom Original (dokumentiert, Snapshot neu eingefroren):
+	# Das Original mailte den Schlüssel und antwortete "1" — die
+	# Mail-Infrastruktur existiert hier nicht (mail_helper.php upstream
+	# privat, Kontaktweg in Etappe F entfernt). Diese Instanz liefert den
+	# Schlüssel direkt im Antwort-Body; das Frontend zeigt ihn an.
+	q = request.query_params
+	email = php_validate_email(q.get("email"))
+	if not email:
+		return php_response("ERROR: invalide email")
+
+	spots_cfg = []
+	i = 0
+	while ("lat_%d" % i) in q and ("lon_%d" % i) in q and ("name_%d" % i) in q:
+		spots_cfg.append({
+			"lat": php_filter_float(q.get("lat_%d" % i)),
+			"lon": php_filter_float(q.get("lon_%d" % i)),
+			"name": q.get("name_%d" % i),
+			"spotId": php_filter_int(q.get("spotId_%d" % i)),
+		})
+		i += 1
+
+	conn = _db_connect()
+	if conn is None:
+		# Eingefrorener Zustand ohne DB (wie vor Etappe E)
+		return php_response("", status=500)
+	try:
+		api_key = generate_random_key()
+		with conn:
+			with conn.cursor() as cur:
+				cur.execute(
+					"INSERT INTO accounts (email) VALUES (%s) "
+					"ON CONFLICT (email) DO NOTHING", (email,))
+				cur.execute(
+					"INSERT INTO api_keys (account_id, api_key, lat_lon_name) "
+					"SELECT id, %s, %s FROM accounts WHERE email=%s "
+					"ON CONFLICT (account_id) DO UPDATE SET "
+					"api_key=EXCLUDED.api_key, lat_lon_name=EXCLUDED.lat_lon_name, "
+					"created_at=now()",
+					(api_key, json.dumps(spots_cfg), email))
+	finally:
+		conn.close()
+	return php_response(api_key)
 
 
 # ============================================================================

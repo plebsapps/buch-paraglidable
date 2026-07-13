@@ -150,8 +150,16 @@ function generateKey()
         dataType: "text",
         success: function(data)    {
                                         $("#apiEmailSpinner").css("display", "none");
-                                        $("#apiEmailOK"     ).css("display", "inline-block");
-                                        $("#apiEmailErr"    ).css("display", "none");
+                                        // Etappe E: der Endpunkt liefert den Schlüssel direkt
+                                        // (das Original verschickte ihn per Mail)
+                                        if (data && data.indexOf("ERROR") === -1) {
+                                            $("#apiKeyValue").text(data);
+                                            $("#apiEmailOK" ).css("display", "inline-block");
+                                            $("#apiEmailErr").css("display", "none");
+                                        } else {
+                                            $("#apiEmailOK" ).css("display", "none");
+                                            $("#apiEmailErr").css("display", "inline-block");
+                                        }
                                    },
         error:   function (result) {
                                         $("#apiEmailSpinner").css("display", "none");

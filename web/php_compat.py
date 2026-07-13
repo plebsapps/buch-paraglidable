@@ -124,3 +124,97 @@ def clean_search_q(q):
 	for tok in SEARCH_STRIP:
 		q = q.replace(tok, "")
 	return q
+
+
+def php_float_json(v):
+	"""PHP json_encode() number rendering (serialize_precision=-1 since
+	PHP 7.1 -> shortest round-trip representation; integers stay plain)."""
+	if isinstance(v, int):
+		return str(v)
+	s = repr(float(v))
+	return s[:-2] if s.endswith(".0") else s
+
+
+def php_json_pretty(data):
+	"""json_encode($data, JSON_PRETTY_PRINT): 4-space indent, escaped
+	slashes, non-ASCII as lowercase \\uXXXX escapes (default flags)."""
+	def esc(s):
+		out = []
+		for ch in s:
+			cp = ord(ch)
+			if ch == '"':
+				out.append('\\"')
+			elif ch == "\\":
+				out.append("\\\\")
+			elif ch == "/":
+				out.append("\\/")
+			elif ch == "\n":
+				out.append("\\n")
+			elif ch == "\r":
+				out.append("\\r")
+			elif ch == "\t":
+				out.append("\\t")
+			elif cp < 0x20:
+				out.append("\\u%04x" % cp)
+			elif cp > 0x7E:
+				if cp > 0xFFFF:  # Ersatzpaar wie PHP
+					cp -= 0x10000
+					out.append("\\u%04x\\u%04x" %
+					           (0xD800 + (cp >> 10), 0xDC00 + (cp & 0x3FF)))
+				else:
+					out.append("\\u%04x" % cp)
+			else:
+				out.append(ch)
+		return "".join(out)
+
+	def enc(value, indent):
+		pad = " " * (4 * indent)
+		pad_in = " " * (4 * (indent + 1))
+		if value is None:
+			return "null"
+		if isinstance(value, bool):
+			return "true" if value else "false"
+		if isinstance(value, (int, float)):
+			return php_float_json(value)
+		if isinstance(value, str):
+			return '"' + esc(value) + '"'
+		if isinstance(value, (list, tuple)):
+			if not value:
+				return "[]"
+			items = [pad_in + enc(v, indent + 1) for v in value]
+			return "[\n" + ",\n".join(items) + "\n" + pad + "]"
+		if isinstance(value, dict):
+			if not value:
+				return "{}"
+			items = [pad_in + '"' + esc(str(k)) + '": ' + enc(v, indent + 1)
+			         for k, v in value.items()]
+			return "{\n" + ",\n".join(items) + "\n" + pad + "}"
+		raise TypeError(type(value))
+
+	return enc(data, 0)
+
+
+def php_htmlentities(s):
+	"""htmlentities() with the PHP 7.2 defaults (ENT_COMPAT | ENT_HTML401):
+	every character with a named HTML-4.01 entity is encoded, double quotes
+	included, single quotes not."""
+	import html.entities
+	out = []
+	for ch in s:
+		name = html.entities.codepoint2name.get(ord(ch))
+		if name is not None and ch != "'":
+			out.append("&%s;" % name)
+		else:
+			out.append(ch)
+	return "".join(out)
+
+
+def php_validate_email(s):
+	"""Approximation of filter_var(..., FILTER_VALIDATE_EMAIL): local part
+	without spaces/@, domain with at least one dot. The exact PHP filter
+	(Rushton regex) differs on exotic inputs -- documented deviation."""
+	if s is None:
+		return None
+	if re.match(r"^[^@\s]+@[^@\s]+\.[A-Za-z0-9-]{2,}$", s):
+		return s
+	return None
