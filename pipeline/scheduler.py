@@ -31,6 +31,13 @@ import sys
 
 ROOT = "/workspaces/Paraglidable"
 
+# Etappe E: der Scheduler läuft als "python3 pipeline/scheduler.py" --
+# sys.path[0] ist dann pipeline/, nicht das Repo-Root, und
+# "from pipeline import db" schlägt fehl (Fund im ersten Produktionslauf
+# mit Spiegel, 2026-07-13: "No module named 'pipeline'").
+if ROOT not in sys.path:
+	sys.path.insert(0, ROOT)
+
 NB_DAYS = 10  # forecast horizon, same constant as forecast.py/clean.py
 
 # Paths of the Docker environment (forecast.py in_docker branch + clean.py)

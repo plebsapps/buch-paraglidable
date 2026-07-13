@@ -44,8 +44,10 @@ Umgesetzt 2026-07-13 (Details docs/plan.md): db-Service + Alembic-Schema
 Nr. 1–3, Doppel-Schreiben hinter PARAGLIDABLE_DB_URL (GM unverändert,
 EQUIVALENT verifiziert), Vergleichsjob Datei↔DB nach jedem Lauf, echte
 API-Schlüssel (3 Snapshots bewusst neu eingefroren), Spot-Leser auf DB
-mit Datei-Rückfall. Offen: erster Produktions-Voll-Lauf mit Spiegel
-(nächster Worker-Trigger) bestätigt EQUIVALENT im Log.
+mit Datei-Rückfall. End-to-End-Abnahme ✅ 2026-07-13: erster Produktions-Voll-Lauf (Zyklus
+2026071306, 31 min) spiegelte 10 Tage × 33 666 Zellen + je 585 Spots,
+Vergleichsjob RESULT: EQUIVALENT. Dabei gefundener Scheduler-Bug
+(Modulpfad) als eigener Commit repariert.
 
 ---
 Weiter offen aus Punkt 3: gemeinsames base-Layout, jQuery-Ablösung der
