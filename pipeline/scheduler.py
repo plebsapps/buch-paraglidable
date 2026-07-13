@@ -63,6 +63,13 @@ def job_forecast():
 	try:
 		from pipeline import db as pipeline_db
 		pipeline_db.close_dangling(ret)
+		# Vergleichsjob (Expand and Contract): Nachweis, dass Datei und
+		# DB-Spiegel denselben Inhalt tragen — Ergebnis nur ins Log,
+		# der Betrieb hängt weiter allein an den Dateien.
+		if ret == 0 and pipeline_db.enabled():
+			from pipeline import verify_db_mirror
+			log("forecast: Vergleich Datei<->DB %s" % (
+				"EQUIVALENT" if verify_db_mirror.verify_run() else "DIFFERENT"))
 	except Exception as e:
 		log("forecast: DB-Laufabschluss fehlgeschlagen: %s" % e)
 

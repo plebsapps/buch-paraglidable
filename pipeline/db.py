@@ -17,6 +17,7 @@ Dateien. Deshalb gilt hier durchgehend:
 Läuft mit Python 3.6 (eingefrorenes Pipeline-Image).
 """
 
+import hashlib
 import io
 import json
 import os
@@ -78,9 +79,11 @@ def _ingest_cells(cur, run_id, strdate, predictions_path):
 	parst dieselbe Dezimaldarstellung wie Python float() — der
 	Vergleichsjob (pipeline/verify_db_mirror.py) weist die Treue nach."""
 	buf = io.StringIO()
-	with open(predictions_path, "r") as f:
-		for cell_id, line in enumerate(f):
-			fields = line.rstrip("\n").split(" ")
+	sha = hashlib.sha256()
+	with open(predictions_path, "rb") as f:
+		for cell_id, raw in enumerate(f):
+			sha.update(raw)
+			fields = raw.decode("ascii").rstrip("\n").split(" ")
 			if len(fields) < 3:
 				continue
 			buf.write("%d\t%s\t%d\t%s\t%s\t{%s}\n" % (
@@ -92,6 +95,7 @@ def _ingest_cells(cur, run_id, strdate, predictions_path):
 		(run_id, strdate))
 	cur.copy_from(buf, "cell_forecasts",
 	              columns=("run_id", "valid_date", "cell_id", "lat", "lon", "values"))
+	return sha.hexdigest()
 
 
 def _ingest_spots(cur, run_id, strdate, spots_json_path):
@@ -123,15 +127,16 @@ def mirror_day(forecast, gfs_cycle, strdate):
 		with conn:
 			with conn.cursor() as cur:
 				run_id = _ensure_run(cur, gfs_cycle)
-				_ingest_cells(cur, run_id, strdate,
-				              forecast.prediction_filename_for_tiler)
+				pred_sha = _ingest_cells(cur, run_id, strdate,
+				                         forecast.prediction_filename_for_tiler)
 				_ingest_spots(cur, run_id, strdate,
 				              os.path.join(forecast.tiles_dir, strdate, "spots.json"))
 				cur.execute(
-					"INSERT INTO tile_sets (run_id, valid_date, zoom_min, zoom_max, base_path) "
-					"VALUES (%s, %s, %s, %s, %s)",
+					"INSERT INTO tile_sets (run_id, valid_date, zoom_min, zoom_max, "
+					"base_path, predictions_sha256) VALUES (%s, %s, %s, %s, %s, %s)",
 					(run_id, strdate, forecast.min_tiles_zoom,
-					 forecast.max_tiles_zoom, "www/data/tiles/%s/256" % strdate))
+					 forecast.max_tiles_zoom,
+					 "www/data/tiles/%s/256" % strdate, pred_sha))
 	finally:
 		conn.close()
 
