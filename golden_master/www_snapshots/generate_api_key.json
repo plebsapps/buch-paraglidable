@@ -1,5 +1,5 @@
 {
- "body": "",
- "request": "GET /apps/api/generateApiKey.php?email=test%40example.org&lat_0=45.9&lon_0=6.6&name_0=Test&spotId_0=-1",
- "status": 500
+ "body": "ERROR: invalide email",
+ "request": "GET /apps/api/generateApiKey.php?email=kaputt&lat_0=45.9&lon_0=6.6&name_0=Test&spotId_0=-1",
+ "status": 200
 }

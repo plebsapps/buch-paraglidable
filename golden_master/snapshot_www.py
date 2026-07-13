@@ -48,15 +48,20 @@ CASES = [
 	("get_missing_date", "GET",
 	 "/apps/api/get.php?tx=65&ty=45&x=128&y=128&zoom=7&date=1999-01-01", {}, None),
 	("get_bad_key", "GET", "/apps/api/get.php?key=zzz", {}, None),
-	("get_key_no_db", "GET", "/apps/api/get.php?key=abc123", {}, None),
+	# Etappe E: hex-Schluessel gegen PostgreSQL; unbekannter Schluessel
+	# antwortet deterministisch "unknown key" (vorher: 500 ohne DB).
+	("get_key_unknown", "GET", "/apps/api/get.php?key=abc123", {}, None),
 	("search_no_referer", "GET", "/apps/search.php?q=anne", {}, None),
 	("search_with_referer", "GET", "/apps/search.php?q=anne",
 	 {"Referer": "https://paraglidable.com/"}, None),
 	("gtag_localhost", "GET", "/apps/gtag.php", {}, None),
 	("send_message", "POST", "/apps/sendMessage.php", {},
 	 b"name=Test&email=test%40example.org&text=snapshot"),
+	# Etappe E: gueltige Anfragen liefern einen ZUFAELLIGEN Schluessel
+	# (nicht snapshot-faehig); eingefroren wird die deterministische
+	# Ablehnung einer ungueltigen E-Mail-Adresse.
 	("generate_api_key", "GET",
-	 "/apps/api/generateApiKey.php?email=test%40example.org"
+	 "/apps/api/generateApiKey.php?email=kaputt"
 	 "&lat_0=45.9&lon_0=6.6&name_0=Test&spotId_0=-1", {}, None),
 ]
 
