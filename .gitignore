@@ -12,3 +12,5 @@ golden_master/input/
 golden_master/run1_provisional/
 golden_master/runs/
 golden_master/reference/
+# Buch-Downloads (privates Manuskript-Repo) — nur lokal ausgeliefert, nie committen
+www/downloads/
