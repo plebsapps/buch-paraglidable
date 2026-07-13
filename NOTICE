@@ -11,8 +11,8 @@ This repository is a derivative work of Paraglidable:
 
 This derivative ("buch-paraglidable") is an independent teaching and practice
 project accompanying the German book "Softwaremodernisierung mit KI"
-(subtitle: "Mit Golden Master, Charakterisierungstests und kleinen
-Schritten vom Altsystem zur Zielarchitektur") by Ralf Balz. It is NOT affiliated with or endorsed by
+(subtitle: "Bestandssysteme kontrolliert erneuern, mit Sicherheitsnetz,
+kleinen Schritten und nachpruefbaren Ergebnissen") by Ralf Balz. It is NOT affiliated with or endorsed by
 the original Paraglidable project or its author.
 
 The full Git history of the original project has been preserved in this
