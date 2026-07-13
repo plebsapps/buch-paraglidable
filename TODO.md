@@ -38,6 +38,15 @@ API-Snapshots bleiben das Sicherheitsnetz.
 - offen: gemeinsames base-Layout der drei Templates, jQuery-Ablösung der
   Bestands-Module (main.js & Co.), ggf. Drawer-Muster auch mobil
 
+## 4. Etappe E: Datei → PostgreSQL (Expand and Contract)  ⬅ End-to-End-Abnahme
+
+Umgesetzt 2026-07-13 (Details docs/plan.md): db-Service + Alembic-Schema
+Nr. 1–3, Doppel-Schreiben hinter PARAGLIDABLE_DB_URL (GM unverändert,
+EQUIVALENT verifiziert), Vergleichsjob Datei↔DB nach jedem Lauf, echte
+API-Schlüssel (3 Snapshots bewusst neu eingefroren), Spot-Leser auf DB
+mit Datei-Rückfall. Offen: erster Produktions-Voll-Lauf mit Spiegel
+(nächster Worker-Trigger) bestätigt EQUIVALENT im Log.
+
 ---
-Unabhängig davon offen: Etappe E (Datei → PostgreSQL, echte API-Schlüssel);
-Reihenfolge zu 2./3. frei.
+Weiter offen aus Punkt 3: gemeinsames base-Layout, jQuery-Ablösung der
+Bestands-Module, ggf. Drawer-Muster auch mobil.

@@ -117,7 +117,13 @@ die versionierte Bann-Liste `banned.txt.php`).
    versionierten Daten und veränderlichem Bann-Zustand.
 3. **Mail-Versand** (Kontaktformular, API-Schlüssel): der eingefrorene
    500-Zustand bleibt erhalten; API-Schlüssel brauchen die Datenbank →
-   Etappe E. *Nachtrag F Teil 1 (2026-07-12): Das Kontaktformular wurde aus
+   Etappe E. *Nachtrag Etappe E (2026-07-13): umgesetzt gegen PostgreSQL
+   (accounts/api_keys, ein Schlüssel je Konto wie das MySQL-REPLACE des
+   Originals). Bewusste, dokumentierte Abweichung: kein Mail-Versand —
+   der Schlüssel kommt im Antwort-Body und wird vom Frontend angezeigt;
+   der key-Zweig von get.php liefert die 10-Tage-Prognose als JSON/XML
+   wie im Original. Ohne erreichbare DB bleibt der eingefrorene
+   500-Zustand.* *Nachtrag F Teil 1 (2026-07-12): Das Kontaktformular wurde aus
    dem Frontend entfernt (Kontakt läuft über ralfwbalz.ch); ein eigener
    SMTP-Versand ist damit vom Tisch. Der sendMessage-Endpunkt bleibt als
    eingefrorener 500-Stub.*

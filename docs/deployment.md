@@ -205,3 +205,25 @@ Kommando-Exit zu vertrauen.
   Neustart~~ — erledigt 2026-07-11: Container mit Restart-Policy
   `unless-stopped` neu angelegt, `scripts/container_start.sh` startet
   Apache idempotent im Vordergrund (Auslöser: 502 nach Server-Reboot).
+
+## PostgreSQL-Betrieb (seit Etappe E, 2026-07-13)
+
+Service `paraglidable-db` (postgis, digest-gepinnt, nur im Compose-Netz,
+`mem_limit 384m`, kleine Puffer — der Server hat 1,8 GB RAM). Zugangsdaten
+in `.env` (Vorlage `.env.example`; Datei liegt nur auf dem Server).
+
+```bash
+# Migrationen (Alembic, Schema Nr. 1 aufwärts)
+docker compose run --rm -w /app/db web alembic upgrade head
+
+# Vergleichsjob Datei<->DB von Hand (läuft sonst nach jedem Worker-Lauf)
+docker exec paraglidable-worker python3 pipeline/verify_db_mirror.py
+
+# Sicherung (Betriebsdaten sind reproduzierbar bis auf accounts/api_keys!)
+docker exec paraglidable-db pg_dump -U paraglidable -d paraglidable \
+  -t accounts -t api_keys > backup_api_keys.sql
+```
+
+Merkposten: Prognosedaten in der DB sind Spiegel (aus Dateien
+reproduzierbar, Aufbewahrung 8 Läufe) — **einzig `accounts`/`api_keys`
+sind Originaldaten** und gehören in die Server-Sicherung.
