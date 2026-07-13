@@ -61,6 +61,9 @@ services:
       # Kacheln (GM-Läufe laufen ohne diese Variable -> Verhalten dort
       # unverändert, Referenz bleibt gültig)
       - PARAGLIDABLE_DRAW_BORDERS=0
+      # Etappe E (Expand): Ergebnisse zusätzlich nach PostgreSQL spiegeln.
+      # GM-Läufe und Legacy-Container setzen die Variable nicht.
+      - PARAGLIDABLE_DB_URL=postgresql://paraglidable:${POSTGRES_PASSWORD:?}@db:5432/paraglidable
     volumes:
       - .:/workspaces/Paraglidable
 

@@ -262,6 +262,15 @@ class Forecast:
 
 				self.step_publish(day_datetime, last_forecast_time, strdate)
 
+		# Etappe E (Expand): in diesem Prozess angelegte Lauf-Zeilen
+		# abschließen (No-op ohne PARAGLIDABLE_DB_URL, s. step_publish).
+		if os.environ.get("PARAGLIDABLE_DB_URL"):
+			try:
+				from pipeline import db as pipeline_db
+				pipeline_db.finish_runs()
+			except Exception as e:
+				Verbose.print_text(1, "[WARNING] DB-Laufabschluss fehlgeschlagen: "+ str(e))
+
 
 	#==================================================================
 	# Pipeline steps (stage C2): download / forecast / tile / publish
@@ -428,6 +437,19 @@ class Forecast:
 		#========================================================================
 
 		self.set_progress(100, strdate)
+
+		# Etappe E (Expand): denselben Tag zusätzlich nach PostgreSQL
+		# spiegeln. Nur aktiv, wenn PARAGLIDABLE_DB_URL gesetzt ist
+		# (worker-Service); Golden-Master-Läufe und der Legacy-Container
+		# setzen die Variable nicht — ihr Verhalten bleibt unverändert.
+		# Fehler brechen den Lauf nicht ab: die Dateien bleiben der Pfad,
+		# der Spiegel ist Kopie (Expand and Contract, Phase 1).
+		if os.environ.get("PARAGLIDABLE_DB_URL"):
+			try:
+				from pipeline import db as pipeline_db
+				pipeline_db.mirror_day(self, last_forecast_time, strdate)
+			except Exception as e:
+				Verbose.print_text(1, "[WARNING] DB-Spiegel fehlgeschlagen: "+ str(e))
 
 
 

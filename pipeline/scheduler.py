@@ -57,6 +57,14 @@ def job_forecast():
 	log("forecast: starting 'python -m pipeline run'")
 	ret = subprocess.call(["python3", "-m", "pipeline", "run"], cwd=ROOT)
 	log("forecast: finished with exit code %d" % ret)
+	# Etappe E: nach Abstürzen liegengebliebene Lauf-Zeilen schließen
+	# (No-op ohne PARAGLIDABLE_DB_URL; der reguläre Abschluss passiert
+	# im Lauf selbst, neural_network/forecast.py main()).
+	try:
+		from pipeline import db as pipeline_db
+		pipeline_db.close_dangling(ret)
+	except Exception as e:
+		log("forecast: DB-Laufabschluss fehlgeschlagen: %s" % e)
 
 
 # ============================================================================
@@ -125,6 +133,16 @@ def job_clean():
 	for delta_days in range(NB_DAYS + 1, 100):
 		strday = (datetime.datetime.now() + datetime.timedelta(days=-delta_days)).strftime("%Y-%m-%d")
 		_remove_dir(os.path.join(TILES_DIR, strday))
+
+	# Etappe E: alte DB-Läufe entfernen (No-op ohne PARAGLIDABLE_DB_URL);
+	# Kinder-Zeilen (Zellen/Spots/Kachel-Metadaten) fallen per CASCADE mit
+	try:
+		from pipeline import db as pipeline_db
+		if pipeline_db.enabled():
+			pipeline_db.prune_runs()
+			log("clean: DB-Läufe auf die letzten %d begrenzt" % pipeline_db.KEEP_RUNS)
+	except Exception as e:
+		log("clean: DB-Aufräumen fehlgeschlagen: %s" % e)
 	log("clean: finished")
 
 

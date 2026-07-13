@@ -6,8 +6,9 @@ FROM paraglidable
 # Last APScheduler line supporting Python 3.6; tzlocal pinned to the
 # matching major version (3.x dropped py3.6). The frozen image runs as
 # user "paraglidable" -> switch to root only for the install.
+# psycopg2-binary 2.8.6: letzte Linie mit cp36-Wheels (Etappe E, DB-Spiegel).
 USER root
-RUN pip3 install --no-cache-dir apscheduler==3.9.1 tzlocal==2.1
+RUN pip3 install --no-cache-dir apscheduler==3.9.1 tzlocal==2.1 psycopg2-binary==2.8.6
 USER paraglidable
 
 WORKDIR /workspaces/Paraglidable
