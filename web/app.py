@@ -152,6 +152,28 @@ def get_prediction(date, coords):
 
 
 def get_spot_prediction(date, spot_id):
+	# Etappe E (Migrate): dieser Leser bezieht die Spot-Prognose aus der
+	# DB (jüngster Lauf, der den Tag trägt). Der Datei-Rückfall ist der
+	# dokumentierte Rückweg von Expand and Contract und bedient zugleich
+	# Tage vor Beginn der Spiegelung (z. B. den GM-Referenztag) sowie
+	# DB-Ausfälle. Byte-gleichheit der Antwort: beide Seiten sind aus
+	# demselben Text geparst (Nachweis: pipeline/verify_db_mirror.py).
+	conn = _db_connect()
+	if conn is not None:
+		try:
+			with conn.cursor() as cur:
+				cur.execute(
+					"SELECT flyability FROM spot_forecasts "
+					"WHERE spot_id=%s AND valid_date=%s "
+					"ORDER BY run_id DESC LIMIT 1", (spot_id, date))
+				row = cur.fetchone()
+			if row is not None:
+				return row[0]
+		except Exception:
+			pass
+		finally:
+			conn.close()
+
 	filename = os.path.join(WWW_DIR, "data", "tiles", date, "spots.json")
 	try:
 		with open(filename, "r") as f:
