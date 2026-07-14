@@ -45,7 +45,7 @@ es wird bei jedem Etappenabschluss nachgeführt.
 Named Volumes: `grib-data`, `tiles`, `training-data`, `golden-master`,
 `pg-data`. Ein Dockerfile, zwei Targets; jeder Job auch manuell als CLI.
 Reverse Proxy/TLS für paraglidable.plebsapps.de ist Teil von Etappe-
-übergreifendem Deployment (Kapitel 20 des Buchs), nicht der Compose-Basis.
+übergreifendem Deployment (Kapitel 14 des Buchs), nicht der Compose-Basis.
 
 ### PostgreSQL-Schema (Skizze für Etappe E)
 
@@ -93,7 +93,7 @@ Pflichtjob ab sofort: `compare_golden_master` grün vor jedem Merge/Push.
   true — frische Clones auf Windows brauchen `git config core.autocrlf false`
   vor dem Checkout oder einen Re-Checkout (siehe CLAUDE.md).
 
-## Betrieb (Ausblick, Kapitel 20)
+## Betrieb (Ausblick, Kapitel 14)
 
 Zielumgebung: eigener Ubuntu-Server, Instanz unter paraglidable.plebsapps.de.
 Zwischenphase ab Etappe S: Legacy-Webschicht (Apache/PHP im eingefrorenen
