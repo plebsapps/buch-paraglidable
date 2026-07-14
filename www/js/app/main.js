@@ -979,7 +979,7 @@ function addOceans(decodedJson, arMaps)
         // can't share the same layer with all maps (https://stackoverflow.com/questions/18235075/leaflet-add-same-layer-to-two-different-maps)
         var oceansLayer = L.geoJson(decodedJson, {
                                                 style: function(feature) {
-                                                            return {"fillOpacity": 1.0, fillColor: '#0071cb', color:'#000', weight:1};
+                                                            return {"fillOpacity": 1.0, fillColor: '#0071cb', stroke: false};
                                                        }
                                                  }
                                     );

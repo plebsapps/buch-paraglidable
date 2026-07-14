@@ -507,7 +507,7 @@ function displayOceans(Text)
 {
     oceanLayer = L.geoJson(JSON.parse(Text), {
                                     style: function(feature) {
-                                    return {"fillOpacity": 1.0, fillColor: '#0071cb', color:'#000', weight:1};
+                                    return {"fillOpacity": 1.0, fillColor: '#0071cb', stroke: false};
                                 }
             }).addTo(map);
 }
