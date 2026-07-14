@@ -1,6 +1,6 @@
 # Web layer (stage D2), pinned like the rest of the project (stage B).
 fastapi==0.139.0
-uvicorn==0.34.0
+uvicorn==0.51.0
 jinja2==3.1.6
 # Etappe E: PostgreSQL-Zugriff (API-Schlüssel, Leser) + Migrationen
 psycopg2-binary==2.9.10
