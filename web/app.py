@@ -26,6 +26,8 @@ import random
 import re
 import urllib.request
 
+import jinja2
+
 from fastapi import FastAPI, Request
 from fastapi.responses import Response
 from fastapi.staticfiles import StaticFiles
@@ -45,8 +47,15 @@ WWW_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 # keep_trailing_newline make the includes reproduce the original file
 # byte for byte -- the proof that the decomposition changed nothing.
 TEMPLATES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates")
-templates = Jinja2Templates(directory=TEMPLATES_DIR,
-							trim_blocks=True, keep_trailing_newline=True)
+# Starlette 1.x dropped the **env_options passthrough of Jinja2Templates; the
+# environment is built here instead. autoescape=True reproduces the old
+# starlette default (1.x would use select_autoescape()) -- same rendering.
+_jinja_env = jinja2.Environment(
+	loader=jinja2.FileSystemLoader(TEMPLATES_DIR),
+	autoescape=True,
+	trim_blocks=True,
+	keep_trailing_newline=True)
+templates = Jinja2Templates(env=_jinja_env)
 
 app = FastAPI(title="Paraglidable web layer (D2 port)")
 
