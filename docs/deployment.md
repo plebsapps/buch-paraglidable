@@ -191,6 +191,36 @@ angefasst wird) — folgenlos, aber ein Argument dafür, nach jedem
 sudo-Handgriff den Ist-Zustand zu prüfen (`grep proxy_pass …`) statt dem
 Kommando-Exit zu vertrauen.
 
+## Auslieferung Etappe B (2026-07-14)
+
+Aktualisierte Abhängigkeiten ausgerollt (Freigabe: Betreiber). Alle vier
+Container auf neuen Ständen, Reihenfolge Worker vor Webschicht:
+
+```bash
+docker tag paraglidable:b5-test paraglidable   # GM-verifiziertes Image
+docker compose up -d --build worker
+docker compose up -d --build web
+docker rm -f paraglidable && docker run -d --name paraglidable \
+  --restart unless-stopped -p 127.0.0.1:8006:80 \
+  -v /home/ralf/buch-paraglidable:/workspaces/Paraglidable \
+  paraglidable sh /workspaces/Paraglidable/scripts/container_start.sh
+```
+
+Der Legacy-Container wird bewusst mitgezogen: Er ist die Laufzeit der
+Golden-Master-Läufe; liefe er auf alten Ständen, prüfte das Netz etwas
+anderes als das, was produktiv rechnet.
+
+Nachweise nach dem Ausrollen: Startseite 200, Referenzkachel 200,
+Datenendpunkt mit echten Werten, ausgelieferter Commit 5481634d, nginx
+401 ohne Zugangsdaten. 13/13 Schnittstellenaufzeichnungen gegen die
+laufende Instanz EQUIVALENT. TLS-Abruf des Downloaders gegen NOAA aus
+dem ausgerollten Worker: 200 mit certifi 2025.04.26.
+
+**Rückweg:** Die vorherigen Images liegen als Tags `rollback-vor-b`
+(`paraglidable`, `buch-paraglidable-web`, `buch-paraglidable-worker`).
+Rollback = Tag zurücksetzen und Container neu anlegen; keine Daten und
+keine Formate betroffen, deshalb trägt der Rückweg ohne Sonderschritte.
+
 ## Offene Punkte
 
 - RAM-Ausstattung des Servers (1,8 GB) weit unter Richtwert; die
