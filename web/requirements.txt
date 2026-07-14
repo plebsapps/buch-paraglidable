@@ -4,5 +4,5 @@ uvicorn==0.51.0
 jinja2==3.1.6
 # Etappe E: PostgreSQL-Zugriff (API-Schlüssel, Leser) + Migrationen
 psycopg2-binary==2.9.10
-SQLAlchemy==2.0.36
-alembic==1.14.0
+SQLAlchemy==2.0.51
+alembic==1.18.5
