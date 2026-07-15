@@ -301,6 +301,53 @@ reine Entrümpelung. Tagesbilanz Etappe B + G am Produktionsimage: 128 →
 basemap. Ältere Stände: `rollback-vor-g` (mit Jupyter),
 `rollback-vor-b` (vor der Abhängigkeitsaktualisierung).
 
+## Auslieferung Etappe G, numba/llvmlite (2026-07-15)
+
+Dritter und letzter Entrümpelungsschritt ausgerollt (Freigabe:
+Betreiber). Wie bei basemap nur Pipeline-Image, Worker und
+Legacy-Container:
+
+```bash
+docker tag paraglidable:latest paraglidable:rollback-vor-numba
+docker tag buch-paraglidable-worker:latest buch-paraglidable-worker:rollback-vor-numba
+docker tag paraglidable:nonumba paraglidable   # GM-verifiziertes Image
+docker compose up -d --build worker
+docker rm -f paraglidable && docker run -d --name paraglidable \
+  --restart unless-stopped -p 127.0.0.1:8006:80 \
+  -v /home/ralf/buch-paraglidable:/workspaces/Paraglidable \
+  paraglidable sh /workspaces/Paraglidable/scripts/container_start.sh
+```
+
+Stand nach dem Ausrollen: Legacy 61 → **59 Pakete**, Worker 64 → 62,
+Image 4,96 → **4,83 GB**. numba und llvmlite in beiden Containern weg;
+`numpy` und `setuptools` unverändert vorhanden — die gehören TensorFlow,
+nicht numba.
+
+Nachweise: Kern- und Produktivimporte OK (TF 2.1.0, numpy 1.18.1,
+pygrib, pyproj, Pillow, matplotlib, pandas, forecast.py,
+trained_model, grib_reader, tiles_maths, pipeline.*); `pip check` ohne
+Befund; Startseite 200, Kachel 200, Datenendpunkt mit echten Werten,
+ausgelieferter Commit 1d69bcf7, nginx 401 ohne Zugangsdaten; 13/13
+Schnittstellenaufzeichnungen gegen die laufende Instanz EQUIVALENT;
+Unit-Tests 17/17 im ausgerollten Legacy-Container; TLS-Abruf gegen NOAA
+aus dem ausgerollten Worker 200 (certifi 2025.04.26); Scheduler nimmt
+die Jobs auf. **Golden Master im ausgerollten Container EQUIVALENT**
+(max. Abweichung 1,300e-04, Toleranzen unverändert).
+
+**Endstand der Entrümpelung** (Etappe B + G, am Produktionsimage
+gemessen): 128 → **59 Pakete**, 5,78 → **4,83 GB**, 996 → **888
+Befunde**. Ehrlich zur Lesart: Die 888 stehen seit dem Jupyter-Schritt
+still. basemap und numba/llvmlite haben zusammen 0,95 GB gespart und
+keinen einzigen Befund geheilt — sie waren befundfrei. Der
+Sicherheitsgewinn stammt aus B1–B5 und dem Jupyter-Wegfall; der Rest
+hängt am Basisimage (TensorFlow 743 + apt-Pakete) und bewegt sich nur
+mit dessen Wechsel, was eine fachliche Entscheidung über das
+Prognoseverhalten ist, keine Abhängigkeitsfrage.
+
+**Rückweg:** Tags `rollback-vor-numba` (`paraglidable`,
+`buch-paraglidable-worker`) = Stand mit numba. Ältere Stände:
+`rollback-vor-basemap`, `rollback-vor-g`, `rollback-vor-b`.
+
 ## Offene Punkte
 
 - RAM-Ausstattung des Servers (1,8 GB) weit unter Richtwert; die
