@@ -40,6 +40,13 @@ USER $USERNAME
 # state the golden master was proven on. apt-managed packages (pygobject,
 # cryptography, ...) are excluded -- the base image digest pins those.
 # python_requirements.txt remains as the author's historical Jan 2020 freeze.
+# Slimmed 2026-07-15 (stage G): the original Dockerfile installed "jupyter"
+# for the author's notebook workflow (scripts/start_jupyter.sh); the lockfile
+# had frozen it plus ~50 transitive packages into the production image. No
+# production code imports any of them, so they were dropped from the lockfile:
+# 128 -> 63 packages, 106 fewer known vulnerabilities, image 5.78 -> 5.56 GB.
+# Golden master EQUIVALENT with unchanged tolerances. idna is pinned
+# explicitly because it used to arrive only via a jupyter dependency.
 COPY python_requirements.lock.txt /tmp/python_requirements.lock.txt
 RUN sudo pip install -r /tmp/python_requirements.lock.txt
 # Pinned 2026-07: current basemap master requires setuptools>=67 which does

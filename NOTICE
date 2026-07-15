@@ -26,7 +26,10 @@ the Git history for exact dates and details of each change):
   * Replacement of cron-based scheduling with an in-process Python scheduler
   * Introduction of PostgreSQL for forecast results and metadata
     (large binary data remains file-based)
-  * Dependency pinning, containerization rework, tests and CI
+  * Dependency pinning and, later, a staged dependency update; the container
+    image was slimmed to the packages the forecast actually needs (the
+    original's Jupyter notebook toolchain was dropped from it)
+  * Containerization rework, tests and CI
   * A visible notice in the web front-end marking this instance as an
     independent re-implementation (added 2026-07-11); a full visual
     redesign establishing a distinct identity is planned (stage F)

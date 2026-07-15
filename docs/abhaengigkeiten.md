@@ -1,6 +1,6 @@
-# Abhängigkeiten: Stand, Aktualisierung, Restliste (Etappe B)
+# Abhängigkeiten: Stand, Aktualisierung, Restliste (Etappe B/G)
 
-Stand: 2026-07-14. Etappe B des Plans (`docs/plan.md`) war bis dahin nicht
+Stand: 2026-07-15. Etappe B des Plans (`docs/plan.md`) war bis dahin nicht
 ausgeführt: Etappe A hatte auf die bewährten Stände gepinnt, aktualisiert
 wurde danach nichts. Dieses Dokument holt das nach und hält fest, was
 bewegt wurde, was nicht, und warum.
@@ -60,7 +60,7 @@ Entscheidung, kein Vergessen.
 | protobuf | 3.11.2 | 7 | An tensorflow 2.1.0 gebunden. | Mit tensorflow. |
 | urllib3 | 1.26.20 | 10 (Rest) | Die verbleibenden Fixes verlangen urllib3 2.x und damit Python 3.8+. | Mit dem Basisimage. |
 | requests | 2.27.1 | 8 (Rest) | Fixes verlangen Python 3.7+. | Mit dem Basisimage. |
-| Jupyter-Stack | div. | ≈70 | **Kein Produktivcode benutzt ihn.** Er stammt aus dem TensorFlow-Basisimage; `scripts/start_jupyter.sh` ist eine Entwicklerbequemlichkeit. Der richtige Zug ist nicht Aktualisieren, sondern Entfernen aus dem Produktionsimage — das ist ein eigener Auftrag, kein Aktualisierungsschritt. | Eigener Auftrag, offen. |
+| ~~Jupyter-Stack~~ | ~~div.~~ | ~~108~~ | **Erledigt 2026-07-15.** Kein Produktivcode benutzte ihn: Das Original-Dockerfile installierte `jupyter` für den Notebook-Ablauf des Autors, Etappe B fror ihn samt rund 50 Folgepaketen ins Lockfile ein. Nicht aktualisiert, sondern entfernt — 128 → 63 Pakete, 996 → 888 Befunde, Image 5,78 → 5,56 GB, Golden Master EQUIVALENT bei unveränderten Toleranzen. | — |
 
 ## Die eine Ursache
 
@@ -68,9 +68,35 @@ Alle offenen Einträge hängen an derselben Wurzel: dem Basisimage
 `tensorflow/tensorflow:latest-py3` (Digest gepinnt) = TensorFlow 2.1.0,
 Ubuntu 18.04, Python 3.6.9. Python 3.6 ist seit Dezember 2021 ohne
 Pflege, Ubuntu 18.04 seit April 2023. Solange dieses Image die Laufzeit
-des eingefrorenen Modells ist, ist die Decke fest: Von den 961 Befunden
-der Erstinventur sind 926 ohne Basisimage-Wechsel unerreichbar.
+des eingefrorenen Modells ist, ist die Decke fest.
 
-Der Wechsel ist kein Abhängigkeitsschritt, sondern eine fachliche
-Entscheidung über das Prognoseverhalten. Er gehört damit nicht in
-Etappe B, sondern vor die Fachseite.
+## Gemessener Endstand (2026-07-15)
+
+Am Produktionsimage selbst gemessen, nicht am Lockfile gerechnet (das
+Image enthält zusätzlich die apt-verwalteten Pakete):
+
+| | Pakete | mit Befunden | Befunde |
+|---|---|---|---|
+| vor Etappe B/G | 128 | 32 | 996 |
+| nach B1–B5 und der Entrümpelung | **63** | **21** | **888** |
+
+Von den 888 trägt TensorFlow 2.1.0 allein 743. Die Entrümpelung hat
+nebenbei sichtbar gemacht, was vorher im Rauschen lag: Nach Jupyter sind
+die größten verbliebenen Posten apt-verwaltete Pakete des Basisimages —
+`cryptography 2.1.4` (19), `pip 19.3.1` (14), `setuptools 44.0.0` (7),
+`pycrypto 2.6.1` (4). Auch sie hängen am Basisimage; das Lockfile
+erreicht sie nicht.
+
+Der Wechsel des Basisimages ist kein Abhängigkeitsschritt, sondern eine
+fachliche Entscheidung über das Prognoseverhalten. Er gehört damit nicht
+in Etappe B, sondern vor die Fachseite.
+
+## Offen: basemap
+
+Beim Import-Test der Entrümpelung gefunden, aber **vorbestehend**, nicht
+durch sie verursacht: Der Dockerfile installiert `basemap` (Zeile 48,
+gepinnt aus einem GitHub-Archiv), und der Import scheitert seit
+matplotlib 3.3.4 an `matplotlib.cbook.dedent`. Aufgefallen ist es nie,
+denn **kein Modul im Repository importiert basemap** — nur der Dockerfile
+installiert es. Entfernen wäre der nächste Schritt derselben Logik wie
+beim Jupyter-Stack; eigener Auftrag, offen.
