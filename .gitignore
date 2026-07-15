@@ -12,6 +12,18 @@ golden_master/input/
 golden_master/run1_provisional/
 golden_master/runs/
 golden_master/reference/
+
+# Die grossen Datenpakete selbst: liegen als Release-Assets am Tag
+# golden-master-v1 und werden per "gh release download" geholt (CLAUDE.md,
+# "Umgebung aufsetzen"). Bisher waren nur die ausgepackten Ziele oben
+# ignoriert, die Archive nicht -- so sind sie 2026-07-15 versehentlich in
+# einen Commit geraten (537 MB). Gehoeren nie in Git.
+/gm_reference.tar.gz
+/gm_data.tar.gz
+/gm_corner_cache.tar.gz
+
+# Screenshots als Arbeitshilfe (Fehlerberichte), nicht Teil der Doku
+/docs/Screenshot-*.png
 # Buch-Downloads (privates Manuskript-Repo) — nur lokal ausgeliefert, nie committen
 www/downloads/
 
