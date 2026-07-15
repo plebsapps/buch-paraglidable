@@ -49,8 +49,11 @@ USER $USERNAME
 # explicitly because it used to arrive only via a jupyter dependency.
 COPY python_requirements.lock.txt /tmp/python_requirements.lock.txt
 RUN sudo pip install -r /tmp/python_requirements.lock.txt
-# Pinned 2026-07: current basemap master requires setuptools>=67 which does
-# not exist for the Python 3.6 in this image. v1.2.1rel matches the
-# basemap==1.2.1 recorded in python_requirements.txt (Jan 2020 freeze).
-RUN sudo pip install https://github.com/matplotlib/basemap/archive/v1.2.1rel.zip
+# Removed 2026-07-15 (stage G): basemap was installed here (pinned v1.2.1rel).
+# It has been broken since matplotlib 3.3.4 -- "from mpl_toolkits.basemap
+# import Basemap" raises ImportError (matplotlib.cbook.dedent is gone) -- and
+# nobody noticed, because no .py file in this repository imports it. Its only
+# use is the author's documentation notebook (neural_network/docs/) and the
+# README excerpt, which draw the training-cell map; both need Jupyter, which
+# left the image in the same stage. pyshp went with it (basemap-only dep).
 

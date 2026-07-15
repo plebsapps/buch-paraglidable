@@ -28,7 +28,8 @@ the Git history for exact dates and details of each change):
     (large binary data remains file-based)
   * Dependency pinning and, later, a staged dependency update; the container
     image was slimmed to the packages the forecast actually needs (the
-    original's Jupyter notebook toolchain was dropped from it)
+    original's Jupyter notebook toolchain and the basemap plotting library
+    were dropped from it; both served the author's notebooks, not the forecast)
   * Containerization rework, tests and CI
   * A visible notice in the web front-end marking this instance as an
     independent re-implementation (added 2026-07-11); a full visual

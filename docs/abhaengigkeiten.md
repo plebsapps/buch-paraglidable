@@ -91,12 +91,27 @@ Der Wechsel des Basisimages ist kein Abhängigkeitsschritt, sondern eine
 fachliche Entscheidung über das Prognoseverhalten. Er gehört damit nicht
 in Etappe B, sondern vor die Fachseite.
 
-## Offen: basemap
+## Erledigt: basemap (2026-07-15)
 
-Beim Import-Test der Entrümpelung gefunden, aber **vorbestehend**, nicht
-durch sie verursacht: Der Dockerfile installiert `basemap` (Zeile 48,
-gepinnt aus einem GitHub-Archiv), und der Import scheitert seit
-matplotlib 3.3.4 an `matplotlib.cbook.dedent`. Aufgefallen ist es nie,
-denn **kein Modul im Repository importiert basemap** — nur der Dockerfile
-installiert es. Entfernen wäre der nächste Schritt derselben Logik wie
-beim Jupyter-Stack; eigener Auftrag, offen.
+Beim Import-Test der Jupyter-Entrümpelung gefunden, aber **vorbestehend**:
+Der Dockerfile installierte `basemap` (gepinnt aus einem GitHub-Archiv),
+und der Import scheiterte seit matplotlib 3.3.4 an
+`matplotlib.cbook.dedent`. Aufgefallen ist es nie, denn **keine `.py`-Datei
+im Repository importiert basemap**. Seine einzige Nutzung sind das
+Dokumentations-Notebook des Autors und ein README-Auszug, die damit die
+Trainingszellen-Karte zeichnen — beide brauchen Jupyter, das im selben
+Zug ging. Entfernt samt `pyshp` (basemap-exklusiv). `pyproj` **bleibt**:
+Es sieht wie ein basemap-Anhängsel aus, wird aber von `pygrib` gebraucht.
+
+Wirkung: 63 → 61 Pakete, Image 5,56 → **4,96 GB** (basemap bringt
+Küstenlinien- und Grenzdaten in mehreren Auflösungen mit). Keine
+Sicherheitsbefunde — basemap hatte null; reine Entrümpelung. Golden
+Master EQUIVALENT bei unveränderten Toleranzen, Unit-Tests 17/17.
+
+## Offen: numba und llvmlite
+
+Verwaist wie basemap, aber ein eigener Fall: Das Original-Dockerfile
+installierte `numba` in derselben Zeile wie `jupyter`; nichts im
+Repository importiert es, `llvmlite` ist sein Unterbau. Null
+Sicherheitsbefunde, aber llvmlite ist ein dicker Brocken. Nächster
+Kandidat derselben Logik; eigener Auftrag, offen.
