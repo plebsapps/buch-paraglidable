@@ -22,7 +22,9 @@ Planned/ongoing substantial modifications (GPLv3 section 5(a) notice — see
 the Git history for exact dates and details of each change):
 
   * Port of the C++/Qt 5 map tiler to Python (numpy/Pillow)
-  * Port of the Apache/PHP web layer to Python (FastAPI)
+  * Port of the Apache/PHP web layer to Python (FastAPI); once FastAPI was
+    the only web path, the original .php sources and .htaccess were removed
+    from the working tree (the Git history keeps them)
   * Replacement of cron-based scheduling with an in-process Python scheduler
   * Introduction of PostgreSQL for forecast results and metadata
     (large binary data remains file-based)

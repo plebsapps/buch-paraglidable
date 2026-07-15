@@ -53,7 +53,8 @@ You're all set!
 
 * `/neural_network/train.py` run a new training
 * `/neural_network/forecast.py` run +10 days forecast and generate tiles
-* `/scripts/start_server.sh` start Apache server to visualize the forecast on the local website
+* the web layer is served by FastAPI (`web/app.py`, `docker compose up -d web`);
+  the original's Apache/PHP layer and its start script were removed in 2026-07
 
 ## Docummentation
 

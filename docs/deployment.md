@@ -121,6 +121,12 @@ PID 1). Nach Container- oder Server-Neustart kommt die Webschicht damit
 ohne manuellen Eingriff wieder hoch; `start_server.sh` wird nur noch für
 manuelle Sonderfälle gebraucht.
 
+*Nachtrag 2026-07-15:* Dieser Satz ist mit der Produktivschaltung von D2
+(2026-07-12, siehe unten) überholt — Apache bedient keinen Web-Verkehr
+mehr, der Legacy-Container ist nur noch die Laufzeit der Pipeline. Der
+Startbefehl `start_server.sh` wurde deshalb entfernt; `container_start.sh`
+bleibt als PID 1 des Containers.
+
 ```bash
 # Container neu anlegen (nur nach docker rm nötig)
 docker run -d --name paraglidable --restart unless-stopped \

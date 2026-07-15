@@ -3,8 +3,12 @@
 # against the golden-master data day, as the safety net for the FastAPI
 # port (stage D2).
 #
-# Usage (inside the container, Apache running via scripts/start_server.sh,
-# tiles for the GM day present in www/data/tiles/):
+# Since the D2 switchover (2026-07-12) these run against the FastAPI layer,
+# which is the only web path; point SNAPSHOT_BASE at it (see below). The
+# Apache/PHP originals in www/apps/ were removed 2026-07-15 -- they had been
+# dead since the port, and git history keeps them as the port's reference.
+#
+# Usage (tiles for the GM day present in www/data/tiles/):
 #   python golden_master/snapshot_www.py record   # write snapshots
 #   python golden_master/snapshot_www.py check    # compare against stored
 #

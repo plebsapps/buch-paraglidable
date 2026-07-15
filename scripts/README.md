@@ -13,9 +13,12 @@ python download_GFS.py # Optional, download the source .grib weather data files 
 ## To be executed once per session
 
 ```bash
-sh start_server.sh  # Start Apache server
 sh start_jupyter.sh # Start Jupyter server for the neural network documentation
+                    # NOTE: jupyter is no longer in the image, see the script
 ```
+
+Der Apache-Startbefehl entfiel 2026-07: Die Webschicht ist FastAPI
+(`web/app.py`), gestartet über `docker compose up -d web`.
 
 ## To be executed if needed
 
