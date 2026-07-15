@@ -251,6 +251,50 @@ Golden Master war vor dem Ausrollen mit diesem Image EQUIVALENT
 `buch-paraglidable-worker`) = Stand nach Etappe B, mit Jupyter. Der
 ältere Stand vor Etappe B liegt weiterhin unter `rollback-vor-b`.
 
+## Auslieferung Etappe G, basemap (2026-07-15)
+
+basemap samt pyshp aus dem Produktionsimage entfernt und ausgerollt
+(Freigabe: Betreiber). Wie bei der Jupyter-Entrümpelung nur
+Pipeline-Image, Worker und Legacy-Container — die Webschicht hat ihr
+eigenes Image:
+
+```bash
+docker tag paraglidable:latest paraglidable:rollback-vor-basemap
+docker tag buch-paraglidable-worker:latest buch-paraglidable-worker:rollback-vor-basemap
+docker tag paraglidable:nobm paraglidable   # GM-verifiziertes Image
+docker compose up -d --build worker
+docker rm -f paraglidable && docker run -d --name paraglidable \
+  --restart unless-stopped -p 127.0.0.1:8006:80 \
+  -v /home/ralf/buch-paraglidable:/workspaces/Paraglidable \
+  paraglidable sh /workspaces/Paraglidable/scripts/container_start.sh
+```
+
+Stand nach dem Ausrollen: Legacy-Container 61 Pakete (vorher 63), Worker
+64 (+ apscheduler, tzlocal, psycopg2-binary), Image 5,56 → **4,96 GB**.
+basemap und pyshp weg, `pyproj` und `pygrib` unverändert vorhanden —
+pyproj sieht wie ein basemap-Anhängsel aus, wird aber von pygrib
+gebraucht (siehe docs/abhaengigkeiten.md).
+
+Nachweise: Kern-Importe im ausgerollten Container OK (TF 2.1.0, numpy
+1.18.1, pygrib, pyproj, Pillow), forecast.py/trained_model/grib_reader
+und pipeline.tiler/predictions_io importierbar; Startseite 200,
+Kachel 200, `vignette.png` 200, Datenendpunkt mit echten Werten,
+ausgelieferter Commit 51358262, nginx 401 ohne Zugangsdaten; 13/13
+Schnittstellenaufzeichnungen gegen die laufende Instanz EQUIVALENT;
+Unit-Tests 17/17 im ausgerollten Legacy-Container; `pip check` ohne
+Befund; TLS-Abruf gegen NOAA aus dem ausgerollten Worker 200 (certifi
+2025.04.26); Scheduler nimmt die Jobs auf. Golden Master war vor dem
+Ausrollen mit diesem Image EQUIVALENT (unveränderte Toleranzen).
+
+Keine Sicherheitsbefunde gewonnen — basemap hatte null; der Schritt ist
+reine Entrümpelung. Tagesbilanz Etappe B + G am Produktionsimage: 128 →
+61 Pakete, 5,78 → 4,96 GB, 996 → 888 Befunde.
+
+**Rückweg:** Tags `rollback-vor-basemap` (`paraglidable`,
+`buch-paraglidable-worker`) = Stand nach der Jupyter-Entrümpelung, mit
+basemap. Ältere Stände: `rollback-vor-g` (mit Jupyter),
+`rollback-vor-b` (vor der Abhängigkeitsaktualisierung).
+
 ## Offene Punkte
 
 - RAM-Ausstattung des Servers (1,8 GB) weit unter Richtwert; die
