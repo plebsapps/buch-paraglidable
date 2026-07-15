@@ -221,6 +221,36 @@ dem ausgerollten Worker: 200 mit certifi 2025.04.26.
 Rollback = Tag zurücksetzen und Container neu anlegen; keine Daten und
 keine Formate betroffen, deshalb trägt der Rückweg ohne Sonderschritte.
 
+## Auslieferung Etappe G, Entrümpelung (2026-07-15)
+
+Jupyter-Stack aus dem Produktionsimage entfernt und ausgerollt (Freigabe:
+Betreiber). Die Webschicht war nicht betroffen (eigenes Image auf
+python:3.11-slim), deshalb nur Pipeline-Image, Worker und
+Legacy-Container:
+
+```bash
+docker tag paraglidable:nojup paraglidable   # GM-verifiziertes Image
+docker compose up -d --build worker
+docker rm -f paraglidable && docker run -d --name paraglidable \
+  --restart unless-stopped -p 127.0.0.1:8006:80 \
+  -v /home/ralf/buch-paraglidable:/workspaces/Paraglidable \
+  paraglidable sh /workspaces/Paraglidable/scripts/container_start.sh
+```
+
+Stand nach dem Ausrollen: Legacy-Container 63 Pakete, Worker 66
+(+ apscheduler, tzlocal, psycopg2-binary), **null Jupyter-Pakete**.
+
+Nachweise: Startseite 200, Referenzkachel 200, Datenendpunkt mit echten
+Werten, nginx 401 ohne Zugangsdaten; 13/13 Schnittstellenaufzeichnungen
+gegen die laufende Instanz EQUIVALENT; Unit-Tests 17/17 im ausgerollten
+Legacy-Container; TLS-Abruf gegen NOAA aus dem ausgerollten Worker 200.
+Golden Master war vor dem Ausrollen mit diesem Image EQUIVALENT
+(unveränderte Toleranzen).
+
+**Rückweg:** Tags `rollback-vor-g` (`paraglidable`,
+`buch-paraglidable-worker`) = Stand nach Etappe B, mit Jupyter. Der
+ältere Stand vor Etappe B liegt weiterhin unter `rollback-vor-b`.
+
 ## Offene Punkte
 
 - RAM-Ausstattung des Servers (1,8 GB) weit unter Richtwert; die
