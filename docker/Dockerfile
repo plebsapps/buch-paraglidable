@@ -56,4 +56,10 @@ RUN sudo pip install -r /tmp/python_requirements.lock.txt
 # use is the author's documentation notebook (neural_network/docs/) and the
 # README excerpt, which draw the training-cell map; both need Jupyter, which
 # left the image in the same stage. pyshp went with it (basemap-only dep).
+# Removed 2026-07-15 (stage G): numba and llvmlite. The original installed
+# numba in the same line as jupyter ("pip install ... pillow numba pyproj
+# jupyter"), a JIT compiler for the author's notebook experiments; no .py
+# file in this repository imports either, and nothing else requires them
+# (llvmlite is numba's backend). No known vulnerabilities -- decluttering
+# only. numpy and setuptools stay: they belong to tensorflow, not numba.
 

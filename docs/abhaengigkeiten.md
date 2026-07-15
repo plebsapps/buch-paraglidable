@@ -108,10 +108,34 @@ Küstenlinien- und Grenzdaten in mehreren Auflösungen mit). Keine
 Sicherheitsbefunde — basemap hatte null; reine Entrümpelung. Golden
 Master EQUIVALENT bei unveränderten Toleranzen, Unit-Tests 17/17.
 
-## Offen: numba und llvmlite
+## Erledigt: numba und llvmlite (2026-07-15)
 
 Verwaist wie basemap, aber ein eigener Fall: Das Original-Dockerfile
-installierte `numba` in derselben Zeile wie `jupyter`; nichts im
-Repository importiert es, `llvmlite` ist sein Unterbau. Null
-Sicherheitsbefunde, aber llvmlite ist ein dicker Brocken. Nächster
-Kandidat derselben Logik; eigener Auftrag, offen.
+installierte `numba` in derselben Zeile wie `jupyter` (`pip install …
+pillow numba pyproj jupyter`) — ein JIT-Compiler für die Experimente des
+Autors. Keine `.py`-Datei im Repository importiert numba oder llvmlite,
+und die Rückwärtssuche über die installierten Pakete zeigt: **niemand**
+verlangt numba; `llvmlite` hängt allein an ihm. `numpy` und `setuptools`
+bleiben — die gehören TensorFlow, nicht numba.
+
+Wirkung: 61 → 59 Pakete, Image 4,96 → **4,83 GB**. **Keine
+Sicherheitsbefunde** — OSV meldet für numba 0.53.1 und llvmlite 0.36.0 je
+null; reine Entrümpelung, kein Sicherheitsgewinn. Golden Master
+EQUIVALENT bei unveränderten Toleranzen, Unit-Tests 17/17, `pip check`
+ohne Befund, Paketvergleich vorher/nachher: genau zwei Zeilen weniger,
+nichts ungepinnt zurückgekehrt.
+
+## Endstand der Entrümpelung (2026-07-15)
+
+| | Pakete | Image | Befunde |
+|---|---|---|---|
+| vor Etappe B/G | 128 | 5,78 GB | 996 |
+| nach B1–B5 | 63 | 5,56 GB | 888 |
+| nach basemap | 61 | 4,96 GB | 888 |
+| nach numba/llvmlite | **59** | **4,83 GB** | **888** |
+
+Die drei Entrümpelungsschritte haben zusammen 69 Pakete und 0,95 GB
+entfernt, ohne einen einzigen Befund zu heilen — sie waren alle
+befundfrei. Der Sicherheitsgewinn der Etappe (996 → 888) stammt
+ausschließlich aus B1–B5 und dem Wegfall des Jupyter-Stacks. Was bleibt,
+hängt am Basisimage (siehe oben).
